@@ -16,7 +16,7 @@ from support.synthrom import SynthRom
 from yomineko.pipeline.workspace import Workspace
 from yomineko.profile.loader import load_profile
 from yomineko.script_io import write_script
-from yomineko.web.app import NOTICE_FILE, create_app
+from yomineko.web.app import NOTICE_FILE, THEME_FILE, create_app
 
 ORIGIN = {"Origin": "http://localhost"}
 
@@ -56,6 +56,63 @@ def test_the_home_page_shows_the_notice_until_it_is_accepted(client, workspace):
     accepted = client.post("/notice", headers=ORIGIN, follow_redirects=False)
     assert accepted.status_code == 303 and (workspace.root / NOTICE_FILE).is_file()
     assert "for games you own" not in client.get("/").text
+
+
+def test_the_theme_button_steps_through_system_light_and_dark(client, workspace):
+    page = client.get("/")
+    assert "data-theme" not in page.text.split("<head>")[0]  # follows the system setting
+    assert 'content="light dark"' in page.text and "Theme: Match system" in page.text
+    for theme, label in (("light", "Light"), ("dark", "Dark")):
+        assert f'name="theme" value="{theme}"' in page.text  # the button offers the next one
+        moved = client.post(
+            "/theme", data={"theme": theme, "back": "/"}, headers=ORIGIN, follow_redirects=False
+        )
+        assert moved.status_code == 303 and (workspace.root / THEME_FILE).is_file()
+        page = client.get("/")
+        assert f'<html lang="en" data-theme="{theme}">' in page.text
+        assert f'name="color-scheme" content="{theme}"' in page.text
+        assert f"Theme: {label}" in page.text
+    assert 'name="theme" value=""' in page.text  # after dark, back to the system setting
+    client.post("/theme", data={"theme": ""}, headers=ORIGIN)
+    assert not (workspace.root / THEME_FILE).exists()
+    assert "Theme: Match system" in client.get("/").text
+
+
+def test_the_theme_is_kept_by_a_new_window(workspace):
+    first = TestClient(create_app(workspace), base_url="http://localhost")
+    first.get("/")
+    first.post("/theme", data={"theme": "dark"}, headers=ORIGIN)
+    again = TestClient(create_app(workspace), base_url="http://localhost")
+    assert 'data-theme="dark"' in again.get("/").text
+
+
+@pytest.mark.parametrize(
+    ("back", "to"),
+    [
+        ("/games/demo/choose?p=2", "/games/demo/choose?p=2"),
+        ("https://example.com/", "/"),
+        ("//example.com/", "/"),
+        ("/\\example.com/", "/"),
+        ("/a\r\nSet-Cookie: x=1", "/"),
+    ],
+)
+def test_the_theme_button_only_returns_to_a_page_on_this_server(client, back, to):
+    client.get("/")
+    moved = client.post(
+        "/theme", data={"theme": "light", "back": back}, headers=ORIGIN, follow_redirects=False
+    )
+    assert moved.headers["location"] == to
+
+
+def test_the_theme_button_returns_to_the_page_it_is_on(client):
+    page = client.get("/?x=1")
+    assert 'name="back" value="/?x=1"' in page.text
+
+
+def test_an_unknown_theme_is_refused(client, workspace):
+    client.get("/")
+    refused = client.post("/theme", data={"theme": "pink"}, headers=ORIGIN)
+    assert refused.status_code == 400 and not (workspace.root / THEME_FILE).exists()
 
 
 def test_the_pages_load_nothing_from_other_sites(client):

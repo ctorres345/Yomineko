@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- **A theme button in the app.** The header's Theme button switches between Match system (the
+  default: light or dark as the computer is set), Light and Dark. The choice is kept in the app's
+  data folder, so the next window opens the same way.
+
 ## 0.5.0 (2026-10-20)
 
 The first public release. 0.4.0 and the milestones before it (0.1.0 to 0.3.0) were never published; their

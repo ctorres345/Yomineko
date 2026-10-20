@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="en"{% if theme %} data-theme="{{ theme }}"{% endif %}>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="light dark">
+  <meta name="color-scheme" content="{{ theme or 'light dark' }}">
   <title>{% block title %}yomineko{% endblock %}</title>
   <link rel="stylesheet" href="/static/pico.min.css">
   <link rel="stylesheet" href="/static/app.css">
@@ -13,9 +13,16 @@
   <header class="container">
     <nav>
       <ul><li><a href="/" class="brand"><strong>yomineko</strong> <span lang="ja">読み猫</span></a></li></ul>
-      {% if can_quit %}
-      <ul><li><form method="post" action="/quit"><button type="submit" class="secondary quiet">Quit yomineko</button></form></li></ul>
-      {% endif %}
+      <ul>
+        <li><form method="post" action="/theme">
+          <input type="hidden" name="theme" value="{{ next_theme }}">
+          <input type="hidden" name="back" value="{{ back }}">
+          <button type="submit" class="secondary quiet" title="Change to: {{ themes[next_theme] }}">Theme: {{ themes[theme] }}</button>
+        </form></li>
+        {% if can_quit %}
+        <li><form method="post" action="/quit"><button type="submit" class="secondary quiet">Quit yomineko</button></form></li>
+        {% endif %}
+      </ul>
     </nav>
   </header>
   <main class="container">
