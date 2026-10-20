@@ -1,0 +1,20 @@
+# Profile for the synthetic compressed 16-bit test ROM (tests/support/synthrom.py). Not a real game.
+schema_version: 1
+id: synth-lz16
+title: Synthetic compressed 16-bit test ROM
+platform: gba
+rom:
+  sha1: "3354d8986298c81146bad1bc4a375196fe25ebde"
+  game_code: LZ1J
+  revision: 0
+encoding:
+  type: table16
+  table: ../fake16.tbl
+  skip: {0x0E: 1, 0x0B: 1}
+text:
+  pointer_base: 0x08000000
+compressed:
+  scheme: lz77
+  tables:
+    - {base: 0x200, stride: 4, count: 2}
+  min_chars: 2

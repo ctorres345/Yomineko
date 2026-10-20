@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}{{ job.label }} - yomineko{% endblock %}
+{% block content %}
+<h1>{{ job.label }}</h1>
+<article>
+  {% include "_job_status.html" %}
+  <noscript><p>This page needs JavaScript to update. <a href="/jobs/{{ job.id }}">Reload</a> to check.</p></noscript>
+</article>
+{% endblock %}

@@ -1,0 +1,16 @@
+# Corrections for the wrong dictionary picks in kana-heavy text. JMdict ids only.
+# A first pass over the most frequent ambiguous words (seen 15+ times) and the names that
+# the tokenizer splits into ordinary nouns; the long tail is unreviewed.
+schema_version: 1
+profile: mario-luigi-rpg-jp
+rom_sha1: "edc538ac505bfcd337abdd03b3a6f2744d81eaab"
+words:
+  - {from: 1241450, to: 1313580}
+  - {from: 1182880, to: 1123880}
+  - {from: 1605845, to: 1605840}
+  - {from: 1496840, drop: true}
+  - {from: 1418970, to: 1400150}
+  - {from: 1307770, drop: true}
+  - {from: 1896380, drop: true}
+  # names the tokenizer split into ordinary words
+  - {from: 1106250, drop: true}

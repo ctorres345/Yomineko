@@ -1,0 +1,54 @@
+# Offsets, encoding and control codes for one game. No game text lives in this file.
+schema_version: 1
+id: mario-luigi-rpg-jp
+title: Mario & Luigi RPG (Japan)
+platform: gba
+rom:
+  sha1: "edc538ac505bfcd337abdd03b3a6f2744d81eaab"
+  game_code: A88J
+  revision: 0
+encoding:
+  type: table8             # one-byte codes, kanji as lead byte (0xFA-0xFE) + index byte
+  table: mario-luigi-rpg-jp.tbl
+  # Commands are 0xFF, a command byte and parameter bytes (-1: up to the next 0xFF).
+  command_prefix: 0xFF
+  commands:
+    0x00: 0   # end of a page or line
+    0x01: 1
+    0x03: 0   # new text box
+    0x04: 0
+    0x05: 0
+    0x0A: -1  # event record: bytes up to the next command
+    0x0B: 1
+    0x0C: 1   # wait
+    0x0D: 1
+    0x0F: 1
+    0x11: 1
+    0x20: 0   # the rest take no parameters and are followed by text
+    0x25: 0
+    0x29: 0
+    0x2B: 0
+    0x2D: 0
+    0x31: 0
+    0x33: 0
+    0x34: 0
+    0x35: 0
+    0x41: 0
+    0x44: 0
+    0x6F: 0
+    0x7F: 0
+  # These end a line; the other commands sit in the middle of a sentence and are kept as escapes.
+  line_breaks: [0x00, 0x01, 0x03, 0x04, 0x05, 0x0A, 0x0F, 0x41, 0x6F]
+text:
+  # The dialogue and the other message banks: one continuous stream, no pointer table to follow.
+  regions:
+    - {start: 0x3BE390, end: 0x3DF0C0}
+    - {start: 0x3EE2E0, end: 0x3F0660}
+discover:
+  stream_min_chars: 2
+  stream_min_jp_ratio: 0.7
+# Two codes draw a character that already has another code: keep the code, show the character.
+plain:
+  - {pattern: '\{FA7A\}', replace: 数}
+  - {pattern: '\{FE42\}', replace: 員}
+kinds: {dialogue_min_length: 12}

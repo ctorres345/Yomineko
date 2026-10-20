@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+{% set first_run = not dictionary or not games %}
+<h1>Study a game you own</h1>
+<p class="lead">yomineko reads a game file on this computer and turns its Japanese into flashcards. Nothing is uploaded.</p>
+
+{% if notice %}
+<article id="notice">
+  <header><strong>Before you start</strong></header>
+  <p>yomineko is for games you own. It reads a ROM you pick, on this computer, and never sends it
+  anywhere. It does not include ROMs, game text or ready-made decks, and what you export contains
+  the game's text: keep it for your own study.</p>
+  <form method="post" action="/notice"><button type="submit" class="secondary">Got it</button></form>
+</article>
+{% endif %}
+
+<article class="setup">
+  <header><strong>{{ "Two things to get started" if first_run else "Add a game" }}</strong></header>
+  {% if first_run %}
+  <div class="setup-item">
+    {% if dictionary %}
+    <span class="dot done"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="sr-only">Done:</span></span>
+    {% else %}
+    <span class="dot current">1</span>
+    {% endif %}
+    <div>
+      <h3>Get the dictionary</h3>
+      {% if dictionary %}
+      <p><mark>Installed.</mark> {{ "{:,}".format(dictionary.entries) }} entries, dated {{ dictionary.date }}.
+      Word meanings come from JMdict, &copy; EDRDG, CC BY-SA 4.0.</p>
+      {% else %}
+      <p>Word meanings come from the JMdict dictionary. It is downloaded once from edrdg.org
+      (about 10 MB) and kept on this computer. This is the only thing yomineko ever downloads, and it
+      happens only when you press the button.</p>
+      <form method="post" action="/dictionary/download"><button type="submit">Download the dictionary</button></form>
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}
+  <div class="setup-item">
+    {% if first_run %}<span class="dot {{ 'current' if dictionary else 'later' }}">2</span>{% endif %}
+    <div>
+      {% if first_run %}<h3>Add a game</h3>{% endif %}
+      <form method="post" action="/extract" enctype="multipart/form-data">
+        <label for="rom">Game file (.gba, .gbc, or a .zip with one ROM, up to {{ max_mb }} MB)</label>
+        <input id="rom" type="file" name="file" accept=".gba,.agb,.gbc,.gb,.bin,.zip" required>
+        <button type="submit"{% if not dictionary %} class="secondary"{% endif %}>Read the game's text</button>
+      </form>
+    </div>
+  </div>
+</article>
+
+{% if games %}
+<h2>Your games</h2>
+<ul>
+  {% for g in games %}
+  <li><a href="/games/{{ g.id }}">{{ g.title }}</a></li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+<p><small>Your games are kept on this computer in <code>{{ folder }}</code>.
+{% if not first_run %}Dictionary installed: {{ "{:,}".format(dictionary.entries) }} entries, dated {{ dictionary.date }}.
+Word meanings come from JMdict, &copy; EDRDG, CC BY-SA 4.0.{% endif %}</small></p>
+{% endblock %}

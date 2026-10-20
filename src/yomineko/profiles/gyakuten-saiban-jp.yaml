@@ -1,0 +1,85 @@
+# Offsets, encoding and control codes for one game. No game text lives in this file.
+schema_version: 1
+id: gyakuten-saiban-jp
+title: Gyakuten Saiban (Japan) (Rev 1)
+platform: gba
+rom:
+  sha1: "ea7dabc4f5330c89a341ca38067fb025de73c835"
+  game_code: ASBJ
+  revision: 1
+encoding:
+  type: table16            # text is 16-bit glyph ids; the table maps each id to a character
+  table: gyakuten-saiban-jp.tbl
+  # Command tokens (below 0x80) followed by arguments that must not be read as text (an argument
+  # can have the value of a glyph id). The counts come from the game's command handlers (table
+  # at 0x11DDA0, commands 0x00 to 0x4C); a command that is not listed takes none. 0x3F is left
+  # out: its count was not worked out, and its seven uses are at the end of an entry.
+  skip:
+    0x03: 1
+    0x04: 1
+    0x06: 1
+    0x0A: 1
+    0x0B: 1
+    0x0C: 1
+    0x0E: 1   # speaker
+    0x10: 1
+    0x13: 1
+    0x17: 1
+    0x18: 1
+    0x1B: 1
+    0x1C: 1
+    0x1D: 1
+    0x20: 1
+    0x25: 1
+    0x26: 1
+    0x28: 1
+    0x29: 1
+    0x2C: 1
+    0x30: 1
+    0x34: 1
+    0x36: 1
+    0x38: 1
+    0x39: 1
+    0x3C: 1
+    0x3D: 1
+    0x3E: 1
+    0x42: 1
+    0x43: 1
+    0x44: 1
+    0x46: 1
+    0x4A: 1
+    0x4B: 1
+    0x05: 2
+    0x08: 2
+    0x0F: 2
+    0x19: 2
+    0x22: 2
+    0x23: 2
+    0x27: 2
+    0x2A: 2
+    0x2F: 2
+    0x31: 2
+    0x32: 2
+    0x35: 2
+    0x37: 2
+    0x3A: 2
+    0x3B: 2
+    0x47: 2
+    0x48: 2
+    0x09: 3
+    0x12: 3   # pose
+    0x1E: 3
+    0x1A: 4
+    0x33: 5
+text:
+  pointer_base: 0x08000000
+# The script is 17 LZ77 blocks reached through one pointer table, and one block of the same
+# layout that is not compressed (the game reads entry numbers below 0x80 from it).
+compressed:
+  scheme: lz77
+  tables:
+    - {base: 0x18738, count: 17, stride: 4}
+  uncompressed:
+    - {start: 0x749428, end: 0x74A214}
+  min_chars: 2
+kinds: {dialogue_min_length: 12}

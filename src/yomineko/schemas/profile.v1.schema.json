@@ -1,0 +1,601 @@
+{
+  "$defs": {
+    "CompressedText": {
+      "additionalProperties": false,
+      "description": "Text kept in compressed blocks. Each block opens with an entry count and entry offsets\n(core/containers.py). Lines inside have no ROM offset: they get virtual addresses.",
+      "properties": {
+        "min_chars": {
+          "default": 2,
+          "minimum": 1,
+          "title": "Min Chars",
+          "type": "integer"
+        },
+        "scheme": {
+          "const": "lz77",
+          "default": "lz77",
+          "title": "Scheme",
+          "type": "string"
+        },
+        "tables": {
+          "items": {
+            "$ref": "#/$defs/PointerTable"
+          },
+          "minItems": 1,
+          "title": "Tables",
+          "type": "array"
+        },
+        "uncompressed": {
+          "items": {
+            "$ref": "#/$defs/Region"
+          },
+          "title": "Uncompressed",
+          "type": "array"
+        }
+      },
+      "required": [
+        "tables"
+      ],
+      "title": "CompressedText",
+      "type": "object"
+    },
+    "Discover": {
+      "additionalProperties": false,
+      "properties": {
+        "frame": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Frame"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "ignore": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Ignore",
+          "type": "array"
+        },
+        "min_score": {
+          "default": 0.7,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Min Score",
+          "type": "number"
+        },
+        "stream_min_chars": {
+          "default": 2,
+          "minimum": 1,
+          "title": "Stream Min Chars",
+          "type": "integer"
+        },
+        "stream_min_jp_ratio": {
+          "default": 0.7,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Stream Min Jp Ratio",
+          "type": "number"
+        },
+        "unreferenced": {
+          "$ref": "#/$defs/Unreferenced"
+        }
+      },
+      "title": "Discover",
+      "type": "object"
+    },
+    "Encoding": {
+      "additionalProperties": false,
+      "properties": {
+        "command_prefix": {
+          "anyOf": [
+            {
+              "maximum": 255,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Command Prefix"
+        },
+        "commands": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Commands",
+          "type": "object"
+        },
+        "custom_leads": {
+          "items": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "integer"
+              }
+            ],
+            "type": "array"
+          },
+          "title": "Custom Leads",
+          "type": "array"
+        },
+        "line_breaks": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Line Breaks",
+          "type": "array"
+        },
+        "rom_strings": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Rom Strings",
+          "type": "object"
+        },
+        "single_byte_kana": {
+          "default": "native",
+          "enum": [
+            "native",
+            "hiragana"
+          ],
+          "title": "Single Byte Kana",
+          "type": "string"
+        },
+        "skip": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Skip",
+          "type": "object"
+        },
+        "table": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Table"
+        },
+        "terminator": {
+          "default": 0,
+          "maximum": 255,
+          "minimum": 0,
+          "title": "Terminator",
+          "type": "integer"
+        },
+        "type": {
+          "enum": [
+            "shift_jis",
+            "table",
+            "table16",
+            "table8"
+          ],
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "title": "Encoding",
+      "type": "object"
+    },
+    "Frame": {
+      "additionalProperties": false,
+      "description": "How a message is laid out, for a game whose text bytes are also common in code and data.\n\nA message is a run of commands. The ``start`` command is followed by text; the others\n(``commands``: command byte -> number of parameter bytes) are stepped over. Text is table\ncodes and ``breaks`` (each ends a line) up to an end byte: one of ``ends`` and the message\nis over, ``resume`` and commands follow (as a command, ``resume`` ends the message). Bytes\nthat do not fit this are not a message, and nothing is read from them.",
+      "properties": {
+        "breaks": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Breaks",
+          "type": "array"
+        },
+        "commands": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Commands",
+          "type": "object"
+        },
+        "ends": {
+          "items": {
+            "type": "integer"
+          },
+          "minItems": 1,
+          "title": "Ends",
+          "type": "array"
+        },
+        "resume": {
+          "anyOf": [
+            {
+              "maximum": 255,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Resume"
+        },
+        "start": {
+          "maximum": 255,
+          "minimum": 0,
+          "title": "Start",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "start",
+        "ends"
+      ],
+      "title": "Frame",
+      "type": "object"
+    },
+    "Kinds": {
+      "additionalProperties": false,
+      "properties": {
+        "dialogue_min_length": {
+          "default": 12,
+          "minimum": 0,
+          "title": "Dialogue Min Length",
+          "type": "integer"
+        }
+      },
+      "title": "Kinds",
+      "type": "object"
+    },
+    "PlainRule": {
+      "additionalProperties": false,
+      "properties": {
+        "pattern": {
+          "title": "Pattern",
+          "type": "string"
+        },
+        "replace": {
+          "default": "",
+          "title": "Replace",
+          "type": "string"
+        }
+      },
+      "required": [
+        "pattern"
+      ],
+      "title": "PlainRule",
+      "type": "object"
+    },
+    "PointerTable": {
+      "additionalProperties": false,
+      "description": "``count`` pointers, ``stride`` bytes apart from ``base``, to compressed blocks.",
+      "properties": {
+        "base": {
+          "minimum": 0,
+          "title": "Base",
+          "type": "integer"
+        },
+        "count": {
+          "exclusiveMinimum": 0,
+          "title": "Count",
+          "type": "integer"
+        },
+        "stride": {
+          "default": 4,
+          "exclusiveMinimum": 0,
+          "title": "Stride",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "base",
+        "count"
+      ],
+      "title": "PointerTable",
+      "type": "object"
+    },
+    "Region": {
+      "additionalProperties": false,
+      "description": "A byte range of the ROM, as file offsets. On a Game Boy cartridge ``{bank: n}`` names\nthe whole of 16 KiB bank ``n`` instead; it is read as the file offsets ``n * 0x4000`` to\n``(n + 1) * 0x4000``, which is all that is kept.",
+      "properties": {
+        "bank": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Bank"
+        },
+        "end": {
+          "default": 0,
+          "minimum": 0,
+          "title": "End",
+          "type": "integer"
+        },
+        "start": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Start",
+          "type": "integer"
+        }
+      },
+      "title": "Region",
+      "type": "object"
+    },
+    "RomInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "game_code": {
+          "pattern": "^.{3}J$",
+          "title": "Game Code",
+          "type": "string"
+        },
+        "revision": {
+          "default": 0,
+          "title": "Revision",
+          "type": "integer"
+        },
+        "sha1": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Sha1",
+          "type": "string"
+        }
+      },
+      "required": [
+        "sha1",
+        "game_code"
+      ],
+      "title": "RomInfo",
+      "type": "object"
+    },
+    "SentenceCaps": {
+      "additionalProperties": false,
+      "description": "Most sentences of a structural kind a deck may hold; None means no limit.",
+      "properties": {
+        "name_quote": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Name Quote"
+        },
+        "name_subject": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Name Subject"
+        }
+      },
+      "title": "SentenceCaps",
+      "type": "object"
+    },
+    "Sentences": {
+      "additionalProperties": false,
+      "description": "How sentence selection treats this game. Addresses and counts only, never text.",
+      "properties": {
+        "caps": {
+          "$ref": "#/$defs/SentenceCaps"
+        },
+        "exclude_ranges": {
+          "items": {
+            "$ref": "#/$defs/Region"
+          },
+          "title": "Exclude Ranges",
+          "type": "array"
+        }
+      },
+      "title": "Sentences",
+      "type": "object"
+    },
+    "TableSpec": {
+      "additionalProperties": false,
+      "description": "A table of names, ``count`` entries from ``base``.\n\n``pointers``: entry ``i`` holds a text pointer at ``base + i*stride + field``.\n``records``: entry ``i`` is the text itself, ``stride`` bytes at ``base + i*stride``, padded\nwith the encoding's terminator. ``strings``: the texts follow one another, each ended by the\nterminator.",
+      "properties": {
+        "base": {
+          "minimum": 0,
+          "title": "Base",
+          "type": "integer"
+        },
+        "category": {
+          "title": "Category",
+          "type": "string"
+        },
+        "count": {
+          "exclusiveMinimum": 0,
+          "title": "Count",
+          "type": "integer"
+        },
+        "field": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Field",
+          "type": "integer"
+        },
+        "kind": {
+          "default": "pointers",
+          "enum": [
+            "pointers",
+            "records",
+            "strings"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "stride": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Stride",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "category",
+        "base",
+        "count"
+      ],
+      "title": "TableSpec",
+      "type": "object"
+    },
+    "TextConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "bank_gap": {
+          "default": 64,
+          "minimum": 0,
+          "title": "Bank Gap",
+          "type": "integer"
+        },
+        "pointer_align": {
+          "default": 4,
+          "minimum": 1,
+          "title": "Pointer Align",
+          "type": "integer"
+        },
+        "pointer_base": {
+          "default": 134217728,
+          "title": "Pointer Base",
+          "type": "integer"
+        },
+        "regions": {
+          "items": {
+            "$ref": "#/$defs/Region"
+          },
+          "title": "Regions",
+          "type": "array"
+        }
+      },
+      "title": "TextConfig",
+      "type": "object"
+    },
+    "Unreferenced": {
+      "additionalProperties": false,
+      "properties": {
+        "min_japanese": {
+          "default": 3,
+          "minimum": 0,
+          "title": "Min Japanese",
+          "type": "integer"
+        },
+        "min_kana_ratio": {
+          "default": 0.8,
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Min Kana Ratio",
+          "type": "number"
+        }
+      },
+      "title": "Unreferenced",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "compressed": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CompressedText"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "discover": {
+      "$ref": "#/$defs/Discover"
+    },
+    "encoding": {
+      "$ref": "#/$defs/Encoding"
+    },
+    "id": {
+      "pattern": "^[a-z0-9][a-z0-9-]*$",
+      "title": "Id",
+      "type": "string"
+    },
+    "kinds": {
+      "$ref": "#/$defs/Kinds"
+    },
+    "plain": {
+      "items": {
+        "$ref": "#/$defs/PlainRule"
+      },
+      "title": "Plain",
+      "type": "array"
+    },
+    "platform": {
+      "enum": [
+        "gba",
+        "gbc"
+      ],
+      "title": "Platform",
+      "type": "string"
+    },
+    "rom": {
+      "$ref": "#/$defs/RomInfo"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "sentences": {
+      "$ref": "#/$defs/Sentences"
+    },
+    "tables": {
+      "items": {
+        "$ref": "#/$defs/TableSpec"
+      },
+      "title": "Tables",
+      "type": "array"
+    },
+    "text": {
+      "$ref": "#/$defs/TextConfig"
+    },
+    "title": {
+      "title": "Title",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "title",
+    "platform",
+    "rom",
+    "encoding",
+    "text"
+  ],
+  "title": "Profile",
+  "type": "object"
+}

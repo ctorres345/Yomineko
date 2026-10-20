@@ -1,0 +1,200 @@
+[build-system]
+requires = ["hatchling>=1.21"]
+build-backend = "hatchling.build"
+
+[project]
+name = "yomineko"
+dynamic = ["version"]
+description = "Extract the Japanese script from game ROMs you own and turn it into study material."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+authors = [{ name = "ctorres345" }]
+keywords = ["japanese", "rom", "anki", "language-learning", "games"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: End Users/Desktop",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Education",
+]
+dependencies = [
+    "pydantic>=2.6",
+    "PyYAML>=6",
+    "typer>=0.12",
+    "platformdirs>=4",
+    "genanki>=0.13",
+    "openpyxl>=3.1",
+    "certifi",  # trusted certificates for the JMdict download where the system's are missing
+]
+
+[project.optional-dependencies]
+# The tokenizer and its 77 MB dictionary: only needed for `yomineko analyze`
+analyze = [
+    "sudachipy>=0.6.8",
+    "sudachidict_core",
+]
+# The web interface: `yomineko serve`
+web = [
+    "fastapi>=0.110",
+    "uvicorn>=0.29",
+    "jinja2>=3.1",
+    "python-multipart>=0.0.9",
+]
+# The desktop app: `yomineko app` (the web interface plus a native window)
+app = [
+    "yomineko[web]",
+    "pywebview>=5",
+]
+dev = [
+    "httpx>=0.27",  # the web tests' client
+    "pytest>=8",
+    "pytest-cov>=5",
+    "ruff>=0.5",
+    "mypy>=1.10",
+    "types-PyYAML",
+    "types-openpyxl",
+    "import-linter>=2.0",
+    "pre-commit>=3.7",
+    "build>=1.2",
+    "twine>=5",
+]
+
+[project.scripts]
+yomineko = "yomineko.cli.app:app"
+
+[project.gui-scripts]
+yomineko-app = "yomineko.app.launch:main"
+
+[project.urls]
+Repository = "https://github.com/ctorres345/yomineko"
+Issues = "https://github.com/ctorres345/yomineko/issues"
+Changelog = "https://github.com/ctorres345/yomineko/blob/main/CHANGELOG.md"
+
+[tool.hatch.version]
+path = "src/yomineko/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/yomineko"]
+
+[tool.hatch.build.targets.sdist]
+# leading "/" anchors each pattern to the repo root (a bare README.md would also match nested ones)
+include = ["/src/yomineko", "/tests", "/tools", "/packaging", "/docs", "/README.md", "/LICENSE", "/NOTICE", "/CHANGELOG.md", "/DISCLAIMER.md"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+# E/F pycodestyle+pyflakes, I import order, UP modern syntax, B likely bugs,
+# SIM simplifications, C4 comprehensions, RUF ruff's own checks
+select = ["E", "F", "I", "UP", "B", "SIM", "C4", "RUF"]
+
+[tool.ruff.lint.per-file-ignores]
+# Japanese text and full-width punctuation are the point of this project
+"**/*.py" = ["RUF001", "RUF002", "RUF003"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+plugins = ["pydantic.mypy"]
+files = ["src", "tools"]
+
+[[tool.mypy.overrides]]
+module = ["sudachipy", "sudachipy.*"]
+ignore_missing_imports = true  # ships a .pyi stub for the top level only
+
+[[tool.mypy.overrides]]
+module = ["webview", "webview.*"]
+ignore_missing_imports = true  # imported late, only with the app extra
+
+[[tool.mypy.overrides]]
+module = ["genanki", "genanki.*"]
+ignore_missing_imports = true  # no stubs and no py.typed marker
+
+[[tool.mypy.overrides]]
+module = ["PIL", "PIL.*"]
+ignore_missing_imports = true  # tools/glyph_render only, imported late; not a project dependency
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# tests/ makes `support` importable; tools/ makes the dev scripts importable
+pythonpath = ["tests", "tools"]
+addopts = "-ra --strict-markers --strict-config"
+markers = [
+    "realrom: needs a real ROM dump; set the env var named in the test (opt-in)",
+    "sudachi: needs the optional tokenizer (pip install yomineko[analyze]); skipped without it",
+]
+
+[tool.coverage.run]
+source = ["yomineko"]
+branch = true
+
+[tool.coverage.report]
+fail_under = 95
+show_missing = true
+skip_covered = true
+exclude_also = ["if TYPE_CHECKING:", "raise NotImplementedError", "# pragma: no cover"]
+
+# Architecture rules, checked by `lint-imports` (import-linter). See docs/ARCHITECTURE.md.
+[tool.importlinter]
+root_package = "yomineko"
+include_external_packages = true
+
+[[tool.importlinter.contracts]]
+name = "Layers: a module may import from layers below it, never above"
+type = "layers"
+layers = [
+    "yomineko.cli",
+    "yomineko.app",
+    "yomineko.web",
+    "yomineko.pipeline",
+    "yomineko.extract | yomineko.export | yomineko.script_io | yomineko.analyze | yomineko.survey",
+    "yomineko.profile.loader",
+    "yomineko.core",
+    "yomineko.profile.schema | yomineko.profile.template | yomineko.model",
+    "yomineko.errors",
+]
+
+[[tool.importlinter.contracts]]
+name = "Inside core: discovery and round-trip build on blocks and encodings; ROM loading is separate"
+type = "layers"
+layers = [
+    "yomineko.core.roundtrip | yomineko.core.discover",
+    "yomineko.core.containers",
+    "yomineko.core.compression | yomineko.core.encodings | yomineko.core.rom",
+]
+
+[[tool.importlinter.contracts]]
+name = "Only the CLI may use the CLI library; only the profile loader and review read YAML"
+type = "forbidden"
+source_modules = [
+    "yomineko.core",
+    "yomineko.model",
+    "yomineko.export",
+    "yomineko.extract",
+    "yomineko.script_io",
+    "yomineko.profile.schema",
+    "yomineko.analyze.dictionary",
+    "yomineko.analyze.matcher",
+    "yomineko.analyze.tokenizer",
+    "yomineko.analyze.vocabulary",
+    "yomineko.analyze.worklist",
+    "yomineko.survey",
+    "yomineko.pipeline",
+    "yomineko.web",
+    "yomineko.app",
+]
+forbidden_modules = ["typer", "yaml"]
+allow_indirect_imports = true  # extract reaches yaml through the loader, which is fine
+
+[[tool.importlinter.contracts]]
+name = "Exporters know only the data model"
+type = "forbidden"
+source_modules = ["yomineko.export"]
+forbidden_modules = ["yomineko.core", "yomineko.extract", "yomineko.profile"]

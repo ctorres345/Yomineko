@@ -1,0 +1,32 @@
+# Never commit ROMs, archives or anything extracted from them
+*.gba
+*.gbc
+*.gb
+*.nds
+*.iso
+*.cso
+*.zip
+*.7z
+*.rar
+*.sav
+*.apkg
+build/
+dist/
+yomineko-out/
+# Python
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+coverage.xml
+*.tbl.bak
+# Personal Claude Code overrides
+.claude/settings.local.json
+
+# graphify knowledge graph (rebuild with: graphify update .)
+graphify-out/

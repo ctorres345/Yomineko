@@ -1,0 +1,387 @@
+{
+  "$defs": {
+    "DictionarySource": {
+      "additionalProperties": false,
+      "description": "Which dictionary the words came from; exports must carry this credit.",
+      "properties": {
+        "credit": {
+          "title": "Credit",
+          "type": "string"
+        },
+        "date": {
+          "title": "Date",
+          "type": "string"
+        },
+        "name": {
+          "default": "JMdict",
+          "title": "Name",
+          "type": "string"
+        },
+        "source": {
+          "title": "Source",
+          "type": "string"
+        }
+      },
+      "required": [
+        "date",
+        "source",
+        "credit"
+      ],
+      "title": "DictionarySource",
+      "type": "object"
+    },
+    "GameInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "platform": {
+          "title": "Platform",
+          "type": "string"
+        },
+        "profile_id": {
+          "title": "Profile Id",
+          "type": "string"
+        },
+        "rom_sha1": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Rom Sha1",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile_id",
+        "title",
+        "platform",
+        "rom_sha1"
+      ],
+      "title": "GameInfo",
+      "type": "object"
+    },
+    "Line": {
+      "additionalProperties": false,
+      "description": "One string found in the ROM.\n\n``address`` is the integer file offset; ``id`` is the bus address as 8 hex digits\n(``\"%08X\" % (pointer_base + address)``). ``raw`` round-trips exactly; ``text`` is the\nreadable form. Repeats of the same ``text`` carry ``duplicate_of`` (the first line's id).\n``word_ids`` are the JMdict ids of the words in the line after review, sentence-safe only,\nin order of appearance without repeats; ``analyze`` fills them (schema 3).",
+      "properties": {
+        "address": {
+          "minimum": 0,
+          "title": "Address",
+          "type": "integer"
+        },
+        "bank": {
+          "title": "Bank",
+          "type": "string"
+        },
+        "duplicate_of": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Duplicate Of"
+        },
+        "id": {
+          "pattern": "^[0-9A-F]{8}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "dialogue",
+            "term"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "raw": {
+          "title": "Raw",
+          "type": "string"
+        },
+        "referenced": {
+          "default": true,
+          "title": "Referenced",
+          "type": "boolean"
+        },
+        "scene": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Scene"
+        },
+        "seen": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Seen"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "translation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Translation"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "word_ids": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Word Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "address",
+        "bank",
+        "raw",
+        "text",
+        "kind"
+      ],
+      "title": "Line",
+      "type": "object"
+    },
+    "Term": {
+      "additionalProperties": false,
+      "description": "A game name (item, move, place ...). ``jmdict_id`` is set by ``analyze`` when the text\nmatches exactly one dictionary entry; ``literal`` then holds that entry's meanings.",
+      "properties": {
+        "category": {
+          "title": "Category",
+          "type": "string"
+        },
+        "index": {
+          "minimum": 0,
+          "title": "Index",
+          "type": "integer"
+        },
+        "jmdict_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Jmdict Id"
+        },
+        "jp": {
+          "title": "Jp",
+          "type": "string"
+        },
+        "line_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Line Id"
+        },
+        "literal": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Literal"
+        },
+        "official_en": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Official En"
+        }
+      },
+      "required": [
+        "jp",
+        "category",
+        "index"
+      ],
+      "title": "Term",
+      "type": "object"
+    },
+    "Translation": {
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "enum": [
+            "official",
+            "dictionary",
+            "machine",
+            "reviewed"
+          ],
+          "title": "Source",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text",
+        "source"
+      ],
+      "title": "Translation",
+      "type": "object"
+    },
+    "Word": {
+      "additionalProperties": false,
+      "description": "A dictionary word found in the script, with how often it occurs.\n\n``examples`` are ids of lines the word appears in (the first few, in ROM order);\n``freq`` counts every occurrence. ``pos`` is the tokenizer's part of speech of the first\noccurrence. ``sentence_safe`` is False when a review correction is right for most lines\nbut not all, so sentence cards should not show this word's meaning.",
+      "properties": {
+        "common": {
+          "default": false,
+          "title": "Common",
+          "type": "boolean"
+        },
+        "examples": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Examples",
+          "type": "array"
+        },
+        "freq": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Freq",
+          "type": "integer"
+        },
+        "jmdict_id": {
+          "title": "Jmdict Id",
+          "type": "integer"
+        },
+        "kana": {
+          "title": "Kana",
+          "type": "string"
+        },
+        "kanji": {
+          "default": "",
+          "title": "Kanji",
+          "type": "string"
+        },
+        "meanings": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Meanings",
+          "type": "array"
+        },
+        "pos": {
+          "default": "",
+          "title": "Pos",
+          "type": "string"
+        },
+        "sentence_safe": {
+          "default": true,
+          "title": "Sentence Safe",
+          "type": "boolean"
+        },
+        "written": {
+          "title": "Written",
+          "type": "string"
+        }
+      },
+      "required": [
+        "jmdict_id",
+        "written",
+        "kana"
+      ],
+      "title": "Word",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "dictionary": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/DictionarySource"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "game": {
+      "$ref": "#/$defs/GameInfo"
+    },
+    "generator": {
+      "title": "Generator",
+      "type": "string"
+    },
+    "lines": {
+      "items": {
+        "$ref": "#/$defs/Line"
+      },
+      "title": "Lines",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": 3,
+      "default": 3,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "terms": {
+      "items": {
+        "$ref": "#/$defs/Term"
+      },
+      "title": "Terms",
+      "type": "array"
+    },
+    "words": {
+      "items": {
+        "$ref": "#/$defs/Word"
+      },
+      "title": "Words",
+      "type": "array"
+    }
+  },
+  "required": [
+    "generator",
+    "game"
+  ],
+  "title": "Script",
+  "type": "object"
+}

@@ -1,0 +1,42 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"$CLAUDE_PROJECT_DIR/tools/repo_guard.py\" --hook",
+            "timeout": 30,
+            "statusMessage": "Checking for ROMs or game text..."
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Bash(git commit *)",
+            "command": "python \"$CLAUDE_PROJECT_DIR/tools/repo_guard.py\" --staged",
+            "timeout": 60,
+            "statusMessage": "Checking staged files..."
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"$CLAUDE_PROJECT_DIR/.claude/hooks/post_edit.py\"",
+            "timeout": 300,
+            "statusMessage": "Running ruff and fast tests..."
+          }
+        ]
+      }
+    ]
+  }
+}

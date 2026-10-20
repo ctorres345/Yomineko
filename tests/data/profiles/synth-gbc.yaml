@@ -1,0 +1,36 @@
+# Profile for the synthetic Game Boy Color test ROM (tests/support/synthrom.py). Not a real game.
+schema_version: 1
+id: synth-gbc
+title: Synthetic Game Boy Color test ROM
+platform: gbc
+rom:
+  sha1: "e402272083565208a5ca4a30d7cc9179381b3452"
+  game_code: SGCJ
+  revision: 0
+encoding:
+  type: table8
+  table: ../fake-frame.tbl
+  terminator: 0x1F
+  rom_strings: {0x40: 0xC300, 0x41: 0xC310}
+text:
+  pointer_base: 0
+  regions:
+    - {bank: 1}
+    - {bank: 2}
+discover:
+  frame:
+    start: 0x02
+    breaks: [0x0A, 0x0D]
+    ends: [0x03, 0x04]
+    resume: 0x1F
+    commands: {0x10: 2, 0x11: 0}
+  unreferenced: {min_japanese: 6}
+  ignore: ['<[^>]*>']
+plain:
+  - {pattern: '<name[0-9A-F]{2}>', replace: 〇〇}
+  - {pattern: '[<>]', replace: ''}
+  - {pattern: '(?<=[ァ-ヴ])り', replace: リ}
+  - {pattern: 'へ(?=[ァ-ヴ])', replace: ヘ}
+tables:
+  - {category: animal, kind: records, base: 0xC100, stride: 5, count: 4}
+  - {category: thing, kind: strings, base: 0xC200, count: 5}

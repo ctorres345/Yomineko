@@ -1,0 +1,42 @@
+# Local checks before each commit. Install once with `pre-commit install` (see CONTRIBUTING.md).
+# The slower checks run on push instead, so commits stay quick. CI runs all of them.
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.10
+    hooks:
+      - id: ruff-check
+        args: [--fix]
+      - id: ruff-format
+
+  - repo: local
+    hooks:
+      - id: repo-guard
+        name: no ROMs, archives or game text
+        entry: python tools/repo_guard.py --staged
+        language: system
+        pass_filenames: false
+        always_run: true
+
+      - id: mypy
+        name: mypy (types)
+        entry: python -m mypy
+        language: system
+        pass_filenames: false
+        always_run: true
+        stages: [pre-push]
+
+      - id: import-linter
+        name: import-linter (architecture layers)
+        entry: lint-imports
+        language: system
+        pass_filenames: false
+        always_run: true
+        stages: [pre-push]
+
+      - id: pytest
+        name: pytest (fast tests)
+        entry: python -m pytest -q -m "not realrom"
+        language: system
+        pass_filenames: false
+        always_run: true
+        stages: [pre-push]

@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% from "_pager.html" import pager %}
+{% block title %}Review - {{ title }} - yomineko{% endblock %}
+{% block content %}
+<p><small>{{ title }}</small></p>
+<h1>Check meanings <span class="status">Optional</span></h1>
+<p>The game is written almost entirely in kana, so the dictionary pick can be the wrong word with
+the same sound. Below are the words that could mean something else, and words that look like a
+character's name. For each one, look at the lines
+it appears in and say what is right. Your answers are saved on this computer as your own review
+(dictionary ids and your own English only).</p>
+
+{% if pending %}
+<article>
+  <p><strong>You have corrections the word list does not show yet.</strong></p>
+  <form method="post" action="/games/{{ game_id }}/analyze"><button type="submit" class="secondary">Apply them (find the words again)</button></form>
+</article>
+{% endif %}
+
+{% if not analysed %}
+<article><p>Find the words first. <a href="/games/{{ game_id }}">Go back</a>.</p></article>
+{% elif not prepared %}
+<article>
+  <p>Preparing the list takes a few seconds.</p>
+  <form method="post" action="/games/{{ game_id }}/review/prepare"><button type="submit" class="secondary">Prepare the words to check</button></form>
+</article>
+{% else %}
+<p>{{ "{:,}".format(rows.total) }} word{{ "" if rows.total == 1 else "s" }} left to check, most frequent first.</p>
+
+{% for item in rows.items %}
+<article>
+  <header>
+    <strong lang="ja">{{ item.pick.written }}</strong>
+    <small>[<span lang="ja">{{ item.pick.kana }}</span>] seen {{ item.freq }} times</small>
+  </header>
+  <p>Picked: <em>{{ item.pick.meaning }}</em></p>
+  {% if item.reason %}<p><mark>{{ item.reason }}</mark> <small>If it is only a character's name, choose "Not a real word here".</small></p>{% endif %}
+  <p><small>In these lines:</small></p>
+  <ul>
+    {% for line_id, text in item.examples %}<li lang="ja">{{ text }}</li>{% endfor %}
+  </ul>
+
+  {% if item.alternatives %}<p><small>Or did it mean:</small></p>{% endif %}
+  {% for alt in item.alternatives %}
+  <form method="post" action="/games/{{ game_id }}/review/rule" class="alt">
+    <input type="hidden" name="pick" value="{{ item.pick.entry_id }}">
+    <input type="hidden" name="action" value="use">
+    <input type="hidden" name="to" value="{{ alt.entry_id }}">
+    <input type="hidden" name="p" value="{{ rows.number }}">
+    <button type="submit" class="outline">
+      <span lang="ja">{{ alt.written }}{% if alt.kanji and alt.kanji != alt.written %} ({{ alt.kanji }}){% endif %}</span>
+      {{ alt.meaning }}{% if not alt.common %} <small>(rare)</small>{% endif %}
+    </button>
+    <label><input type="checkbox" name="partial" value="1"> right for most lines, not all</label>
+  </form>
+  {% endfor %}
+
+  <footer>
+    <form method="post" action="/games/{{ game_id }}/review/rule" class="inline">
+      <input type="hidden" name="pick" value="{{ item.pick.entry_id }}">
+      <input type="hidden" name="p" value="{{ rows.number }}">
+      <button type="submit" name="action" value="confirm" class="secondary">The pick is right</button>
+      <button type="submit" name="action" value="drop" class="secondary">Not a real word here</button>
+    </form>
+    <form method="post" action="/games/{{ game_id }}/review/rule" class="inline">
+      <input type="hidden" name="pick" value="{{ item.pick.entry_id }}">
+      <input type="hidden" name="action" value="gloss">
+      <input type="hidden" name="p" value="{{ rows.number }}">
+      <fieldset role="group">
+        <input type="text" name="gloss" placeholder="Show this meaning instead (English)" aria-label="A meaning in English">
+        <button type="submit" class="secondary">Use it</button>
+      </fieldset>
+    </form>
+  </footer>
+</article>
+{% endfor %}
+
+{{ pager(rows, "/games/" ~ game_id ~ "/review?x=1") }}
+{% endif %}
+
+{% if rules %}
+<h2>Your corrections</h2>
+<div class="overflow-auto">
+<table>
+  <thead><tr><th>Word</th><th>Becomes</th><th></th></tr></thead>
+  <tbody>
+    {% for r in rules %}
+    <tr>
+      <td lang="ja">{{ r.word.written }} <small>{{ r.word.meaning }}</small></td>
+      <td>
+        {% if r.drop %}removed
+        {% elif r.to %}<span lang="ja">{{ r.to.written }}</span> <small>{{ r.to.meaning }}</small>{% if r.partial %} <small>(not on sentence cards)</small>{% endif %}
+        {% elif r.gloss %}meaning: {{ r.gloss }}{% endif %}
+      </td>
+      <td>
+        <form method="post" action="/games/{{ game_id }}/review/remove">
+          <input type="hidden" name="pick" value="{{ r.id }}">
+          <button type="submit" class="secondary outline">Undo</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endif %}
+
+<p class="next-step">
+  <a href="/games/{{ game_id }}/export">Skip this step</a>
+  <a role="button" href="/games/{{ game_id }}/export">Next: Export</a>
+</p>
+{% endblock %}

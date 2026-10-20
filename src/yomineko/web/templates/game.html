@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}{{ script.game.title }} - yomineko{% endblock %}
+{% block content %}
+<p><small>{{ script.game.platform | upper }}, checksum <code>{{ script.game.rom_sha1 }}</code></small></p>
+<h1>{{ script.game.title }}</h1>
+
+<article>
+  <header class="split">
+    <strong>The game's text is ready</strong>
+    {% if status %}
+    {% if status.rebuild_ok %}
+    <span class="status"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3.2 3L13 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Rebuild check passed</span>
+    {% else %}
+    <strong class="status bad"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v6M8 12.5v.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Rebuild mismatch</strong>
+    {% endif %}
+    {% endif %}
+  </header>
+  <dl class="stats">
+    <div><dt>Readable lines</dt><dd>{{ "{:,}".format(lines) }}</dd></div>
+    <div><dt>Dialogue</dt><dd>{{ "{:,}".format(dialogue) }}</dd></div>
+    <div><dt>Names and terms</dt><dd>{{ "{:,}".format(terms) }}</dd></div>
+  </dl>
+  {% if status %}
+  <p><small>{{ "{:,}".format(status.strings) }} strings found in {{ "{:,}".format(status.banks) }} groups.
+  {% if status.rebuild_ok %}The text rebuilds the original ROM byte for byte, so nothing was missed or misread.
+  {% else %}The text does not rebuild the original ROM; the extraction may be incomplete.{% endif %}
+  {% if status.unstable %}{{ status.unstable }} strings were left out because they do not rebuild identically.{% endif %}</small></p>
+  {% endif %}
+</article>
+
+<article class="next">
+  <header><strong>Find the words</strong></header>
+  {% if words %}
+  <p>{{ "{:,}".format(words) }} distinct words found. Next, choose which of them become cards.</p>
+  <p><a role="button" href="/games/{{ game_id }}/choose">Next: Choose your words</a></p>
+  {% if dictionary %}
+  <form method="post" action="/games/{{ game_id }}/analyze">
+    <button type="submit" class="secondary quiet">Find the words again</button>
+  </form>
+  {% endif %}
+  {% else %}
+  <p>yomineko finds each word in the dialogue, its meaning and how often it appears.</p>
+  {% if dictionary %}
+  <form method="post" action="/games/{{ game_id }}/analyze">
+    <button type="submit">Find the words</button>
+  </form>
+  {% else %}
+  <p>The dictionary is needed first.</p>
+  <p><a role="button" href="/">Next: Get the dictionary</a></p>
+  {% endif %}
+  {% endif %}
+</article>
+
+<section aria-labelledby="look-inside">
+  <h2 id="look-inside" class="small-heading">Look inside</h2>
+  <p class="links">
+    <a href="/games/{{ game_id }}/lines">Browse the lines</a>
+    {% if words %}
+    <a href="/games/{{ game_id }}/words">Browse the words</a>
+    <a href="/games/{{ game_id }}/sentences">See the sentences it would pick</a>
+    {% endif %}
+  </p>
+</section>
+{% endblock %}

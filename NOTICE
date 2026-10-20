@@ -1,0 +1,32 @@
+yomineko
+Copyright 2026 ctorres345
+
+This product includes no ROMs, game scripts or JMdict data.
+
+yomineko downloads JMdict at runtime (`yomineko dict download`) and does not ship it.
+JMdict is the property of the Electronic Dictionary Research and Development Group (EDRDG)
+and is used under the Creative Commons Attribution-ShareAlike 4.0 licence:
+https://www.edrdg.org/edrdg/licence.html
+
+The word analysis uses SudachiPy and SudachiDict-core (Works Applications, Apache-2.0,
+https://github.com/WorksApplications/Sudachi). The pip package installs them as separate
+dependencies; the desktop builds include them, and each library's own licence file is kept in
+the bundle. SudachiDict is built from UniDic and other sources: see
+https://github.com/WorksApplications/SudachiDict for its terms.
+
+The JMdict download trusts the certificates in certifi (https://github.com/certifi/python-certifi,
+Mozilla Public License 2.0), which the pip package installs as a dependency and the desktop builds
+include unmodified.
+
+The web interface includes two files from other projects, unmodified:
+- htmx 2.0.4 (https://htmx.org), Zero-Clause BSD licence.
+- Pico CSS 2.0.6 (https://picocss.com), Copyright (c) 2019-2024 Pico, MIT licence.
+
+The web interface bundles six font files, unmodified, in src/yomineko/web/static/fonts/: IBM Plex
+Sans 1.1.0, IBM Plex Sans JP 3.0.0 and IBM Plex Mono 2.5.0 (https://github.com/IBM/plex), each in
+Regular and SemiBold. Copyright 2017 IBM Corp. with Reserved Font Name "Plex", licensed under the SIL
+Open Font License, Version 1.1 (https://openfontlicense.org). The full licence text is next to the
+fonts, in OFL.txt, and goes with them in the package and the desktop builds.
+
+The logo (docs/assets/logo.png) is an illustration by @loritoart. It is not covered by the
+Apache-2.0 licence of the code.

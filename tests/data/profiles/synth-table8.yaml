@@ -1,0 +1,21 @@
+# Profile for the synthetic byte-stream test ROM (tests/support/synthrom.py). Not a real game.
+schema_version: 1
+id: synth-table8
+title: Synthetic byte-stream test ROM
+platform: gba
+rom:
+  sha1: "af7f2e2c591bc2ad1b07c4afc7050327c4b7eca5"
+  game_code: TB8J
+  revision: 0
+encoding:
+  type: table8
+  table: ../fake8.tbl
+  command_prefix: 0xFF
+  commands: {0x00: 0, 0x01: 1, 0x03: 0, 0x0A: -1, 0x0B: 1, 0x35: 0}
+  line_breaks: [0x00, 0x01, 0x03, 0x0A]
+text:
+  regions:
+    - {start: 0x400, end: 0xC00}
+discover:
+  stream_min_chars: 2
+  stream_min_jp_ratio: 0.7

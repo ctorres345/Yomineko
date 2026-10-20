@@ -1,0 +1,108 @@
+# Offsets, encoding and control codes for one game. No game text lives in this file.
+schema_version: 1
+id: pokemon-crystal-jp
+title: Pocket Monsters Crystal (Japan)
+platform: gbc
+rom:
+  sha1: "95127b901bbce2407daf43cce9f45d4c27ef635d"
+  game_code: BXTJ
+  revision: 0
+encoding:
+  type: table8             # one byte per character, kana only; no command prefix
+  table: pokemon-crystal-jp.tbl
+  terminator: 0x50         # ends a name in the tables below, and a fixed string
+  # 17 bytes each draw a fixed string that the text engine keeps in bank 0. Only where each
+  # string is goes here; it is read from the ROM and becomes the table text <string>.
+  rom_strings:
+    0x1D: 0x12B5
+    0x1E: 0x12B8
+    0x1F: 0x12B2
+    0x22: 0x129E
+    0x23: 0x1299
+    0x24: 0x12AC
+    0x25: 0x12AF
+    0x35: 0x12BB
+    0x36: 0x12C2
+    0x37: 0x12C6
+    0x4A: 0x12A9
+    0x54: 0x1294
+    0x56: 0x12A1
+    0x5B: 0x1288
+    0x5C: 0x127C
+    0x5D: 0x1282
+    0x5E: 0x128D
+text:
+  pointer_base: 0          # line ids are file offsets (bank x 0x4000 + address - 0x4000)
+  # The 20 banks that hold messages. Map scripts and their text share most of them.
+  regions:
+    - {bank: 0x05}         # menus and system messages
+    - {bank: 0x11}         # reference-book entries
+    - {bank: 0x15}
+    - {bank: 0x16}
+    - {bank: 0x17}
+    - {bank: 0x18}
+    - {bank: 0x19}
+    - {bank: 0x1A}
+    - {bank: 0x1B}
+    - {bank: 0x1C}
+    - {bank: 0x1D}
+    - {bank: 0x1E}
+    - {bank: 0x1F}
+    - {start: 0x080000, end: 0x081400}   # bank 0x20: battle messages, then data
+    - {bank: 0x26}
+    - {bank: 0x27}
+    - {bank: 0x28}
+    - {bank: 0x29}
+    - {bank: 0x2F}
+    - {bank: 0x5D}         # text only, reached from other banks
+discover:
+  stream_min_chars: 2
+  stream_min_jp_ratio: 0.7
+  # Every byte from 0x80 up is a character, so text is read from whole messages only.
+  frame:
+    start: 0x00                                    # text follows
+    breaks: [0x4B, 0x4C, 0x4E, 0x4F, 0x51, 0x55]   # next line, paragraph, scroll
+    ends: [0x57, 0x58, 0x5F]                       # the message is over
+    resume: 0x50                                   # the text is over, commands follow
+    # commands between two texts, and how many parameter bytes each has
+    commands:
+      0x01: 2   # a string from memory
+      0x02: 3   # a number
+      0x03: 2
+      0x04: 4
+      0x05: 0
+      0x06: 0
+      0x07: 0
+      0x09: 3   # a number
+      0x0A: 0
+      0x0B: 0
+      0x0C: 1
+      0x0D: 0
+      0x0E: 0
+      0x0F: 0
+      0x10: 0
+      0x11: 0
+      0x12: 0
+      0x13: 0
+      0x14: 1
+      0x15: 0
+  # A message with no pointer to it in its own bank needs this many kana that are not part of
+  # a marked entry, a fixed string or a name (script bytes often read as those).
+  unreferenced: {min_japanese: 6}
+  ignore: ['<[^>]*>']
+plain:
+  - {pattern: '<name[0-9A-F]{2}>', replace: 〇〇}    # a name read from memory
+  - {pattern: '[<>]', replace: ''}                  # the marks around a fixed string
+  # The font has no katakana he or ri, and no voiced be or pe: katakana words use the hiragana
+  # codes. Shown as katakana next to a katakana character (he: only in front of one, since it
+  # is also a particle; ri: not between a hiragana and a katakana, where it ends a word).
+  - {pattern: '(?<=[ァ-ヴ])べ|(?<=[ァ-ヴ]ー)べ|べ(?=[ァ-ヴ])', replace: ベ}
+  - {pattern: '(?<=[ァ-ヴ])ぺ|(?<=[ァ-ヴ]ー)ぺ|ぺ(?=[ァ-ヴー])', replace: ペ}
+  - {pattern: '(?<=[ァ-ヴ])り|(?<=[ァ-ヴ]ー)り|(?<![ぁ-ん])り(?=[ァ-ヴー])', replace: リ}
+  - {pattern: 'へ(?=[ァ-ヴ])', replace: ヘ}
+kinds: {dialogue_min_length: 4}   # a line is one row of the text box, at most 18 characters
+# Name tables: fixed 5-byte records, and lists of names each ended by the terminator.
+tables:
+  - {category: pokemon, kind: records, base: 0x05341A, stride: 5, count: 251}
+  - {category: move,    kind: strings, base: 0x04163B, count: 251}
+  - {category: item,    kind: strings, base: 0x0070FA, count: 256}

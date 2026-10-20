@@ -1,0 +1,310 @@
+{
+  "$defs": {
+    "GameInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "platform": {
+          "title": "Platform",
+          "type": "string"
+        },
+        "profile_id": {
+          "title": "Profile Id",
+          "type": "string"
+        },
+        "rom_sha1": {
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Rom Sha1",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile_id",
+        "title",
+        "platform",
+        "rom_sha1"
+      ],
+      "title": "GameInfo",
+      "type": "object"
+    },
+    "Line": {
+      "additionalProperties": false,
+      "description": "One string found in the ROM.\n\n``address`` is the integer file offset; ``id`` is the bus address as 8 hex digits\n(``\"%08X\" % (pointer_base + address)``). ``raw`` round-trips exactly; ``text`` is the\nreadable form. Repeats of the same ``text`` carry ``duplicate_of`` (the first line's id).",
+      "properties": {
+        "address": {
+          "minimum": 0,
+          "title": "Address",
+          "type": "integer"
+        },
+        "bank": {
+          "title": "Bank",
+          "type": "string"
+        },
+        "duplicate_of": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Duplicate Of"
+        },
+        "id": {
+          "pattern": "^[0-9A-F]{8}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "dialogue",
+            "term"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "raw": {
+          "title": "Raw",
+          "type": "string"
+        },
+        "referenced": {
+          "default": true,
+          "title": "Referenced",
+          "type": "boolean"
+        },
+        "scene": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Scene"
+        },
+        "seen": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Seen"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "translation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Translation"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "id",
+        "address",
+        "bank",
+        "raw",
+        "text",
+        "kind"
+      ],
+      "title": "Line",
+      "type": "object"
+    },
+    "Term": {
+      "additionalProperties": false,
+      "properties": {
+        "category": {
+          "title": "Category",
+          "type": "string"
+        },
+        "index": {
+          "minimum": 0,
+          "title": "Index",
+          "type": "integer"
+        },
+        "jp": {
+          "title": "Jp",
+          "type": "string"
+        },
+        "line_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Line Id"
+        },
+        "literal": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Literal"
+        },
+        "official_en": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Official En"
+        }
+      },
+      "required": [
+        "jp",
+        "category",
+        "index"
+      ],
+      "title": "Term",
+      "type": "object"
+    },
+    "Translation": {
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "enum": [
+            "official",
+            "dictionary",
+            "machine",
+            "reviewed"
+          ],
+          "title": "Source",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text",
+        "source"
+      ],
+      "title": "Translation",
+      "type": "object"
+    },
+    "Word": {
+      "additionalProperties": false,
+      "properties": {
+        "examples": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Examples",
+          "type": "array"
+        },
+        "freq": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Freq",
+          "type": "integer"
+        },
+        "jmdict_id": {
+          "title": "Jmdict Id",
+          "type": "integer"
+        },
+        "kana": {
+          "title": "Kana",
+          "type": "string"
+        },
+        "kanji": {
+          "default": "",
+          "title": "Kanji",
+          "type": "string"
+        },
+        "meanings": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Meanings",
+          "type": "array"
+        },
+        "written": {
+          "title": "Written",
+          "type": "string"
+        }
+      },
+      "required": [
+        "jmdict_id",
+        "written",
+        "kana"
+      ],
+      "title": "Word",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "game": {
+      "$ref": "#/$defs/GameInfo"
+    },
+    "generator": {
+      "title": "Generator",
+      "type": "string"
+    },
+    "lines": {
+      "items": {
+        "$ref": "#/$defs/Line"
+      },
+      "title": "Lines",
+      "type": "array"
+    },
+    "schema_version": {
+      "const": 1,
+      "default": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "terms": {
+      "items": {
+        "$ref": "#/$defs/Term"
+      },
+      "title": "Terms",
+      "type": "array"
+    },
+    "words": {
+      "items": {
+        "$ref": "#/$defs/Word"
+      },
+      "title": "Words",
+      "type": "array"
+    }
+  },
+  "required": [
+    "generator",
+    "game"
+  ],
+  "title": "Script",
+  "type": "object"
+}

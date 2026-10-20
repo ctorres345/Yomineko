@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% from "_pager.html" import pager %}
+{% block title %}Lines - {{ title }} - yomineko{% endblock %}
+{% block content %}
+<h1>Lines</h1>
+<p><small>{{ title }}. Each distinct line once, in ROM order.</small></p>
+<form method="get" hx-get="/games/{{ game_id }}/lines" hx-target="#results" hx-select="#results"
+      hx-trigger="input delay:300ms from:find input, change">
+  <fieldset role="group">
+    <input type="search" name="q" value="{{ q }}" placeholder="Search the text">
+    <select name="kind" aria-label="Kind of line">
+      <option value=""{{ " selected" if not kind }}>All</option>
+      <option value="dialogue"{{ " selected" if kind == "dialogue" }}>Dialogue</option>
+      <option value="term"{{ " selected" if kind == "term" }}>Names and terms</option>
+    </select>
+    <button type="submit" class="secondary">Search</button>
+  </fieldset>
+</form>
+<div id="results">
+  <p>{{ "{:,}".format(rows.total) }} line{{ "" if rows.total == 1 else "s" }}</p>
+  <div class="overflow-auto">
+  <table>
+    <thead><tr><th>Address</th><th>Text</th></tr></thead>
+    <tbody>
+      {% for x in rows.items %}
+      <tr><td><code>{{ x.id }}</code></td><td lang="ja" class="line">{{ x.text }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  {{ pager(rows, "/games/" ~ game_id ~ "/lines?q=" ~ (q | urlencode) ~ "&kind=" ~ kind) }}
+</div>
+<p><a href="/games/{{ game_id }}">&larr; Back</a></p>
+{% endblock %}

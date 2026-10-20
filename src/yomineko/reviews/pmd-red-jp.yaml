@@ -1,0 +1,1001 @@
+# Corrections for the wrong dictionary picks in kana-only text. JMdict ids only.
+# A hand review of the most frequent ambiguous words, as JMdict ids only.
+schema_version: 1
+profile: pmd-red-jp
+rom_sha1: "4bc9370edebb3da5bdf768eeced689fda3f8b77b"
+words:
+  - {from: 1241450, to: 1313580}
+  - {from: 1589780, to: 1221270, sentence_safe: false}
+  - {from: 1591100, to: 1591110, sentence_safe: false}
+  - {from: 1587190, drop: true}
+  - {from: 1255060, drop: true}
+  - {from: 1012050, drop: true}
+  - {from: 1208840, drop: true}
+  - {from: 1403550, to: 1402730, sentence_safe: false}
+  - {from: 1374620, drop: true}
+  - {from: 1616010, to: 1559410}
+  - {from: 2558020, drop: true}
+  - {from: 1433680, to: 1495770, sentence_safe: false}
+  - {from: 1352030, to: 1242590}
+  - {from: 1155210, to: 1155710}
+  - {from: 2783750, drop: true}
+  - {from: 1956720, drop: true}
+  - {from: 1512070, drop: true}
+  - {from: 1196670, drop: true}
+  - {from: 1206440, drop: true}
+  - {from: 1518540, to: 1529550}
+  - {from: 1351270, drop: true}
+  - {from: 1580550, drop: true}
+  - {from: 1318000, to: 1421210}
+  - {from: 1633690, drop: true}
+  - {from: 1570710, drop: true}
+  - {from: 1495740, to: 1422970, sentence_safe: false}
+  - {from: 1956230, drop: true}
+  - {from: 1331530, drop: true}
+  - {from: 2028980, drop: true}
+  - {from: 1246880, drop: true}
+  - {from: 1441830, drop: true}
+  - {from: 1182880, to: 1123880}
+  - {from: 1636070, drop: true}
+  - {from: 1551240, drop: true}
+  - {from: 1304760, to: 1607180, sentence_safe: false}
+  - {from: 1197710, to: 1604890}
+  - {from: 2266990, drop: true}
+  - {from: 2603520, drop: true}
+  - {from: 1536350, to: 1219680, sentence_safe: false}
+  - {from: 1420490, drop: true}
+  - {from: 1223680, to: 1445690, sentence_safe: false}
+  - {from: 1203020, to: 1199330, sentence_safe: false}
+  - {from: 1226610, drop: true}
+  - {from: 1307770, drop: true}
+  - {from: 1445150, to: 1553120, sentence_safe: false}
+  - {from: 2568090, drop: true}
+  - {from: 1956040, drop: true}
+  - {from: 1215770, drop: true}
+  - {from: 1489320, drop: true}
+  - {from: 1156610, to: 1382440}
+  - {from: 2269880, drop: true}
+  - {from: 2029100, drop: true}
+  - {from: 2835840, drop: true}
+  - {from: 2029080, drop: true}
+  - {from: 1373000, to: 1005180}
+  - {from: 2826615, drop: true}
+  - {from: 1586270, drop: true}
+  - {from: 1012400, drop: true}
+  - {from: 1127600, drop: true}
+  - {from: 2004010, drop: true}
+  - {from: 2770620, drop: true}
+  - {from: 1100750, drop: true}
+  - {from: 1597045, drop: true}
+  - {from: 1383750, drop: true}
+  - {from: 1245280, drop: true}
+  - {from: 1583720, to: 1499720, sentence_safe: false}
+  - {from: 1444990, drop: true}
+  - {from: 1603990, drop: true}
+  - {from: 1318950, to: 1310680, sentence_safe: false}
+  - {from: 2089690, drop: true}
+  - {from: 1388740, drop: true}
+  - {from: 2138180, drop: true}
+  - {from: 1016610, drop: true}
+  - {from: 1516530, drop: true}
+  - {from: 1229950, drop: true}
+  - {from: 2834408, to: 1450270}
+  - {from: 1461140, drop: true}
+  - {from: 1581590, drop: true}
+  - {from: 1445980, to: 1446740}
+  - {from: 1133790, drop: true}
+  - {from: 1160330, drop: true}
+  - {from: 1244570, drop: true}
+  - {from: 1390020, drop: true}
+  - {from: 1372410, drop: true}
+  - {from: 1277520, drop: true}
+  - {from: 1172570, drop: true}
+  - {from: 2009920, drop: true}
+  - {from: 1212110, to: 1212250}
+  - {from: 1253900, drop: true}
+  - {from: 1473680, drop: true}
+  - {from: 1956680, drop: true}
+  - {from: 1090530, drop: true}
+  - {from: 2061250, drop: true}
+  - {from: 1245170, drop: true}
+  - {from: 2026870, drop: true}
+  - {from: 1296300, drop: true}
+  - {from: 1607310, drop: true}
+  - {from: 1592100, drop: true}
+  - {from: 1349370, drop: true}
+  - {from: 2069620, drop: true}
+  - {from: 1548470, drop: true}
+  - {from: 2607630, drop: true}
+  - {from: 2834502, drop: true}
+  - {from: 2646200, drop: true}
+  - {from: 1357240, drop: true}
+  - {from: 1604470, drop: true}
+  - {from: 1629170, drop: true}
+  - {from: 2863773, drop: true}
+  - {from: 1376120, to: 1380230}
+  - {from: 1633990, drop: true}
+  - {from: 1918840, drop: true}
+  - {from: 2158950, drop: true}
+  - {from: 1578010, drop: true}
+  - {from: 1482110, drop: true}
+  - {from: 2744250, drop: true}
+  - {from: 1481640, drop: true}
+  - {from: 1397590, drop: true}
+  - {from: 1356210, drop: true}
+  - {from: 1584800, drop: true}
+  - {from: 1328030, drop: true}
+  - {from: 1524290, to: 1428280}
+  - {from: 1114300, drop: true}
+  - {from: 2868440, drop: true}
+  - {from: 1111010, drop: true}
+  - {from: 1391780, drop: true}
+  - {from: 1584050, drop: true}
+  - {from: 1211140, drop: true}
+  - {from: 1253310, drop: true}
+  - {from: 1382450, drop: true}
+  - {from: 1659970, drop: true}
+  - {from: 1960150, drop: true}
+  - {from: 1396860, drop: true}
+  - {from: 1577460, drop: true}
+  - {from: 2836543, drop: true}
+  - {from: 1233320, drop: true}
+  - {from: 1524900, drop: true}
+  - {from: 1546610, drop: true}
+  - {from: 1469320, drop: true}
+  - {from: 1956660, drop: true}
+  - {from: 2733720, drop: true}
+  - {from: 1532940, drop: true}
+  - {from: 2174380, drop: true}
+  - {from: 1421020, drop: true}
+  - {from: 1528440, drop: true}
+  - {from: 1215910, to: 1211490}
+  - {from: 1270870, drop: true}
+  - {from: 1147330, drop: true}
+  - {from: 1312880, drop: true}
+  - {from: 1433670, drop: true}
+  - {from: 2727530, drop: true}
+  - {from: 1079350, drop: true}
+  - {from: 1050810, drop: true}
+  - {from: 1006230, drop: true}
+  - {from: 2074830, drop: true}
+  - {from: 2406530, drop: true}
+  - {from: 1400530, drop: true}
+  - {from: 1333540, drop: true}
+  - {from: 1499290, drop: true}
+  - {from: 2028930, drop: true}
+  - {from: 1405770, drop: true}
+  - {from: 1228260, drop: true}
+  - {from: 1085030, drop: true}
+  - {from: 1486350, drop: true}
+  - {from: 2821500, drop: true}
+  - {from: 1629950, drop: true}
+  - {from: 1474860, to: 1310670, sentence_safe: false}
+  - {from: 1369620, drop: true}
+  - {from: 1049850, drop: true}
+  - {from: 1956120, drop: true}
+  - {from: 1239560, drop: true}
+  - {from: 2827815, drop: true}
+  - {from: 1514780, drop: true}
+  - {from: 1503210, drop: true}
+  - {from: 1212010, drop: true}
+  - {from: 1296770, drop: true}
+  - {from: 1478750, drop: true}
+  - {from: 1331840, drop: true}
+  - {from: 1499730, drop: true}
+  - {from: 1220210, to: 1255430}
+  - {from: 1989500, drop: true}
+  - {from: 2219050, drop: true}
+  - {from: 1487320, drop: true}
+  - {from: 1175140, drop: true}
+  - {from: 2037940, drop: true}
+  - {from: 1211410, drop: true}
+  - {from: 1783660, drop: true}
+  - {from: 2837010, drop: true}
+  - {from: 2727850, drop: true}
+  - {from: 1267790, to: 1265760}
+  - {from: 1376760, to: 1375290}
+  - {from: 1114310, drop: true}
+  - {from: 1019950, drop: true}
+  - {from: 1127700, drop: true}
+  - {from: 1147220, drop: true}
+  - {from: 2648350, drop: true}
+  - {from: 1157470, drop: true}
+  - {from: 1156720, drop: true}
+  - {from: 1054230, drop: true}
+  - {from: 1189940, drop: true}
+  - {from: 2220340, drop: true}
+  - {from: 1005020, drop: true}
+  - {from: 1821850, drop: true}
+  - {from: 2835187, drop: true}
+  - {from: 1268990, drop: true}
+  - {from: 1473960, drop: true}
+  - {from: 1054850, drop: true}
+  - {from: 1044620, drop: true}
+  - {from: 1595110, drop: true}
+  - {from: 1150410, drop: true}
+  - {from: 1322180, drop: true}
+  - {from: 2765700, drop: true}
+  - {from: 1021680, drop: true}
+  - {from: 1156690, to: 1311450}
+  - {from: 1579840, drop: true}
+  - {from: 1592250, drop: true}
+  - {from: 1131750, drop: true}
+  - {from: 1920080, drop: true}
+  - {from: 2150840, drop: true}
+  - {from: 1224080, to: 1357250}
+  - {from: 1119330, drop: true}
+  - {from: 1050590, drop: true}
+  - {from: 2007310, drop: true}
+  - {from: 1028890, drop: true}
+  - {from: 1088740, drop: true}
+  - {from: 1035800, drop: true}
+  - {from: 1316400, drop: true}
+  - {from: 2565240, drop: true}
+  - {from: 1026700, drop: true}
+  - {from: 1250090, drop: true}
+  - {from: 1021120, drop: true}
+  - {from: 1295650, drop: true}
+  - {from: 1984750, drop: true}
+  - {from: 1574260, to: 1198180, sentence_safe: false}
+  - {from: 1284430, to: 1198180, sentence_safe: false}
+  - {from: 1584030, drop: true}
+  - {from: 1549860, drop: true}
+  - {from: 1206040, drop: true}
+  - {from: 1495220, drop: true}
+  - {from: 1616090, drop: true}
+  - {from: 2007420, drop: true}
+  - {from: 1209080, drop: true}
+  - {from: 1318910, drop: true}
+  - {from: 1270760, drop: true}
+  - {from: 1484920, drop: true}
+  - {from: 2518850, drop: true}
+  - {from: 1615350, drop: true}
+  - {from: 1454500, drop: true}
+  - {from: 1350810, to: 1347180}
+  - {from: 2039550, drop: true}
+  - {from: 2069600, drop: true}
+  - {from: 2080200, drop: true}
+  - {from: 1197900, drop: true}
+  - {from: 2828048, drop: true}
+  - {from: 1956480, drop: true}
+  - {from: 1255940, drop: true}
+  - {from: 1496030, drop: true}
+  - {from: 1361130, drop: true}
+  - {from: 1577660, drop: true}
+  - {from: 1956260, drop: true}
+  - {from: 1124390, drop: true}
+  - {from: 1560210, drop: true}
+  - {from: 1209030, drop: true}
+  - {from: 2534980, drop: true}
+  - {from: 1183590, drop: true}
+  - {from: 1011260, drop: true}
+  - {from: 2441300, drop: true}
+  - {from: 2843550, drop: true}
+  - {from: 1496840, drop: true}
+  - {from: 2267530, drop: true}
+  - {from: 1474200, drop: true}
+  - {from: 1629980, drop: true}
+  - {from: 2434630, drop: true}
+  - {from: 1556750, to: 1206070}
+  - {from: 1209140, drop: true}
+  - {from: 1237010, to: 1236200}
+  - {from: 1583000, drop: true}
+  - {from: 2173530, drop: true}
+  - {from: 1219300, to: 1220800}
+  - {from: 1314520, drop: true}
+  - {from: 1180130, drop: true}
+  - {from: 1324110, drop: true}
+  - {from: 1339160, drop: true}
+  - {from: 1981920, drop: true}
+  - {from: 2629920, drop: true}
+  - {from: 1191980, to: 1193950}
+  - {from: 1459540, to: 1419250}
+  - {from: 1332650, drop: true}
+  - {from: 2771030, drop: true}
+  - {from: 1283300, to: 1275130}
+  - {from: 1509350, drop: true}
+  - {from: 1040570, drop: true}
+  - {from: 1012990, drop: true}
+  - {from: 1003820, drop: true}
+  - {from: 2007350, drop: true}
+  - {from: 2217420, drop: true}
+  - {from: 1757510, drop: true}
+  - {from: 1009870, drop: true}
+  - {from: 1225920, drop: true}
+  - {from: 2115040, drop: true}
+  - {from: 1374550, gloss: "amazing; awesome; incredible; (also) terrible, dreadful"}
+  - {from: 1345605, gloss: "soon; it's about time (to); slowly, gradually"}
+  - {from: 1224890, gloss: "please (do); nice to meet you; best regards; please take care of it"}
+  - {from: 1009320, gloss: "rapidly; steadily; more and more; (sound) bang, boom"}
+  - {from: 1012480, gloss: "already; anymore; soon; more, again"}
+  - {from: 1305380, gloss: "to finish; (after -te) to do completely, to end up doing (regrettably); to put away"}
+  - {from: 1270350, gloss: "to be; to exist"}
+  - {from: 1157080, gloss: "for the sake of; for (the purpose of); because of"}
+  - {from: 1401000, gloss: "opponent; the other party; partner, companion"}
+  - {from: 1425790, gloss: "friend; companion; teammate, member of a group"}
+  - {from: 2139720, drop: true}
+  - {from: 1565440, drop: true}
+
+sentences:
+  exclude:
+    - "08098008"
+    - "080B6D88"
+    - "080B6DF4"
+    - "080B6E68"
+    - "080B6EDC"
+    - "080B6F38"
+    - "080B7044"
+    - "080D4980"
+    - "080D49C4"
+    - "080D4A04"
+    - "080D4C7C"
+    - "080D4D40"
+    - "080D5178"
+    - "080D52F8"
+    - "080D5330"
+    - "080D53AC"
+    - "080D5428"
+    - "080D5458"
+    - "080D54A8"
+    - "080D5568"
+    - "080D55D4"
+    - "080D5608"
+    - "080D5644"
+    - "080D5670"
+    - "080D56CC"
+    - "080D5700"
+    - "080D5C48"
+    - "080D5D34"
+    - "080D5D68"
+    - "080D5DA8"
+    - "080D5DE0"
+    - "080D5E20"
+    - "080D5EA0"
+    - "080D5F28"
+    - "080D5F5C"
+    - "080D5FC0"
+    - "080D5FF4"
+    - "080D6088"
+    - "080D612C"
+    - "080D6164"
+    - "080D618C"
+    - "080D6838"
+    - "080D69A0"
+    - "080D6A44"
+    - "080D6EF4"
+    - "080D6FC0"
+    - "080D7024"
+    - "080D7080"
+    - "080D7148"
+    - "080D71AC"
+    - "080D7210"
+    - "080D727C"
+    - "080D7308"
+    - "080D73A4"
+    - "080D7400"
+    - "080D746C"
+    - "080D74CC"
+    - "080D750C"
+    - "080D7540"
+    - "080D7560"
+    - "080D75A8"
+    - "080D761C"
+    - "080D7690"
+    - "080D7F14"
+    - "080D823C"
+    - "080D82A4"
+    - "080D8330"
+    - "080D83B8"
+    - "080D83FC"
+    - "080D842C"
+    - "080D8474"
+    - "080D84C8"
+    - "080D850C"
+    - "080D856C"
+    - "080D8610"
+    - "080D86C8"
+    - "080D870C"
+    - "080D8750"
+    - "080D8794"
+    - "080D87F0"
+    - "080D8828"
+    - "080D9034"
+    - "080D91CC"
+    - "080D9350"
+    - "080D9458"
+    - "080D948C"
+    - "080D9570"
+    - "080D9634"
+    - "080D9688"
+    - "080D96BC"
+    - "080D975C"
+    - "080D986C"
+    - "080D9958"
+    - "080D99C4"
+    - "080D9A14"
+    - "080D9B68"
+    - "080D9BB4"
+    - "080D9BE4"
+    - "080D9C14"
+    - "080D9ED4"
+    - "080DA3E4"
+    - "080DA484"
+    - "080DA504"
+    - "080DA548"
+    - "080DA630"
+    - "080DA6FC"
+    - "080DA7A8"
+    - "080DA80C"
+    - "080DA850"
+    - "080DAB6C"
+    - "080DAC60"
+    - "080DAC94"
+    - "080DAF58"
+    - "080DAF84"
+    - "080DAFCC"
+    - "080DCA10"
+    - "080DCA30"
+    - "080DCA70"
+    - "080DD618"
+    - "080DF2EC"
+    - "080DF338"
+    - "080DF388"
+    - "080DF3CC"
+    - "080DF524"
+    - "080DF564"
+    - "080DF598"
+    - "080DF668"
+    - "080DF6F0"
+    - "080DF754"
+    - "080DF79C"
+    - "080DF7EC"
+    - "080DF84C"
+    - "080DF8B8"
+    - "080DF8F0"
+    - "080DF928"
+    - "080DF9D4"
+    - "080DFAF4"
+    - "080DFB40"
+    - "080DFB60"
+    - "080DFBA8"
+    - "080DFBE0"
+    - "080DFCE8"
+    - "080DFD20"
+    - "080DFD58"
+    - "080DFD8C"
+    - "080DFE50"
+    - "080DFE70"
+    - "080DFE94"
+    - "080DFEB8"
+    - "080DFEEC"
+    - "080E0000"
+    - "080E0060"
+    - "080E0130"
+    - "080E0194"
+    - "080E01D0"
+    - "080E0248"
+    - "080E0294"
+    - "080E02E0"
+    - "080E0544"
+    - "080E05A4"
+    - "080E06A8"
+    - "080E0708"
+    - "080E0740"
+    - "080E079C"
+    - "080E0810"
+    - "080E0838"
+    - "080E0884"
+    - "080E08C8"
+    - "080E0974"
+    - "080E09B0"
+    - "080E09F0"
+    - "080E0A3C"
+    - "080E0AA0"
+    - "080E0AE0"
+    - "080E0AFC"
+    - "080E0B98"
+    - "080E0C30"
+    - "080E0C74"
+    - "080E0CD8"
+    - "080E0E20"
+    - "080E0E78"
+    - "080E0F50"
+    - "080E0F80"
+    - "080E1000"
+    - "080E103C"
+    - "080E1090"
+    - "080E11BC"
+    - "080E1508"
+    - "080E1530"
+    - "080E1568"
+    - "080E15BC"
+    - "080E1634"
+    - "080E16A0"
+    - "080E16F0"
+    - "080E1718"
+    - "080E17A0"
+    - "080E23EC"
+    - "080E254C"
+    - "080E263C"
+    - "080E27E0"
+    - "080E2924"
+    - "080E2A80"
+    - "080E2B34"
+    - "080E2C9C"
+    - "080E2DA8"
+    - "080E3284"
+    - "080E343C"
+    - "080E3D4C"
+    - "080E3D84"
+    - "080E3DBC"
+    - "080E3DF4"
+    - "080E3E2C"
+    - "080E3E64"
+    - "080E3E9C"
+    - "080E3ED8"
+    - "080E3F5C"
+    - "080E3FA0"
+    - "080E4010"
+    - "080E4054"
+    - "080E4084"
+    - "080E40E4"
+    - "080E4124"
+    - "080E4160"
+    - "080E41B8"
+    - "080E4200"
+    - "080E4238"
+    - "080E4270"
+    - "080E42B0"
+    - "080E431C"
+    - "080E4360"
+    - "080E44E4"
+    - "080E4524"
+    - "080E4560"
+    - "080E45CC"
+    - "080E4608"
+    - "080E471C"
+    - "080E4758"
+    - "080E479C"
+    - "080E47D8"
+    - "080E482C"
+    - "080E48AC"
+    - "080E492C"
+    - "080E496C"
+    - "080E49B0"
+    - "080E4A04"
+    - "080E4A50"
+    - "080E4AA0"
+    - "080E4B0C"
+    - "080E4CD4"
+    - "080E4D80"
+    - "080E4DC4"
+    - "080E4E00"
+    - "080E4E44"
+    - "080E4E80"
+    - "080E4EC0"
+    - "080E503C"
+    - "080E5198"
+    - "080E52F4"
+    - "080E53C0"
+    - "080E5580"
+    - "080E563C"
+    - "080E578C"
+    - "080E5864"
+    - "080E5900"
+    - "080E5A30"
+    - "080E5BA4"
+    - "080E5BC4"
+    - "080E5C28"
+    - "080E5C78"
+    - "080E5CE0"
+    - "080E5D44"
+    - "080E5D8C"
+    - "080E5DD0"
+    - "080E5E20"
+    - "080E5E78"
+    - "080E5EC8"
+    - "080E5F20"
+    - "080E5F78"
+    - "080E5FD0"
+    - "080E605C"
+    - "080E609C"
+    - "080E60D8"
+    - "080E6118"
+    - "080E6150"
+    - "080E6178"
+    - "080E72D4"
+    - "080E73B0"
+    - "080E7424"
+    - "080E74D4"
+    - "080E74F4"
+    - "080E75A4"
+    - "080E7724"
+    - "080E7754"
+    - "080E77B8"
+    - "080E7860"
+    - "080E7AF0"
+    - "080E7B14"
+    - "080E7B68"
+    - "080E7BB0"
+    - "080E7BF8"
+    - "080E7C40"
+    - "080E7CBC"
+    - "080E7D58"
+    - "080E7D78"
+    - "080E7DC8"
+    - "080E7E20"
+    - "080E7EA8"
+    - "080E7F58"
+    - "080E7FBC"
+    - "080E8020"
+    - "080E8348"
+    - "080E83B4"
+    - "080E8504"
+    - "080E8528"
+    - "080E8608"
+    - "080E8664"
+    - "080E8828"
+    - "080E88A8"
+    - "080E8920"
+    - "080E8988"
+    - "080E89F8"
+    - "080E8A5C"
+    - "080E8AC0"
+    - "080E8B88"
+    - "080E8C10"
+    - "080E8C9C"
+    - "080E8CBC"
+    - "080E8E10"
+    - "080E911C"
+    - "080E9154"
+    - "080E91A8"
+    - "080E91D0"
+    - "080E921C"
+    - "080E92F8"
+    - "080EA084"
+    - "080EA0E0"
+    - "080EA138"
+    - "080EA178"
+    - "080EA1B0"
+    - "080EA9BC"
+    - "080EA9DC"
+    - "080EAAA8"
+    - "080EAAD0"
+    - "080EAAF8"
+    - "080EAB1C"
+    - "080EAB44"
+    - "080EAB6C"
+    - "080EAB94"
+    - "080EABBC"
+    - "080EABE4"
+    - "080EAC0C"
+    - "080EAC38"
+    - "080EAC60"
+    - "080EAC88"
+    - "080EACB4"
+    - "080EACD8"
+    - "080EACFC"
+    - "080EAD28"
+    - "080EAD54"
+    - "080EAD78"
+    - "080EAD9C"
+    - "080EADC8"
+    - "080EADF0"
+    - "080EAE18"
+    - "080EAE44"
+    - "080EAE70"
+    - "080EAE98"
+    - "080EAEC0"
+    - "080EAEEC"
+    - "080EAF14"
+    - "080EAF30"
+    - "080EAF58"
+    - "080EAF84"
+    - "080EAFB0"
+    - "080EAFDC"
+    - "080EB004"
+    - "080EB030"
+    - "080EB058"
+    - "080EB07C"
+    - "080EB0A4"
+    - "080EB0CC"
+    - "080EB0F0"
+    - "080EB110"
+    - "080EB134"
+    - "080EB15C"
+    - "080EB188"
+    - "080EBD80"
+    - "080EBDDC"
+    - "080EBE34"
+    - "080EBE90"
+    - "080EBEEC"
+    - "080EBF54"
+    - "080EBFAC"
+    - "080EBFFC"
+    - "080EC050"
+    - "080EC0AC"
+    - "080EC100"
+    - "080EC158"
+    - "080EC1B8"
+    - "080EC214"
+    - "080EC270"
+    - "080EC2D0"
+    - "080EC32C"
+    - "080EC388"
+    - "080EC3E0"
+    - "080EC474"
+    - "080EC4D0"
+    - "080EC528"
+    - "080EC5DC"
+    - "080EC63C"
+    - "080EC694"
+    - "080EC740"
+    - "080EC7A0"
+    - "080EC800"
+    - "080EC850"
+    - "080EC8A4"
+    - "080EC8FC"
+    - "080EC954"
+    - "080EC9B0"
+    - "080ECA68"
+    - "080ECAC4"
+    - "080ECB24"
+    - "080ECB7C"
+    - "080ECBC4"
+    - "080ECC18"
+    - "080ECD84"
+    - "080ECDAC"
+    - "080ECE84"
+    - "080ECEB4"
+    - "080ECED4"
+    - "080ECEF4"
+    - "080ECF1C"
+    - "080ECFB8"
+    - "080ECFD4"
+    - "080ED018"
+    - "080ED0A4"
+    - "080ED0E8"
+    - "080ED108"
+    - "080ED128"
+    - "080ED154"
+    - "080ED2F0"
+    - "080ED318"
+    - "080ED340"
+    - "080ED368"
+    - "080ED394"
+    - "080ED3B8"
+    - "080ED3E0"
+    - "080ED408"
+    - "080ED430"
+    - "080ED458"
+    - "080ED47C"
+    - "080ED4A4"
+    - "080ED4CC"
+    - "080ED4F4"
+    - "080ED518"
+    - "080ED540"
+    - "080ED564"
+    - "080ED58C"
+    - "080ED5B4"
+    - "080ED5DC"
+    - "080ED604"
+    - "080ED62C"
+    - "080EE580"
+    - "080EE710"
+    - "080EE888"
+    - "080EE9D8"
+    - "080EEB58"
+    - "080EEC5C"
+    - "080EED78"
+    - "080EEE94"
+    - "080EEFE4"
+    - "080EF0D4"
+    - "080EF198"
+    - "080EF268"
+    - "080EF3A8"
+    - "080EF3C4"
+    - "080EF488"
+    - "080EF578"
+    - "080EF6B0"
+    - "080EF840"
+    - "080EF864"
+    - "080EF920"
+    - "080EFA08"
+    - "080EFB58"
+    - "080EFB7C"
+    - "080EFCBC"
+    - "080EFDD8"
+    - "080F03E0"
+    - "080F055C"
+    - "080F06D0"
+    - "080F0858"
+    - "080F0B14"
+    - "080F0C58"
+    - "080F0F28"
+    - "080F1244"
+    - "080F13E8"
+    - "080F15A4"
+    - "080F1758"
+    - "080F188C"
+    - "080F1B48"
+    - "080F1D90"
+    - "080F1EC4"
+    - "080F2158"
+    - "080F22E4"
+    - "080F2460"
+    - "080F4264"
+    - "080F4698"
+    - "080F4CEC"
+    - "080F9D44"
+    - "080FA240"
+    - "080FA454"
+    - "080FADF0"
+    - "080FAE10"
+    - "080FAE54"
+    - "080FC380"
+    - "080FC51C"
+    - "080FC560"
+    - "081003E4"
+    - "08100478"
+    - "08100868"
+    - "081008EC"
+    - "08100A18"
+    - "08100A78"
+    - "08100AC4"
+    - "08100B24"
+    - "08100C24"
+    - "08100D04"
+    - "08100D54"
+    - "08100DC4"
+    - "081011EC"
+    - "08101208"
+    - "08101224"
+    - "08101274"
+    - "08102450"
+    - "081026F0"
+    - "0810C310"
+    - "0810EAA0"
+    - "0810EACC"
+    - "0810EB30"
+    - "0810EB90"
+    - "0810EC28"
+    - "0810EC64"
+    - "0810ECB0"
+    - "0810ECF8"
+    - "0810ED28"
+    - "0810ED5C"
+    - "0810ED8C"
+    - "0810EDD4"
+    - "0810EE20"
+    - "0810EE78"
+    - "0810EEB0"
+    - "0810EEE4"
+    - "0810EF34"
+    - "0810EF7C"
+    - "0810F008"
+    - "0810F058"
+    - "0810F0CC"
+    - "0810F104"
+    - "0810F138"
+    - "0810F1A0"
+    - "0810F1EC"
+    - "0810F218"
+    - "0810F24C"
+    - "0810F2A0"
+    - "0810F328"
+    - "0810F378"
+    - "0810F3C4"
+    - "0810F434"
+    - "0810F474"
+    - "0810F4EC"
+    - "0810F520"
+    - "0810F56C"
+    - "0810F5CC"
+    - "0810F60C"
+    - "0810F640"
+    - "0810F67C"
+    - "0810F6C0"
+    - "0810F720"
+    - "0810F75C"
+    - "0810F7DC"
+    - "0810F82C"
+    - "0810F868"
+    - "0810F8A0"
+    - "0810F8E0"
+    - "0810F924"
+    - "0810F968"
+    - "0810F9A4"
+    - "0810F9E4"
+    - "0810FA20"
+    - "0810FA84"
+    - "0810FB24"
+    - "0810FB64"
+    - "0810FBB8"
+    - "0810FC80"
+    - "0810FCC4"
+    - "0811211C"
+    - "08113A50"
+    - "08113AE4"
+    - "08113C40"
+    - "08113CA8"
+    - "08113D0C"
+    - "08113D6C"
+    - "08113DD0"
+    - "0811921C"
+    - "08119288"
+    - "081192FC"
+    - "08119348"
+    - "0811939C"
+    - "0811940C"
+    - "08119FB4"
+    - "0811A58C"
+    - "08122998"
+    - "08124688"
+    - "0813A520"
+    - "08144B18"
+    - "08194B9C"
+    - "08194C10"
+    - "08194DE4"
+    - "08194F78"
+    - "081968A4"
+    - "081BAD80"
+    - "081C5794"
+    - "081D519C"
+    - "0822DEF8"
+    - "08231894"
+    - "08307749"
+    - "0830910D"
+    - "08309182"
+    - "0830920E"
+    - "08309259"
+    - "0830933C"
+    - "083093AA"
+    - "083094FD"
+    - "08309569"
+    - "0830964F"
+    - "083096A5"
+    - "08309759"
+    - "08309801"
+    - "083098BB"
+    - "08309948"
+    - "08309A32"
+    - "08309AB5"
+    - "08309B46"
+    - "08309BC6"
+    - "08309C67"
+    - "08309CEE"
+    - "08309D9F"
+    - "08309E44"
+    - "08309EC7"
+    - "08309F47"
+    - "08309FDF"
+    - "0830A05F"
+    - "0830A0E9"
+    - "0830A1B6"
+    - "0830A248"
+    - "0830A2A9"
+    - "0830A356"
+    - "0830A461"
+    - "0830A575"
+    - "0830A5D4"
+    - "0830A660"
+    - "0830A70D"
+    - "0830A847"
+    - "0830A899"
+    - "0830A915"
+    - "0830A9A4"
+    - "0830AA5F"
+    - "0830AB03"
+    - "0830AB64"
+    - "0830ABA3"
+    - "0830B8E8"
+    - "0830BEF0"
+    - "0830BF79"
+    - "0830C02B"
+    - "0830C0DE"
+    - "0830C182"
+    - "0830C211"
+    - "0830C289"
+    - "0830C309"
+    - "0836BAD4"
+    - "0836CDA0"

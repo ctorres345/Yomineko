@@ -1,0 +1,60 @@
+name: Build app
+
+# Builds the command-line program and the desktop app for Windows, macOS and Linux with
+# PyInstaller. Runs on request (Actions, Run workflow) or when a version tag is pushed, not on
+# every push: macOS runners are expensive on a private repository.
+# The result is a downloadable build artifact. Attaching it to a release is the owner's step.
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {name: windows, os: windows-latest, exe: ".exe", archive: zip}
+          - {name: macos, os: macos-latest, exe: "", archive: gztar}
+          - {name: linux, os: ubuntu-latest, exe: "", archive: gztar}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -U pip
+      - run: python -m pip install -e ".[app,analyze]" pyinstaller
+      - run: pyinstaller --noconfirm --distpath dist --workpath build packaging/yomineko.spec
+
+      - name: Smoke test
+        shell: bash
+        run: |
+          ./dist/yomineko/yomineko${{ matrix.exe }} --version
+          ./dist/yomineko/yomineko${{ matrix.exe }} app --smoke
+
+      - name: Archive and checksum
+        shell: bash
+        run: |
+          python - <<'PY'
+          import hashlib, os, shutil
+          name = "yomineko-${{ matrix.name }}"
+          path = shutil.make_archive(name, "${{ matrix.archive }}", "dist", "yomineko")
+          digest = hashlib.sha256(open(path, "rb").read()).hexdigest()
+          # the bare file name, so `shasum -c` works in the folder the user downloaded it to
+          open(path + ".sha256", "w").write(f"{digest}  {os.path.basename(path)}\n")
+          print(path, digest)
+          PY
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: yomineko-${{ matrix.name }}
+          path: |
+            yomineko-${{ matrix.name }}.*
+          if-no-files-found: error

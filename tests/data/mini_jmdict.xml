@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A tiny dictionary in JMdict's format for tests. The entry ids are invented and the glosses
+     are written for these tests; nothing here is copied from JMdict. Several entries share a
+     reading on purpose, to exercise homophone ranking. -->
+<!DOCTYPE JMdict [
+<!ENTITY n "noun (common) (futsuumeishi)">
+<!ENTITY v1 "Ichidan verb">
+<!ENTITY v5r "Godan verb with 'ru' ending">
+<!ENTITY vt "transitive verb">
+<!ENTITY vi "intransitive verb">
+<!ENTITY adj-i "adjective (keiyoushi)">
+<!ENTITY uk "word usually written using kana alone">
+<!ENTITY arch "archaism">
+]>
+<JMdict>
+<entry>
+<ent_seq>9000001</ent_seq>
+<k_ele><keb>事</keb><ke_pri>ichi1</ke_pri><ke_pri>news1</ke_pri><ke_pri>nf02</ke_pri></k_ele>
+<r_ele><reb>こと</reb><re_pri>ichi1</re_pri><re_pri>news1</re_pri><re_pri>nf02</re_pri></r_ele>
+<sense><pos>&n;</pos><gloss>thing (abstract)</gloss><gloss>matter</gloss></sense>
+</entry>
+<entry>
+<ent_seq>9000002</ent_seq>
+<k_ele><keb>琴</keb><ke_pri>nf40</ke_pri></k_ele>
+<r_ele><reb>こと</reb><re_pri>nf40</re_pri></r_ele>
+<sense><pos>&n;</pos><gloss>koto (a long zither)</gloss></sense>
+</entry>
+<entry>
+<ent_seq>9000003</ent_seq>
+<k_ele><keb>古都</keb></k_ele>
+<r_ele><reb>こと</reb></r_ele>
+<sense><pos>&n;</pos><gloss>old capital</gloss></sense>
+</entry>
+<entry>
+<ent_seq>9000004</ent_seq>
+<k_ele><keb>依頼</keb><ke_pri>news1</ke_pri><ke_pri>nf10</ke_pri></k_ele>
+<r_ele><reb>いらい</reb><re_pri>news1</re_pri><re_pri>nf10</re_pri></r_ele>
+<sense><pos>&n;</pos><gloss>request</gloss><gloss>commission</gloss></sense>
+</entry>
+<entry>
+<ent_seq>9000005</ent_seq>
+<k_ele><keb>以来</keb><ke_pri>news1</ke_pri><ke_pri>nf05</ke_pri></k_ele>
+<r_ele><reb>いらい</reb><re_pri>news1</re_pri><re_pri>nf05</re_pri></r_ele>
+<sense><pos>&n;</pos><gloss>since</gloss><gloss>ever since</gloss></sense>
+</entry>
+<entry>
+<ent_seq>9000006</ent_seq>
+<k_ele><keb>地震</keb><ke_pri>news1</ke_pri><ke_pri>nf20</ke_pri></k_ele>
+<r_ele><reb>じしん</reb><re_pri>news1</re_pri><re_pri>nf20</re_pri></r_ele>
+<sense><pos>&n;</pos><gloss>earthquake</gloss></sense>
+</entry>
+<entry>
+<ent_seq>9000007</ent_seq>
+<k_ele><keb>自身</keb><ke_pri>ichi1</ke_pri><ke_pri>nf15</ke_pri></k_ele>
+<r_ele><reb>じしん</reb><re_pri>ichi1</re_pri><re_pri>nf15</re_pri></r_ele>
+<sense><pos>&n;</pos><gloss>oneself</gloss></sense>
+</entry>
+<entry>
+<ent_seq>9000008</ent_seq>
+<k_ele><keb>帰る</keb><ke_pri>news1</ke_pri><ke_pri>nf08</ke_pri></k_ele>
+<r_ele><reb>かえる</reb><re_pri>news1</re_pri><re_pri>nf08</re_pri></r_ele>
+<sense><pos>&v5r;</pos><pos>&vi;</pos><gloss>to go back home</gloss></sense>
+</entry>
+<entry>
+<ent_seq>9000009</ent_seq>
+<k_ele><keb>変える</keb><ke_pri>news1</ke_pri><ke_pri>nf12</ke_pri></k_ele>
+<r_ele><reb>かえる</reb><re_pri>news1</re_pri><re_pri>nf12</re_pri></r_ele>
+<sense><pos>&v1;</pos><pos>&vt;</pos><gloss>to alter</gloss></sense>
+</entry>
+<entry>
+<ent_seq>9000010</ent_seq>
+<k_ele><keb>蛙</keb></k_ele>
+<r_ele><reb>かえる</reb></r_ele>
+<sense><pos>&n;</pos><misc>&uk;</misc><gloss>frog</gloss></sense>
+</entry>
+<entry>
+<ent_seq>9000011</ent_seq>
+<r_ele><reb>すごい</reb><re_pri>spec1</re_pri></r_ele>
+<sense><pos>&adj-i;</pos><misc>&arch;</misc><gloss>dreadful</gloss><gloss>terrible</gloss></sense>
+<sense><pos>&adj-i;</pos><misc>&uk;</misc><gloss>amazing</gloss><gloss>great</gloss></sense>
+</entry>
+<entry>
+<ent_seq>9000012</ent_seq>
+<k_ele><keb>釦</keb></k_ele>
+<r_ele><reb>ボタン</reb><re_pri>ichi1</re_pri></r_ele>
+<sense><pos>&n;</pos><misc>&uk;</misc><gloss>button</gloss></sense>
+</entry>
+<entry>
+<ent_seq>9000013</ent_seq>
+<k_ele><keb>雲</keb><ke_pri>news1</ke_pri><ke_pri>nf15</ke_pri></k_ele>
+<r_ele><reb>くも</reb><re_pri>news1</re_pri><re_pri>nf15</re_pri></r_ele>
+<sense><pos>&n;</pos><gloss>cloud</gloss></sense>
+</entry>
+<entry>
+<ent_seq>9000014</ent_seq>
+<k_ele><keb>蜘蛛</keb></k_ele>
+<r_ele><reb>くも</reb></r_ele>
+<sense><pos>&n;</pos><gloss>spider</gloss></sense>
+</entry>
+</JMdict>

@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}Export - {{ title }} - yomineko{% endblock %}
+{% block content %}
+<p><small>{{ title }}</small></p>
+<h1>Export</h1>
+{% if not analysed %}
+<article><p>Find the words first (the lines can be exported without). <a href="/games/{{ game_id }}">Go back</a>.</p></article>
+{% else %}
+<p>Words seen {{ min_freq }} time{{ "" if min_freq == 1 else "s" }} or more, level {{ level.name }}
+({{ level.description | lower }}){% if known %}, leaving out the {{ "{:,}".format(known) }} word{{ "" if known == 1 else "s" }} you marked as known{% endif %}.
+<a href="/games/{{ game_id }}/choose">Choose your words</a></p>
+{% endif %}
+{# Only the options for the chosen format show (app.css, with :has); without it all of them do. #}
+<form method="post" action="/games/{{ game_id }}/export" class="export">
+  <fieldset class="formats">
+    <legend><strong>What do you want?</strong></legend>
+    <div class="choices">
+    <label class="choice"><input type="radio" name="kind" value="anki" checked>
+      <strong>Anki deck</strong> <small>.apkg: words, sentences and game terms, ready to import</small></label>
+    <label class="choice"><input type="radio" name="kind" value="xlsx">
+      <strong>Spreadsheet</strong> <small>.xlsx: the same cards as rows</small></label>
+    <label class="choice"><input type="radio" name="kind" value="csv">
+      <strong>CSV file</strong> <small>Opens in a spreadsheet or in Anki's importer</small></label>
+    <label class="choice"><input type="radio" name="kind" value="json">
+      <strong>JSON file</strong> <small>For other programs</small></label>
+    </div>
+  </fieldset>
+
+  <fieldset class="for-deck">
+    <legend><strong>Which parts</strong></legend>
+    <label><input type="checkbox" name="decks" value="words" checked> Words, most frequent first
+      {% if analysed %}<span class="count">{{ "{:,}".format(cards) }} card{{ "" if cards == 1 else "s" }}</span>{% endif %}</label>
+    <label><input type="checkbox" name="decks" value="sentences" checked> Sentences, easiest first
+      <span class="count">up to {{ "{:,}".format(count) }}</span></label>
+    <label><input type="checkbox" name="decks" value="terms" checked> Game names that are real words</label>
+  </fieldset>
+
+  <label class="for-anki">Deck name
+    <input type="text" name="deck_name" placeholder="{{ title }}"></label>
+
+  <fieldset class="for-file">
+    <legend><strong>What goes in the file</strong></legend>
+    <label><input type="radio" name="content" value="words" checked> The word list</label>
+    <label><input type="radio" name="content" value="sentences"> The picked sentences</label>
+    <label><input type="radio" name="content" value="lines"> Every distinct line of text</label>
+  </fieldset>
+
+  <details>
+    <summary>More options</summary>
+    <label>Words seen at least this many times
+      <input type="number" name="min_freq" min="1" placeholder="{{ min_freq }} (from Choose your words)"></label>
+    <label>How many sentences to pick
+      <input type="number" name="sentences" min="1" max="5000" placeholder="{{ count }}"></label>
+    <label>Sentence order
+      <select name="order">
+        <option value="frequency">Easiest first</option>
+        <option value="rom">As in the game</option>
+      </select></label>
+    <label>Name shown where the game uses your name
+      <input type="text" name="player_name" value="{{ player_name }}"></label>
+  </details>
+
+  <section class="summary">
+    <div>
+      {% if analysed %}
+      <p class="for-deck"><strong>{{ "{:,}".format(cards) }} word card{{ "" if cards == 1 else "s" }}</strong>
+        <small>from Choose your words, up to {{ "{:,}".format(count) }} sentence cards and the game's names.</small></p>
+      {% else %}
+      <p class="for-deck"><strong>No words yet.</strong> <small>Find the words first for a deck.</small></p>
+      {% endif %}
+      <p class="for-file"><strong>One file</strong> <small>saved where you choose.</small></p>
+    </div>
+    <button type="submit">Download</button>
+  </section>
+</form>
+<p><small>Your own corrections (see "Check meanings") are used for the sentences. Exports contain the
+game's text: for your own study. Word meanings come from JMdict, &copy; EDRDG, CC BY-SA 4.0.</small></p>
+{% endblock %}

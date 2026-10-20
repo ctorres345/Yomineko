@@ -1,0 +1,13 @@
+{% macro pager(rows, base) %}
+{% if rows.pages > 1 %}
+<nav aria-label="Pages">
+  <ul>
+    <li>{% if rows.has_previous %}<a href="{{ base }}&amp;p={{ rows.number - 1 }}">&larr; Previous</a>{% endif %}</li>
+  </ul>
+  <ul><li>Page {{ rows.number }} of {{ rows.pages }}</li></ul>
+  <ul>
+    <li>{% if rows.has_next %}<a href="{{ base }}&amp;p={{ rows.number + 1 }}">Next &rarr;</a>{% endif %}</li>
+  </ul>
+</nav>
+{% endif %}
+{% endmacro %}

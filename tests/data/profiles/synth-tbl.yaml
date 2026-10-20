@@ -1,0 +1,22 @@
+# Profile for the synthetic table-encoded test ROM (tests/support/synthrom.py). Not a real game.
+schema_version: 1
+id: synth-tbl
+title: Synthetic table-encoded test ROM
+platform: gba
+rom:
+  sha1: "3117d802b4cbece5c4d678c68b1ee364337291ce"
+  game_code: TBLJ
+  revision: 0
+encoding:
+  type: table
+  table: ../fake.tbl
+  terminator: 0xFF
+text:
+  regions:
+    - {start: 0x0, end: 0x10000}
+discover:
+  ignore: ['<NAME>']
+plain:
+  - {pattern: '<NAME>', replace: '〇〇'}
+tables:
+  - {category: item, base: 0x3000, stride: 8, count: 2, field: 0}

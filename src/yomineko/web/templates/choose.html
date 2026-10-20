@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% from "_pager.html" import pager %}
+{% block title %}Choose your words - {{ title }} - yomineko{% endblock %}
+{% block content %}
+<p><small>{{ title }}</small></p>
+<h1>Choose your words</h1>
+{% if not analysed %}
+<article><p>Find the words first. <a href="/games/{{ game_id }}">Go back</a>.</p></article>
+{% else %}
+<p>Tell yomineko what you already know. Cards are made only for the rest, so your deck has no words you would skip anyway.</p>
+
+<div id="choose">
+{% if not ranked %}
+<article>
+  <p><strong>This game was analysed with an older yomineko,</strong> so its words do not know yet how
+  common they are and a level cannot skip any. Find the words again to use one.</p>
+  <form method="post" action="/games/{{ game_id }}/analyze"><button type="submit" class="secondary">Find the words again</button></form>
+</article>
+{% endif %}
+
+<form method="post" action="/games/{{ game_id }}/choose" class="choose"
+      hx-post="/games/{{ game_id }}/choose" hx-trigger="change" hx-target="#choose" hx-select="#choose" hx-swap="outerHTML">
+  <fieldset class="levels" aria-describedby="level-note">
+    <legend><strong>Which words do you already know?</strong></legend>
+    <p id="level-note"><small>Remembered for your next game. You can change it any time.</small></p>
+    {% for key, info in levels %}
+    <label class="level">
+      <input type="radio" name="level" value="{{ key }}" id="level-{{ key }}"{% if key == level %} checked{% endif %}{% if not ranked and key != "starting" %} disabled{% endif %}>
+      <strong>{{ info.name }}</strong><br>
+      <small>{{ info.description }}</small>
+    </label>
+    {% endfor %}
+  </fieldset>
+
+  <article class="skipped-sample">
+    {% if choice.sample %}
+    <p><strong>Do you know most of these?</strong> At this level they are skipped. If several are new to you, pick an easier level.</p>
+    <ul class="word-chips">
+      {% for w in choice.sample %}
+      <li><span lang="ja">{{ w.written }}</span> <small>{{ (w.meanings[0] if w.meanings else "") | truncate(40) }}</small></li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>Nothing is skipped at this level: every word seen often enough gets a card.</p>
+    {% endif %}
+    <p><small>How common a word is comes from the dictionary's newspaper word counts, so a few everyday
+    words rank lower than you might expect. Mark those with "I know this" below. The levels are word
+    counts, not JLPT levels.</small></p>
+  </article>
+
+  <label for="min-freq"><strong>How often must a word appear in this game?</strong></label>
+  <p><small>A higher number gives fewer cards, each for a word you will meet again while playing.</small></p>
+  <fieldset role="group" class="min-freq">
+    <input type="number" name="min_freq" id="min-freq" value="{{ min_freq }}" min="1" max="{{ max_min_freq }}" aria-describedby="min-freq-unit" style="max-width: 7rem">
+    <span id="min-freq-unit">times or more</span>
+  </fieldset>
+  <input type="hidden" name="p" value="{{ rows.number }}">
+  <button type="submit" class="secondary outline save">Save</button>
+</form>
+
+<section class="choose-words" aria-labelledby="words-title">
+  <h2 id="words-title">The words</h2>
+  <p><small>Most frequent first. "I know this" skips a word in every game, at any level.</small></p>
+  <div class="overflow-auto">
+  <table>
+    <thead><tr><th scope="col">Word</th><th scope="col">Meaning</th><th scope="col">How common</th><th scope="col">Seen</th><th scope="col">Card?</th><th scope="col"><span class="visually-hidden">Action</span></th></tr></thead>
+    <tbody>
+      {% for w in rows.items %}
+      {% set st = status(w) %}
+      <tr>
+        <td><span lang="ja"><strong>{{ w.written }}</strong></span>{% if w.kana and w.kana != w.written %} <small lang="ja">{{ w.kana }}</small>{% endif %}</td>
+        <td>{{ (w.meanings[0] if w.meanings else "") | truncate(40) }}</td>
+        <td><small>{{ how_common(w) }}</small></td>
+        <td>{{ w.freq }}</td>
+        <td>{% if st == "known" %}You know it{% elif st == "skipped" %}Skipped, common{% elif st == "card" %}<strong>Card</strong>{% else %}Too rare here{% endif %}</td>
+        <td>
+          {% if st != "skipped" %}
+          <form method="post" action="/games/{{ game_id }}/known" class="known-word"
+                hx-post="/games/{{ game_id }}/known" hx-target="#choose" hx-select="#choose" hx-swap="outerHTML">
+            <input type="hidden" name="word" value="{{ w.jmdict_id }}">
+            <input type="hidden" name="back" value="choose">
+            <input type="hidden" name="p" value="{{ rows.number }}">
+            {% if st == "known" %}
+            <button type="submit" name="action" value="undo" class="secondary outline quiet">Undo</button>
+            {% else %}
+            <button type="submit" name="action" value="know" class="secondary outline quiet">I know this</button>
+            {% endif %}
+          </form>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  {{ pager(rows, "/games/" ~ game_id ~ "/choose?") }}
+</section>
+
+<section class="card-count" aria-labelledby="card-count">
+  <h2 id="card-count" aria-live="polite">{{ "{:,}".format(choice.cards) }} word card{{ "" if choice.cards == 1 else "s" }}</h2>
+  <p>{{ summary }} Sentences are then picked around these words.</p>
+  <p>
+    <a role="button" href="/games/{{ game_id }}/review">Next: Check the meanings</a>
+    <a href="/games/{{ game_id }}/export">Skip to export</a>
+  </p>
+  <p><small><a href="/games/{{ game_id }}/words">See every word and whether it gets a card</a></small></p>
+</section>
+</div>
+{% endif %}
+<p><a href="/games/{{ game_id }}">&larr; Back</a></p>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% if job.status == "running" %}
+<div id="job" hx-get="/jobs/{{ job.id }}/status" hx-trigger="every 1s" hx-swap="outerHTML">
+  <p aria-busy="true">{{ job.message or "Starting" }} &hellip;</p>
+</div>
+{% elif job.status == "done" %}
+<div id="job">
+  <p><mark>Done.</mark></p>
+  {% for note in job.notes %}<p>{{ note }}</p>{% endfor %}
+  <a role="button" href="{{ job.next_url }}">Continue</a>
+</div>
+{% else %}
+<div id="job">
+  <p><strong>This did not work.</strong></p>
+  <p>{{ job.error }}</p>
+  <a role="button" class="secondary" href="/">Back to the start</a>
+</div>
+{% endif %}

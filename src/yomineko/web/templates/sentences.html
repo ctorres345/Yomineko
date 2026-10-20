@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% from "_pager.html" import pager %}
+{% block title %}Sentences - {{ title }} - yomineko{% endblock %}
+{% block content %}
+<h1>Sentences</h1>
+<p><small>{{ title }}. The lines that teach the most words you would not yet have seen, in ROM order.</small></p>
+<form method="get">
+  <fieldset role="group">
+    <input type="number" name="count" value="{{ count }}" min="1" max="5000" aria-label="How many sentences">
+    {% if addresses %}<input type="hidden" name="addresses" value="1">{% endif %}
+    <button type="submit" class="secondary">Pick</button>
+  </fieldset>
+</form>
+<p>{{ "{:,}".format(rows.total) }} sentence{{ "" if rows.total == 1 else "s" }}.
+{% if addresses %}<a href="/games/{{ game_id }}/sentences?count={{ count }}">Hide the ROM addresses</a>
+{% else %}<small><a href="/games/{{ game_id }}/sentences?count={{ count }}&amp;addresses=1">Show the ROM addresses</a></small>{% endif %}</p>
+<div class="overflow-auto">
+<table>
+  <thead><tr>{% if addresses %}<th>Address</th>{% endif %}<th>Sentence</th><th>Words</th></tr></thead>
+  <tbody>
+    {% for s in rows.items %}
+    <tr>{% if addresses %}<td><code>{{ s.line.id }}</code></td>{% endif %}<td lang="ja" class="line">{{ s.text }}</td><td>{{ s.word_ids | length }}</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+{{ pager(rows, "/games/" ~ game_id ~ "/sentences?count=" ~ count ~ ("&addresses=1" if addresses else "")) }}
+<p><a href="/games/{{ game_id }}">&larr; Back</a></p>
+{% endblock %}

@@ -1,0 +1,42 @@
+# Corrections for the wrong dictionary picks in kana-heavy text. JMdict ids only.
+# A first pass over the most frequent ambiguous words (seen 15+ times) and the names that
+# the tokenizer splits into ordinary nouns; the long tail is unreviewed.
+schema_version: 1
+profile: gyakuten-saiban-jp
+rom_sha1: "ea7dabc4f5330c89a341ca38067fb025de73c835"
+words:
+  - {from: 1241450, to: 1313580}
+  - {from: 1605845, to: 1605840}
+  - {from: 2603520, drop: true}
+  - {from: 1373000, to: 1005180}
+  - {from: 1318950, to: 1310680, sentence_safe: false}
+  - {from: 1636070, to: 1343950, sentence_safe: false}
+  - {from: 1589320, to: 1589350}
+  - {from: 1584800, drop: true}
+  - {from: 1396840, to: 1607070, sentence_safe: false}
+  - {from: 1433680, to: 1495770, sentence_safe: false}
+  - {from: 1580550, to: 1310730}
+  - {from: 1536350, to: 1168660, sentence_safe: false}
+  - {from: 1570710, to: 1207610, sentence_safe: false}
+  - {from: 1328710, to: 1323560, sentence_safe: false}
+  - {from: 1339160, to: 1338180}
+  - {from: 1307770, drop: true}
+  - {from: 1374620, drop: true}
+  - {from: 1518540, to: 1529550}
+  - {from: 1189940, drop: true}
+  - {from: 1256750, drop: true}
+  - {from: 1195250, drop: true}
+  # names the tokenizer split into ordinary words (found with `yomineko review worklist`)
+  - {from: 1376310, drop: true}
+  - {from: 1158600, drop: true}
+  - {from: 1825600, drop: true}
+  - {from: 2742570, drop: true}
+  - {from: 1201860, drop: true}
+  - {from: 1290020, drop: true}
+  - {from: 1621470, drop: true}
+  - {from: 2083370, drop: true}
+  - {from: 1751720, drop: true}
+  - {from: 1039100, drop: true}
+  - {from: 1514290, drop: true}
+  - {from: 1461340, drop: true}
+  - {from: 1633990, drop: true}

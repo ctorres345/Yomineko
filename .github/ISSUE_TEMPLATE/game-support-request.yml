@@ -1,0 +1,57 @@
+name: Game support request
+description: Ask for a game to be supported, or share what you found about one. Never attach a ROM or game text.
+title: "Game support: <title> (<game code>)"
+labels: ["game support"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Do not attach or paste a ROM, a save, or any text taken from a game.** Only offsets, counts,
+        encodings and control codes belong here. yomineko reads Japanese games only (game code ends in `J`).
+        How to investigate a game yourself: [docs/ADDING_A_GAME.md](../blob/main/docs/ADDING_A_GAME.md).
+        Requests for ROMs, keys or circumvention are closed: see [DISCLAIMER.md](../blob/main/DISCLAIMER.md).
+  - type: input
+    id: title
+    attributes:
+      label: Game title and platform
+      placeholder: "Example: Some Game (Japan), Game Boy Advance"
+    validations:
+      required: true
+  - type: input
+    id: code
+    attributes:
+      label: Game code and revision
+      description: From `yomineko info game.gba`.
+      placeholder: "ABCJ, revision 0"
+    validations:
+      required: true
+  - type: input
+    id: sha1
+    attributes:
+      label: SHA-1 of your dump
+      description: From `yomineko info game.gba`. It identifies the exact dump.
+    validations:
+      required: true
+  - type: dropdown
+    id: status
+    attributes:
+      label: Where are you?
+      options:
+        - I only want this game supported
+        - I investigated it and found where the text is
+        - I wrote a profile (I will open a pull request)
+        - I found the text is compressed or uses a custom table
+    validations:
+      required: true
+  - type: textarea
+    id: findings
+    attributes:
+      label: What you found (counts and offsets only)
+      description: "For example: pointer table at 0x..., N entries; text looks like Shift-JIS or a custom table; compressed with LZ77 (header byte 0x10); how sure you are."
+  - type: checkboxes
+    id: rules
+    attributes:
+      label: Rules
+      options:
+        - label: I did not attach or paste a ROM or any game text.
+          required: true

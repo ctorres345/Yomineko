@@ -1,0 +1,62 @@
+# Offsets, encoding and control codes for one game. No game text lives in this file.
+schema_version: 1
+id: pmd-red-jp
+title: Pokemon Fushigi no Dungeon - Aka no Kyuujotai (Japan)
+platform: gba
+rom:
+  sha1: "4bc9370edebb3da5bdf768eeced689fda3f8b77b"
+  game_code: B24J
+  revision: 0
+encoding:
+  type: shift_jis
+  terminator: 0x00
+  # the single-byte "half-width katakana" range is drawn as hiragana by this game
+  single_byte_kana: hiragana
+  # lead bytes 0x84-0x87 and 0xEB-0xFC are custom glyphs (icons), kept as {XXXX}
+  custom_leads: [[0x84, 0x87], [0xEB, 0xFC]]
+text:
+  regions:
+    - {start: 0x0, end: 0x600000}   # past this the ROM is graphics and audio
+  pointer_base: 0x08000000
+  pointer_align: 4
+  bank_gap: 0x40
+discover:
+  min_score: 0.7
+  unreferenced: {min_japanese: 3, min_kana_ratio: 0.8}
+  # colour (#C?), #R/#P/#W/#= codes, $x0 name placeholders, {0D} and {10} control bytes
+  ignore: ['#C.', '#[RPW=]', '\$[a-z]\d', '\{(?:0D|10)\}']
+plain:
+  - {pattern: '^.{0,3}?\{0F\}\{08\}', replace: ''}   # struct bytes before some lines
+  - {pattern: '#[Cc].', replace: ''}                 # colour
+  - {pattern: '#[PpNn]', replace: "\n"}              # new page / newline
+  - {pattern: '#[RrWw=+]', replace: ''}              # reset colour, wait, positioning
+  - {pattern: '\$-|#', replace: ''}
+  - {pattern: '\$[a-z]\d?', replace: '〇〇'}          # name placeholders
+  - {pattern: '\{0D\}', replace: "\n"}
+kinds: {dialogue_min_length: 12}
+# Tables of text pointers: entry i has a pointer at base + i*stride + field.
+tables:
+  - {category: pokemon,            base: 0x355140, stride: 72, count: 424, field: 0}
+  - {category: pokemon_category,   base: 0x355140, stride: 72, count: 424, field: 4}
+  - {category: item,               base: 0x30C51C, stride: 32, count: 240, field: 0}
+  - {category: item_desc,          base: 0x30C51C, stride: 32, count: 240, field: 16}
+  - {category: move,               base: 0x3653D4, stride: 44, count: 413, field: 0}
+  - {category: move_desc,          base: 0x3653D4, stride: 44, count: 413, field: 28}
+  - {category: type,               base: 0x10DC8C, stride: 4,  count: 18}
+  - {category: adventure_log,      base: 0x10DFC0, stride: 4,  count: 32}
+  - {category: ability,            base: 0x10E450, stride: 4,  count: 77}
+  - {category: ability_desc,       base: 0x10E93C, stride: 4,  count: 77}
+  - {category: range,              base: 0x10FD0C, stride: 4,  count: 49}
+  - {category: status,             base: 0x110018, stride: 4,  count: 89}
+  - {category: dungeon,            base: 0x11496C, stride: 8,  count: 98, field: 0}
+  - {category: dungeon_alt,        base: 0x11496C, stride: 8,  count: 98, field: 4}
+  - {category: iq_desc,            base: 0x115AFC, stride: 4,  count: 24}
+  - {category: tactic,             base: 0x1161F0, stride: 4,  count: 12}
+  - {category: friend_area,        base: 0x116F00, stride: 4,  count: 58}
+  - {category: friend_area_desc,   base: 0x1173D8, stride: 4,  count: 58}
+# Sentence selection: item and move description tables read as rule text, so they stay out of
+# the sentence deck; battle banter and adventure-log lines are capped.
+sentences:
+  exclude_ranges:
+    - {start: 0x30A000, end: 0x370000}
+  caps: {name_quote: 100, name_subject: 150}

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% from "_pager.html" import pager %}
+{% block title %}Words - {{ title }} - yomineko{% endblock %}
+{% block content %}
+<h1>Words</h1>
+<p><small>{{ title }}</small></p>
+{% if not analysed %}
+<article><p>This game has not been analysed yet. <a href="/games/{{ game_id }}">Go back</a> and find the words first.</p></article>
+{% else %}
+<form method="get" hx-get="/games/{{ game_id }}/words" hx-target="#results" hx-select="#results"
+      hx-trigger="input delay:300ms from:find input, change">
+  <fieldset role="group">
+    <input type="search" name="q" value="{{ q }}" placeholder="Search a word or a meaning">
+    <input type="number" name="min_freq" value="{{ min_freq }}" min="1" aria-label="Seen at least this many times" style="max-width: 7rem">
+    <button type="submit">Search</button>
+  </fieldset>
+  <small>Showing words seen at least {{ min_freq }} time{{ "" if min_freq == 1 else "s" }}.</small>
+</form>
+<p><small>Cards: words seen {{ choices.min_freq }} time{{ "" if choices.min_freq == 1 else "s" }} or more,
+level {{ level.name }} ({{ level.description | lower }}).
+{% if not ranked and level.skips %}This game was analysed with an older yomineko, so no word is skipped until you find the words again.{% endif %}
+<a href="/games/{{ game_id }}/choose">Choose your words</a></small></p>
+<div id="results">
+  <p>{{ "{:,}".format(rows.total) }} word{{ "" if rows.total == 1 else "s" }}</p>
+  <div class="overflow-auto">
+  <table>
+    <thead><tr><th>#</th><th>Word</th><th>Reading</th><th>Meaning</th><th>Seen</th><th>Card?</th><th><span class="visually-hidden">Action</span></th></tr></thead>
+    <tbody>
+      {% for rank, w in rows.items %}
+      <tr>
+        <td>{{ rank }}</td>
+        <td lang="ja">{{ w.written }}{% if w.kanji and w.kanji != w.written %} ({{ w.kanji }}){% endif %}</td>
+        <td lang="ja">{{ w.kana }}</td>
+        <td>{{ w.meanings | join(" | ") }}</td>
+        <td>{{ w.freq }}</td>
+        {% set st = status(w) %}
+        <td>{% if st == "known" %}You know it{% elif st == "skipped" %}Skipped, common{% elif st == "card" %}<strong>Card</strong>{% else %}Too rare here{% endif %}</td>
+        <td>
+          {% if st != "skipped" %}
+          <form method="post" action="/games/{{ game_id }}/known" class="known-word"
+                hx-post="/games/{{ game_id }}/known" hx-target="#results" hx-select="#results" hx-swap="outerHTML">
+            <input type="hidden" name="word" value="{{ w.jmdict_id }}">
+            <input type="hidden" name="back" value="words">
+            <input type="hidden" name="p" value="{{ rows.number }}">
+            <input type="hidden" name="q" value="{{ q }}">
+            <input type="hidden" name="min_freq" value="{{ min_freq }}">
+            {% if st == "known" %}
+            <button type="submit" name="action" value="undo" class="secondary outline quiet">Undo</button>
+            {% else %}
+            <button type="submit" name="action" value="know" class="secondary outline quiet">I know this</button>
+            {% endif %}
+          </form>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  {{ pager(rows, "/games/" ~ game_id ~ "/words?q=" ~ (q | urlencode) ~ "&min_freq=" ~ min_freq) }}
+</div>
+{% endif %}
+<p><a href="/games/{{ game_id }}">&larr; Back</a></p>
+{% endblock %}

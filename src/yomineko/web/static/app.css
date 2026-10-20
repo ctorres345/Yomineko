@@ -1,0 +1,275 @@
+/* yomineko on top of Pico CSS: the black-to-white palette, IBM Plex, a 2 px focus outline.
+   Only the five greys below. Text pairs are checked in tests/test_web_palette.py (4.5:1 or more);
+   #7f7f7f is for control borders (and secondary text on black), #bfbfbf for dividers on white. */
+
+@font-face { font-family: "IBM Plex Sans"; font-weight: 400; font-display: swap;
+  src: url("fonts/IBMPlexSans-Regular.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Sans"; font-weight: 600; font-display: swap;
+  src: url("fonts/IBMPlexSans-SemiBold.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Sans JP"; font-weight: 400; font-display: swap;
+  src: url("fonts/IBMPlexSansJP-Regular.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Sans JP"; font-weight: 600; font-display: swap;
+  src: url("fonts/IBMPlexSansJP-SemiBold.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Mono"; font-weight: 400; font-display: swap;
+  src: url("fonts/IBMPlexMono-Regular.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Mono"; font-weight: 600; font-display: swap;
+  src: url("fonts/IBMPlexMono-SemiBold.woff2") format("woff2"); }
+
+/* Tokens. fg: headings, links, controls; body: running text; fg2: secondary text;
+   line: dividers; ctl: input and quiet button borders. */
+:root {
+  --yk-bg: #ffffff; --yk-fg: #000000; --yk-body: #000000; --yk-fg2: #404040;
+  --yk-line: #bfbfbf; --yk-ctl: #7f7f7f;
+  --yk-font-ja: "IBM Plex Sans JP", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI",
+    "Yu Gothic", Meiryo, "Noto Sans JP", "Noto Sans CJK JP", sans-serif;
+  --pico-font-family-sans-serif: "IBM Plex Sans", "IBM Plex Sans JP", system-ui, "Segoe UI",
+    "Hiragino Sans", "Yu Gothic UI", Meiryo, "Noto Sans JP", sans-serif;
+  --pico-font-family-monospace: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas,
+    monospace;
+  --pico-font-family: var(--pico-font-family-sans-serif);
+  --pico-border-radius: 6px;
+  --pico-outline-width: 2px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme=light]) {
+    --yk-bg: #000000; --yk-fg: #ffffff; --yk-body: #bfbfbf; --yk-fg2: #7f7f7f;
+    --yk-line: #404040; --yk-ctl: #7f7f7f;
+  }
+}
+[data-theme=dark] {
+  --yk-bg: #000000; --yk-fg: #ffffff; --yk-body: #bfbfbf; --yk-fg2: #7f7f7f;
+  --yk-line: #404040; --yk-ctl: #7f7f7f;
+}
+
+/* Pico's colours, mapped to the tokens. The selectors match Pico's theme blocks (light, automatic
+   dark, forced dark) with the same weight, so these win by coming later. */
+:root:not([data-theme=dark]), :root:not([data-theme]), [data-theme] {
+  --pico-background-color: var(--yk-bg);
+  --pico-color: var(--yk-body);
+  --pico-text-selection-color: var(--yk-line);
+  --pico-muted-color: var(--yk-fg2);
+  --pico-muted-border-color: var(--yk-line);
+  --pico-box-shadow: none;
+  --pico-h1-color: var(--yk-fg); --pico-h2-color: var(--yk-fg); --pico-h3-color: var(--yk-fg);
+  --pico-h4-color: var(--yk-fg); --pico-h5-color: var(--yk-fg); --pico-h6-color: var(--yk-fg);
+  /* primary: the one filled button on a page, and links */
+  --pico-primary: var(--yk-fg);
+  --pico-primary-background: var(--yk-fg);
+  --pico-primary-border: var(--yk-fg);
+  --pico-primary-underline: var(--yk-ctl);
+  --pico-primary-hover: var(--yk-fg2);
+  --pico-primary-hover-background: var(--yk-fg2);
+  --pico-primary-hover-border: var(--yk-fg2);
+  --pico-primary-hover-underline: var(--yk-fg2);
+  --pico-primary-focus: transparent;
+  --pico-primary-inverse: var(--yk-bg);
+  /* secondary and contrast: outline buttons */
+  --pico-secondary: var(--yk-fg);
+  --pico-secondary-background: transparent;
+  --pico-secondary-border: var(--yk-fg);
+  --pico-secondary-underline: var(--yk-ctl);
+  --pico-secondary-hover: var(--yk-fg);
+  --pico-secondary-hover-background: transparent;
+  --pico-secondary-hover-border: var(--yk-fg);
+  --pico-secondary-hover-underline: var(--yk-fg);
+  --pico-secondary-focus: transparent;
+  --pico-secondary-inverse: var(--yk-fg);
+  --pico-contrast: var(--yk-fg);
+  --pico-contrast-background: transparent;
+  --pico-contrast-border: var(--yk-fg);
+  --pico-contrast-underline: var(--yk-ctl);
+  --pico-contrast-hover: var(--yk-fg);
+  --pico-contrast-hover-background: transparent;
+  --pico-contrast-hover-border: var(--yk-fg);
+  --pico-contrast-hover-underline: var(--yk-fg);
+  --pico-contrast-focus: transparent;
+  --pico-contrast-inverse: var(--yk-fg);
+  --pico-mark-background-color: var(--yk-fg);
+  --pico-mark-color: var(--yk-bg);
+  --pico-ins-color: var(--yk-fg);
+  --pico-del-color: var(--yk-fg);
+  --pico-blockquote-border-color: var(--yk-line);
+  --pico-table-border-color: var(--yk-line);
+  --pico-table-row-stripped-background-color: transparent;
+  --pico-code-background-color: transparent;
+  --pico-code-color: var(--yk-fg2);
+  --pico-code-kbd-background-color: var(--yk-fg);
+  --pico-code-kbd-color: var(--yk-bg);
+  --pico-form-element-background-color: var(--yk-bg);
+  --pico-form-element-selected-background-color: var(--yk-line);
+  --pico-form-element-border-color: var(--yk-ctl);
+  --pico-form-element-color: var(--yk-fg);
+  --pico-form-element-placeholder-color: var(--yk-fg2);
+  --pico-form-element-active-background-color: var(--yk-bg);
+  --pico-form-element-active-border-color: var(--yk-fg);
+  --pico-form-element-focus-color: transparent;
+  --pico-form-element-invalid-border-color: var(--yk-fg);
+  --pico-form-element-invalid-active-border-color: var(--yk-fg);
+  --pico-form-element-invalid-focus-color: transparent;
+  --pico-form-element-valid-border-color: var(--yk-ctl);
+  --pico-form-element-valid-active-border-color: var(--yk-fg);
+  --pico-form-element-valid-focus-color: transparent;
+  --pico-switch-background-color: var(--yk-ctl);
+  --pico-switch-checked-background-color: var(--yk-fg);
+  --pico-switch-color: var(--yk-bg);
+  --pico-range-border-color: var(--yk-line);
+  --pico-range-active-border-color: var(--yk-ctl);
+  --pico-range-thumb-border-color: var(--yk-bg);
+  --pico-range-thumb-color: var(--yk-fg);
+  --pico-range-thumb-active-color: var(--yk-fg);
+  --pico-accordion-border-color: var(--yk-line);
+  --pico-accordion-active-summary-color: var(--yk-fg);
+  --pico-accordion-close-summary-color: var(--yk-fg);
+  --pico-accordion-open-summary-color: var(--yk-fg);
+  --pico-card-background-color: var(--yk-bg);
+  --pico-card-border-color: var(--yk-line);
+  --pico-card-box-shadow: none;
+  --pico-card-sectioning-background-color: var(--yk-bg);
+  --pico-dropdown-background-color: var(--yk-bg);
+  --pico-dropdown-border-color: var(--yk-line);
+  --pico-dropdown-box-shadow: none;
+  --pico-dropdown-color: var(--yk-body);
+  --pico-dropdown-hover-background-color: var(--yk-line);
+  --pico-progress-background-color: var(--yk-line);
+  --pico-progress-color: var(--yk-fg);
+  --pico-tooltip-background-color: var(--yk-fg);
+  --pico-tooltip-color: var(--yk-bg);
+}
+
+/* Type */
+body { background: var(--yk-bg); }
+h1, h2, h3, h4, h5, h6, strong, b, th, legend, summary { font-weight: 600; }
+h1 { --pico-font-size: 2.25rem; --pico-line-height: 1.2; }
+[lang=ja] { font-family: var(--yk-font-ja); font-size: 1.15em; }
+[lang=ja] [lang=ja] { font-size: 1em; }
+code, kbd, samp, pre { font-family: var(--pico-font-family-monospace); }
+mark { font-weight: 600; padding: 0.05em 0.35em; border-radius: 3px; }
+
+/* Focus: the same 2 px outline on every control, from the keyboard */
+:where(a, button, input, select, textarea, summary, [role=button], [tabindex]):focus-visible {
+  outline: 2px solid var(--yk-fg);
+  outline-offset: 2px;
+}
+:where(input, select, textarea):focus-visible { outline-offset: 0; }
+
+/* Buttons: one filled (the default, primary) per page; .secondary and .outline are outlines */
+button, [role=button], [type=submit], [type=button] { border-width: 1.5px; font-weight: 600; }
+button[type=submit] { width: auto; }
+button.quiet { border-color: var(--yk-ctl); color: var(--yk-body); font-weight: 400; }
+body > header form { margin: 0; }
+:is(button, [type=submit], [type=button], [role=button]):is(.secondary, .contrast, .outline):hover {
+  box-shadow: inset 0 0 0 1px var(--yk-fg);
+}
+input:not([type=checkbox], [type=radio], [type=range]), select, textarea { border-width: 1.5px; }
+/* Pico's search and select icons are data: images, which the page's security policy blocks */
+input:not([type=checkbox], [type=radio], [type=range], [type=file])[type=search] {
+  background-image: none; padding-inline-start: var(--pico-form-element-spacing-horizontal);
+}
+[type=file]::file-selector-button {
+  --pico-background-color: transparent; --pico-border-color: var(--yk-fg); --pico-color: var(--yk-fg);
+}
+
+/* Cards: a thin divider line instead of a shadow */
+article { border: 1px solid var(--yk-line); border-radius: 8px; }
+article > header { border-bottom: 1px solid var(--yk-line); color: var(--yk-fg); }
+article > footer { border-top: 1px solid var(--yk-line); }
+
+/* Status: an icon, weight and an inverted label, never colour alone */
+.status { display: inline-flex; align-items: center; gap: 0.35em; padding: 0.05em 0.5em;
+  border: 1.5px solid var(--yk-fg); border-radius: 4px; color: var(--yk-fg); font-weight: 600; }
+.status.bad { background: var(--yk-fg); color: var(--yk-bg); }
+.status svg { width: 1em; height: 1em; flex: none; }
+
+/* Page frame */
+body > header { border-bottom: 1px solid var(--yk-line); }
+body > footer { border-top: 1px solid var(--yk-line); color: var(--yk-fg2); }
+.brand { text-decoration: none; }
+.brand strong { color: var(--yk-fg); }
+.brand [lang=ja] { color: var(--yk-fg2); }
+
+/* Layout helpers */
+dl { display: grid; grid-template-columns: max-content 1fr; gap: 0.25rem 1rem; }
+dt { color: var(--pico-muted-color); }
+dd { margin: 0; }
+code { word-break: break-all; }
+@media (max-width: 576px) { dl { grid-template-columns: 1fr; } dd { margin-bottom: 0.5rem; } }
+form.alt { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; }
+form.alt button { margin: 0; width: auto; text-align: left; }
+form.alt label { margin: 0; }
+form.inline { margin-bottom: 0.5rem; }
+/* "I know this" / "Undo" in a words table: a quiet button that keeps the row short */
+form.known-word { margin: 0; }
+form.known-word button { margin: 0; padding: 0.4rem 0.9rem; min-height: 44px; white-space: nowrap; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* Step bar on a game's pages, and the numbered dots it shares with the start page's setup list:
+   done shows a check, the current step is filled, later steps are dashed but readable. */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%);
+  white-space: nowrap; }
+.dot { display: inline-flex; align-items: center; justify-content: center; flex: none;
+  width: 2rem; height: 2rem; border-radius: 50%; border: 1.5px solid var(--yk-ctl);
+  color: var(--yk-fg); font-family: var(--pico-font-family-monospace); font-weight: 600;
+  font-size: 0.875rem; }
+.dot svg { width: 1rem; height: 1rem; }
+.dot.current { background: var(--yk-fg); border-color: var(--yk-fg); color: var(--yk-bg); }
+.dot.later { border-style: dashed; }
+nav.steps { display: block; margin-bottom: 2rem; padding-bottom: 1rem;
+  border-bottom: 1px solid var(--yk-line); }
+nav.steps ol, nav.steps ol:first-of-type, nav.steps ol:last-of-type { display: flex;
+  flex-wrap: wrap; align-items: stretch; gap: 0.5rem 1rem; margin: 0; padding: 0; }
+nav.steps li { flex: 1 1 9rem; padding: 0; list-style: none; }
+nav.steps li::before { content: none; }
+nav.steps a { display: flex; align-items: center; gap: 0.6rem; min-height: 44px; margin: 0;
+  padding: 0; text-decoration: none; color: var(--yk-body); }
+nav.steps .name { display: block; line-height: 1.3; }
+nav.steps .note { display: block; color: var(--yk-fg2); }
+nav.steps a.current .name { font-weight: 600; color: var(--yk-fg); }
+nav.steps a:hover .name { text-decoration: underline; }
+
+/* The start page's setup list */
+.setup-item { display: flex; gap: 1.25rem; }
+.setup-item + .setup-item { margin-top: 1.5rem; padding-top: 1.5rem;
+  border-top: 1px solid var(--yk-line); }
+.setup-item > div { flex: 1; min-width: 0; }
+.setup-item h3 { margin: 0.25rem 0 0.5rem; font-size: 1.1rem; }
+.lead { font-size: 1.15rem; max-width: 40em; }
+
+/* The game page */
+article > header.split { display: flex; flex-wrap: wrap; align-items: center;
+  justify-content: space-between; gap: 0.5rem 1rem; }
+dl.stats { grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: 1rem; }
+dl.stats dd { font-family: var(--pico-font-family-monospace); font-size: 1.5rem; font-weight: 600;
+  color: var(--yk-fg); }
+article.next { border: 1.5px solid var(--yk-fg); }
+.small-heading { font-size: 1rem; margin-bottom: 0.5rem; }
+.links { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
+.next-step { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end;
+  gap: 0.75rem 1.25rem; padding-top: 1.5rem; border-top: 1px solid var(--yk-line); }
+.next-step [role=button] { margin: 0; }
+h1 .status { font-size: 0.875rem; vertical-align: middle; font-weight: 600; }
+
+/* Export: format cards first, then only the options for that format (where :has works) */
+.choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 0.75rem; }
+fieldset.formats legend { margin-bottom: 0.75rem; }
+fieldset .count { margin-left: 0.5rem; color: var(--yk-fg2);
+  font-family: var(--pico-font-family-monospace); font-size: 0.875rem; }
+label.choice { width: auto; margin: 0; padding: 1rem; border: 1.5px solid var(--yk-ctl);
+  border-radius: 8px; cursor: pointer; }
+label.choice small { display: block; margin-top: 0.25rem; color: var(--yk-fg2); }
+label.choice:hover, label.choice:has(:checked) { border-color: var(--yk-fg);
+  box-shadow: inset 0 0 0 1px var(--yk-fg); }
+form.export:has([name=kind][value=csv]:checked, [name=kind][value=json]:checked) .for-deck,
+form.export:has([name=kind][value=anki]:checked, [name=kind][value=xlsx]:checked) .for-file,
+form.export:has([name=kind][value=xlsx]:checked, [name=kind][value=csv]:checked,
+  [name=kind][value=json]:checked) .for-anki { display: none; }
+label.for-anki { max-width: 35rem; margin-bottom: var(--pico-spacing); }
+.summary { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 1rem 1.5rem; margin: 1.5rem 0; padding: 1.5rem; border: 1.5px solid var(--yk-fg);
+  border-radius: 8px; }
+.summary p { margin: 0; }
+.summary strong { font-size: 1.25rem; color: var(--yk-fg); }
+.summary small { display: block; color: var(--yk-fg2); }
+.summary button { margin: 0; }

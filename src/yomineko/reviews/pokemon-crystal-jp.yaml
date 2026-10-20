@@ -1,0 +1,91 @@
+# Corrections for the wrong dictionary picks in kana-only text. JMdict ids only.
+# A first pass over the ambiguous words seen 15 or more times and the names the tokenizer
+# reads as ordinary nouns; the long tail is unreviewed.
+schema_version: 1
+profile: pokemon-crystal-jp
+rom_sha1: "95127b901bbce2407daf43cce9f45d4c27ef635d"
+words:
+  # another entry with the same reading (sentence_safe: false where it is right for most
+  # lines, not all)
+  - {from: 1241450, to: 1313580}
+  - {from: 1605845, to: 1605840}
+  - {from: 1591100, to: 1591110, sentence_safe: false}
+  - {from: 1482110, to: 2022640, sentence_safe: false}
+  - {from: 1314270, to: 1064880}
+  - {from: 1579800, to: 2650010}
+  - {from: 1445980, to: 1446740, sentence_safe: false}
+  - {from: 1570710, to: 1207610, sentence_safe: false}
+  - {from: 1586840, to: 1296400}
+  - {from: 1331530, to: 1495740, sentence_safe: false}
+  - {from: 1433680, to: 1495770, sentence_safe: false}
+  - {from: 1208840, to: 1346150, sentence_safe: false}
+  - {from: 1239700, to: 1239560, sentence_safe: false}
+  - {from: 1197710, to: 1604890}
+  - {from: 1589780, to: 1510650, sentence_safe: false}
+  - {from: 1597045, to: 1251100, sentence_safe: false}
+  - {from: 1304760, to: 1607180}
+  - {from: 1352030, to: 1242590, sentence_safe: false}
+  - {from: 1956720, to: 1445160}
+  - {from: 1396840, to: 2140540}
+  - {from: 1403550, to: 1402730}
+  - {from: 1284430, to: 1198180, sentence_safe: false}
+  - {from: 1212110, to: 1212250}
+  - {from: 1253900, to: 1343950}
+  - {from: 1318950, to: 1310680}
+  - {from: 1324280, to: 1557580}
+  - {from: 1373000, to: 1005180}
+  - {from: 1445150, to: 1553120, sentence_safe: false}
+  - {from: 1430250, to: 1326980, sentence_safe: false}
+  - {from: 2266990, to: 2029080, sentence_safe: false}
+  # the first half or the second half of a longer word: use that word
+  - {from: 1318270, to: 1318290}
+  - {from: 1580550, to: 1366000}
+  - {from: 1586270, to: 1401000, sentence_safe: false}
+  - {from: 1502860, to: 1222590, sentence_safe: false}
+  # the right entry, but its first meaning is not the one used here
+  - {from: 1346230, gloss: "match; battle; contest"}
+  - {from: 1165670, gloss: "full; a lot; plenty"}
+  - {from: 1374550, gloss: "amazing; great; terrific"}
+  - {from: 1352320, gloss: "to give; to do (something) for someone; to raise"}
+  - {from: 1457730, gloss: "we; our (family, home, shop); I, me (Kansai dialect)"}
+  - {from: 1584870, gloss: "old man; grandpa"}
+  # a piece of other words, a particle or a sound: not a word to study
+  - {from: 2028980, drop: true}
+  - {from: 1374620, drop: true}
+  - {from: 1391780, drop: true}
+  - {from: 1012050, drop: true}
+  - {from: 1351270, drop: true}
+  - {from: 2603520, drop: true}
+  - {from: 1584800, drop: true}
+  - {from: 1193610, drop: true}
+  - {from: 1636070, drop: true}
+  - {from: 1172570, drop: true}
+  - {from: 1296300, drop: true}
+  - {from: 1607310, drop: true}
+  - {from: 1215770, drop: true}
+  - {from: 1255060, drop: true}
+  - {from: 1577650, drop: true}
+  - {from: 1956120, drop: true}
+  - {from: 1560210, drop: true}
+  # names of people and towns that are also ordinary nouns
+  - {from: 2839304, drop: true}
+  - {from: 1151180, drop: true}
+  - {from: 1221310, drop: true}
+  - {from: 1267550, drop: true}
+  - {from: 1528410, drop: true}
+  - {from: 1297160, drop: true}
+  - {from: 1538490, drop: true}
+sentences:
+  # bytes of a map script that pass for a message: never a sentence card
+  exclude:
+    - "00014238"
+    - "000618B1"
+    - "000618B7"
+    - "00069716"
+    - "000702ED"
+    - "000702F3"
+    - "00071EB4"
+    - "0007AF42"
+    - "0007AF49"
+    - "0007C175"
+    - "0007DE5F"

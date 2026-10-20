@@ -1,0 +1,35 @@
+# Profile for the synthetic Shift-JIS test ROM (tests/support/synthrom.py). Not a real game.
+schema_version: 1
+id: synth-sjis
+title: Synthetic Shift-JIS test ROM
+platform: gba
+rom:
+  sha1: "61dd5a574e6cc4a357bafa42b152fce266ecb57a"
+  game_code: TSTJ
+  revision: 0
+encoding:
+  type: shift_jis
+  terminator: 0x00
+  single_byte_kana: hiragana
+  custom_leads: [[0x84, 0x87], [0xEB, 0xFC]]
+text:
+  regions:
+    - {start: 0x0, end: 0x10000}
+  pointer_base: 0x08000000
+  pointer_align: 4
+  bank_gap: 0x40
+discover:
+  min_score: 0.7
+  unreferenced: {min_japanese: 3, min_kana_ratio: 0.8}
+  ignore: ['#C.', '#[RPW=]', '\$[a-z]\d', '\{(?:0D|10)\}']
+plain:
+  - {pattern: '^.{0,3}?\{0F\}\{08\}', replace: ''}
+  - {pattern: '#[Cc].', replace: ''}
+  - {pattern: '#[PpNn]', replace: "\n"}
+  - {pattern: '#[RrWw=+]', replace: ''}
+  - {pattern: '\$-|#', replace: ''}
+  - {pattern: '\$[a-z]\d?', replace: '〇〇'}
+  - {pattern: '\{0D\}', replace: "\n"}
+kinds: {dialogue_min_length: 12}
+tables:
+  - {category: item, base: 0x3000, stride: 8, count: 3, field: 0}
