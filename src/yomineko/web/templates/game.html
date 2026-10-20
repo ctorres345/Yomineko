@@ -31,7 +31,7 @@
 <article class="next">
   <header><strong>Find the words</strong></header>
   {% if words %}
-  <p>{{ "{:,}".format(words) }} distinct words found. Next, choose which of them become cards.</p>
+  <p>{{ "{:,}".format(words) }} distinct word{{ "" if words == 1 else "s" }} found. Next, choose which of them become cards.</p>
   <p><a role="button" href="/games/{{ game_id }}/choose">Next: Choose your words</a></p>
   {% if dictionary %}
   <form method="post" action="/games/{{ game_id }}/analyze">

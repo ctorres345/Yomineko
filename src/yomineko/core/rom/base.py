@@ -95,7 +95,10 @@ def _read_zip(source: str | Path | BinaryIO, name: str) -> tuple[bytes, str]:
     except (zipfile.BadZipFile, zlib.error, EOFError) as e:
         raise RomError(f"{name}: not a valid zip file") from e
     except (RuntimeError, NotImplementedError) as e:  # a password, or an unknown compression
-        raise RomError(f"{name}: cannot open the zip: {e}") from e
+        raise RomError(
+            f"{name}: the zip is password-protected or packed in a way yomineko cannot read. "
+            "Unzip it and pick the ROM inside."
+        ) from e
 
 
 def load_rom(path: str | Path) -> Rom:

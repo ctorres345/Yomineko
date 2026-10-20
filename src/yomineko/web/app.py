@@ -316,7 +316,8 @@ def create_app(
                 script, make_tokenizer, review_files=review_files(game_id), download=False
             )
             write_script(done.script, path)
-            notes = [f"{len(done.script.words):,} distinct words found."]
+            found = len(done.script.words)
+            notes = [f"{found:,} distinct word{'' if found == 1 else 's'} found."]
             if done.report is not None:
                 notes.extend(describe_report(done.report))
             return Outcome(f"/games/{game_id}", notes)

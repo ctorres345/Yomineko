@@ -90,10 +90,10 @@ def test_analysing_a_game_finds_its_words(workspace, data_folder):
     client = make_client(workspace, make_tokenizer=tokenizer)
     assert "Find the words" in client.get("/games/demo").text
     status = finish(client, post(client, "/games/demo/analyze"))
-    assert "Done" in status and "1 distinct words found" in status
+    assert "Done" in status and "1 distinct word found" in status
     assert [w.jmdict_id for w in read_script(workspace.script_path("demo")).words] == [9000001]
     page = client.get("/games/demo")
-    assert "1 distinct words found" in page.text and "Find the words again" in page.text
+    assert "1 distinct word found" in page.text and "Find the words again" in page.text
 
 
 def test_the_review_the_user_wrote_is_applied(workspace, data_folder):

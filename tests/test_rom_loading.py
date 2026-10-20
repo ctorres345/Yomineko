@@ -182,8 +182,9 @@ def damaged_zip(rom, damage):
 def test_a_zip_that_cannot_be_unpacked_is_refused_with_a_message(sjis_rom, tmp_path, damage):
     archive = tmp_path / "game.zip"
     archive.write_bytes(damaged_zip(sjis_rom.rom, damage))
-    with pytest.raises(RomError, match=r"^game\.zip: "):
+    with pytest.raises(RomError, match=r"^game\.zip: ") as refused:
         load_rom(archive)
+    assert "ZipInfo" not in str(refused.value)  # a message for people, not Python's
     with pytest.raises(RomError, match=r"^game\.zip: "):
         load_rom_bytes(archive.read_bytes(), "game.zip")
 
