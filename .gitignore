@@ -25,6 +25,10 @@ __pycache__/
 htmlcov/
 coverage.xml
 *.tbl.bak
+# Plans, handoffs and session notes stay outside the repository
+docs/PLAN.md
+notes/
+
 # Personal Claude Code overrides
 .claude/settings.local.json
 

@@ -11,7 +11,7 @@ Prepare (on a branch, then PR):
 1. Bump `__version__` in `src/yomineko/__init__.py`; move the CHANGELOG entry from
    "unreleased" to the version and date.
 2. Run the `check-game` skill for every packaged game (the owner's ROMs, set the `YOMINEKO_ROM_*`
-   variables) and put the verdicts and numbers in the README game table and `docs/PLAN.md`.
+   variables) and put the verdicts and numbers in the README game table and each game's `docs/games/<game>.md`.
 3. The CI gate: `ruff check .`, `ruff format --check .`, `mypy`, `lint-imports`,
    `pytest -m "not realrom" --cov`, `python tools/repo_guard.py --all`.
 4. `python -m build`, then `python -m twine check dist/*`. List the wheel contents and
