@@ -1,14 +1,13 @@
 name: Build app
 
 # Builds the command-line program and the desktop app for Windows, macOS and Linux with
-# PyInstaller. Runs on request (Actions, Run workflow) or when a version tag is pushed, not on
-# every push: macOS runners are expensive on a private repository.
-# The result is a downloadable build artifact. Attaching it to a release is the owner's step.
+# PyInstaller. Runs on request (Actions, Run workflow) and as part of the Release workflow when a
+# version tag is pushed, not on every push: macOS runners are expensive.
+# The result is a downloadable build artifact; the Release workflow attaches it to the release.
 
 on:
   workflow_dispatch:
-  push:
-    tags: ["v*"]
+  workflow_call:
 
 permissions:
   contents: read

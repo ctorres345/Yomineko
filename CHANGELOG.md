@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- **One tag makes a release.** Pushing a version tag runs the new Release workflow: it checks the tag
+  against the version and the changelog, runs the checks, builds the package and the Windows, macOS and Linux app,
+  publishes to PyPI with Trusted Publishing (no token stored anywhere) and creates the GitHub release
+  with these notes and the downloads. The Build app workflow no longer runs on its own for a tag.
+
 ## 0.5.1 (2026-10-20)
 
 - **A theme button in the app.** The header's Theme button switches between Match system (the

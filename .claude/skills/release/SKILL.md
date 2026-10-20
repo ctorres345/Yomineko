@@ -1,11 +1,11 @@
 ---
 name: release
-description: Prepare a yomineko release (version bump, changelog, build) and walk the owner through the PyPI upload. Use when cutting a version.
+description: Prepare a yomineko release (version bump, changelog, build) and hand the owner the tag that publishes it through the Release workflow. Use when cutting a version.
 ---
 
-**Claude prepares; the owner uploads.** Never run `twine upload`, and never ask for,
-read, print or store a PyPI token. The owner keeps it in a password manager or in
-`%USERPROFILE%\.pypirc`, outside the repo.
+**Claude prepares; the owner releases by pushing the tag.** Never run `twine upload` or push a
+release tag, and never ask for, read, print or store a PyPI token: publishing is the Release
+workflow's job, through Trusted Publishing.
 
 Prepare (on a branch, then PR):
 1. Bump `__version__` in `src/yomineko/__init__.py`; move the CHANGELOG entry from
@@ -17,12 +17,29 @@ Prepare (on a branch, then PR):
 4. `python -m build`, then `python -m twine check dist/*`. List the wheel contents and
    confirm the profiles and schemas ship and no ROM, archive or game text does.
 
-Owner, after merging to `main`, in the venv:
-1. Optional rehearsal: `python -m twine upload --repository testpypi dist/*`
-2. `python -m twine upload dist/*` (username `__token__`, password = the token)
-3. Fresh venv: `pip install yomineko`, then `yomineko --version`
-4. Tag `vX.Y.Z`. After the first upload, replace the account-wide token with one scoped to
-   `yomineko`.
+Owner, after merging the bump to `main`: push the tag. That is the whole release.
 
-A version can never be re-uploaded: a bad 0.1.0 becomes 0.1.1. Tokenless Trusted
-Publishing from GitHub Actions is a follow-up.
+```bash
+git checkout main && git pull origin main
+git tag vX.Y.Z && git push origin vX.Y.Z
+```
+
+The **Release** workflow (`.github/workflows/release.yml`) then checks that the tag matches
+`__version__` and has a CHANGELOG section (`tools/release_notes.py`) and that the commit is on
+`main`, runs the CI checks, builds the package and the Windows, macOS and Linux app, publishes to
+PyPI with Trusted Publishing (no token), and creates the GitHub release with the changelog section
+as notes and the app downloads and package files attached (a pre-release for a PEP 440
+pre-release version).
+Nothing is published unless every check and build passed. Afterwards: fresh venv, `pip install yomineko`,
+`yomineko --version`.
+
+One-time setup (owner, on pypi.org): the `yomineko` project, *Publishing*, *Add a new publisher*,
+GitHub: owner `ctorres345`, repository `Yomineko`, workflow `release.yml`, environment `pypi`.
+Once it works, delete the PyPI API token: nothing needs it any more.
+
+If the workflow fails before the PyPI job, cancel the run if it is still going, delete the tag
+(`git push origin :vX.Y.Z`, `git tag -d vX.Y.Z`), fix the problem in a PR and merge it, then tag
+the new commit on main (`git pull`, `git tag vX.Y.Z`, `git push origin vX.Y.Z`). Once
+the PyPI job has uploaded, never move the tag: if only the GitHub release job failed, re-run it
+and it completes the release. If the PyPI job failed after uploading only one of the two files,
+its re-runs fail too (PyPI refuses a file it already has): release the next patch version. A version can never be re-uploaded, so a bad 0.1.0 becomes 0.1.1.
