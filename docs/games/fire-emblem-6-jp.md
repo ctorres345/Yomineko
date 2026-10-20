@@ -18,7 +18,7 @@ the decompiled functions stay on the owner's machine under `yomineko-out/yom61/`
 
 ## The format, checked against the decoder (YOM-61)
 
-The first look (2026-10-05, `docs/PLAN.md`) inferred the format from statistics. Each fact below was then
+The first look (2026-10-05) inferred the format from statistics. Each fact below was then
 read off the game's code with Ghidra and tried on the data.
 
 | Inferred fact | Verdict | What the code and the data say |

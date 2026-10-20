@@ -1,8 +1,9 @@
 # yomineko
 
 Extracts the Japanese script from game ROMs the user owns and turns it into study
-material (word list, sentences, Anki/CSV/JSON). Scope, decisions and task order are in
-`docs/PLAN.md`: tick a stage off there when it lands.
+material (word list, sentences, Anki/CSV/JSON). Scope, decisions and task order live in the
+maintainer's plan, outside this repository: never commit plans, handoffs or session notes
+(`docs/PLAN.md` and `notes/` are gitignored for local copies).
 
 ## Data model
 
@@ -30,7 +31,7 @@ data-only YAML profiles in `src/yomineko/profiles/`, keyed by ROM SHA-1.
 
 ## Working
 
-- Setup and checks: see CONTRIBUTING.md. Where the work stands and what the next session does: `docs/PLAN.md`. Use the project venv: `.venv/Scripts/python`
+- Setup and checks: see CONTRIBUTING.md. Use the project venv: `.venv/Scripts/python`
   (Windows) or `.venv/bin/python`.
 - Install for development with `pip install -e ".[dev,analyze,web]"` (the same as CI; `analyze` is
   the tokenizer, `web` the web interface, and their tests and type checks need them).

@@ -95,9 +95,9 @@ Every game should leave the tool a little better. Before you finish, ask: what d
 command could do, and what did the tool get wrong that it should get right for the next game? Examples
 from the first four: a survey check that was missing (comparing two regions, measuring control codes), a
 matcher bug that only a kana-heavy game showed, a quality measure the scorecard lacked. Write the answer
-in one or two lines under "Lessons" in `docs/PLAN.md`, and when it is small, do it (a check in
+in one or two lines in the game's `docs/games/<game>.md`, and when it is small, do it (a check in
 `tools/game_check.py`, a survey detector with a synthetic test, a line in this skill or in
-`docs/ADDING_A_GAME.md`). When it is large, add it to the plan as a task.
+`docs/ADDING_A_GAME.md`). When it is large, open an issue for it.
 
 ## Not supported yet
 

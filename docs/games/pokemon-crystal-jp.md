@@ -1,6 +1,6 @@
 # Pocket Monsters Crystal (Japan, GBC) - investigation notes
 
-Status: **supported** (2026-10-09, phase 3 of the release roadmap in `docs/PLAN.md`): profile
+Status: **supported** (2026-10-09): profile
 `pokemon-crystal-jp`, `verify` byte for byte, scorecard verdict *ready*. What was built and measured is in
 "Result" below; the investigation that led to it follows, as it was written in phase 2, with two
 corrections marked.
@@ -305,7 +305,7 @@ adapter's sign-up and should stay out.
 (Phase 3 settled the extra tiles and the name bytes; the rest stands.)
 
 - **Whole sentences.** A sentence that runs over two rows of a box is two lines. Joining rows is the
-  planned soft-break work for all three row-based games (`docs/PLAN.md`).
+  planned soft-break work for all three row-based games.
 - **Reference-book entries** (bank 0x11): 117 found against 251 species, so most entries do not start with
   a 0x00 command or are split differently. Find the entry table before counting on them.
 - **Mobile adapter text** is in the ROM (the sign-up place names at 0x04854D, the phrase words in bank

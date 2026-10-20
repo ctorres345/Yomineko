@@ -24,7 +24,7 @@ when the verdict is *broken*.
   sentence, no repeats, hardly any character names left in the word list, name or term cards exist, and
   every review rule still matches something.
 - **works, with limits**: usable, and the limits are named. Say them to the user in plain words; they go in
-  the README game table and in `docs/PLAN.md`.
+  the README game table and in the game's `docs/games/<game>.md`.
 - **broken**: do not release. Typical causes and where to look:
   - *the text does not rebuild the ROM*: the profile (encoding, regions, commands); `yomineko verify`.
   - *raw escape codes reach the cards*: a control code the profile keeps as `{XX}` inside a line; add a
@@ -42,7 +42,7 @@ sentences from the file (never print Japanese to the Windows console; open the f
 - Sentences that stop mid-sentence, are menu text or debug strings: `sentences.exclude_ranges` or caps in
   the profile, or `sentences.exclude` ids in the review.
 
-Fix, run the check again, and keep the numbers from the last run in `docs/PLAN.md`.
+Fix, run the check again, and keep the numbers from the last run in the game's `docs/games/<game>.md`.
 
 ## Adding a new check
 

@@ -26,7 +26,7 @@ text causes, picks the sentences that teach the most words, and exports Anki dec
 spreadsheets, CSV and JSON. You can use it in a desktop app, in your browser, or from a
 terminal. Four games are supported so far (see [Games and profiles](#games-and-profiles) for
 what each gives you).
-See [docs/PLAN.md](https://github.com/ctorres345/yomineko/blob/main/docs/PLAN.md) for status and what comes next.
+See the [changelog](https://github.com/ctorres345/yomineko/blob/main/CHANGELOG.md) for what each version added.
 
 **Contents:** [Install](#install) · [How to use it](#how-to-use-it) ·
 [Troubleshooting](#troubleshooting) · [Command line](#command-line) ·
