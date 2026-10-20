@@ -157,6 +157,21 @@ def test_the_app_shows_a_window_and_stops_the_server_when_it_closes(launched, mo
     assert seen["app"][0].root.name == "games"  # the app's own folder, in the user data folder
 
 
+def test_quit_on_the_page_closes_the_window(launched, monkeypatch):
+    running, seen = launched
+    closed = []
+    window = types.SimpleNamespace(destroy=lambda: closed.append(True))
+    monkeypatch.setitem(sys.modules, "webview", types.SimpleNamespace(windows=[window]))
+
+    def shown(url):
+        seen["app"][1]()  # the Quit button, pressed while the window is open
+        return True
+
+    monkeypatch.setattr(launch, "_open_window", shown)
+    assert launch.run() == 0
+    assert closed == [True] and running.stopped
+
+
 def test_the_app_falls_back_to_the_browser_and_waits_for_quit(launched, monkeypatch):
     running, seen = launched
     monkeypatch.setattr(launch, "_open_window", lambda url: False)
