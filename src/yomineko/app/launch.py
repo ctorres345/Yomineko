@@ -29,6 +29,13 @@ def _open_window(url: str) -> bool:
     return True
 
 
+def _close_windows() -> None:
+    """Close the app's window, so Quit on the page ends the app. Nothing to do in the browser."""
+    webview = sys.modules.get("webview")  # only loaded once a window was asked for
+    for window in list(getattr(webview, "windows", ())):
+        window.destroy()
+
+
 def run(*, smoke: bool = False, browser: bool = False, port: int = 0) -> int:
     """Run the app. Returns the exit code."""
     require_web_extra()
@@ -48,7 +55,12 @@ def run(*, smoke: bool = False, browser: bool = False, port: int = 0) -> int:
     from yomineko.web.server import start
 
     stop = threading.Event()
-    running = start(create_app(app_workspace(), on_quit=stop.set), port)
+
+    def quit_app() -> None:
+        stop.set()
+        _close_windows()
+
+    running = start(create_app(app_workspace(), on_quit=quit_app), port)
     try:
         if browser or not _open_window(running.url):
             webbrowser.open(running.url)
