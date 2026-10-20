@@ -1,0 +1,120 @@
+name: Release
+
+# Pushing a version tag (v1.2.3) releases that version:
+#   1. check that the tag is v + the package's __version__, that CHANGELOG.md has its section, and
+#      that the tagged commit is on main;
+#   2. run the CI checks, and build the Python package and the Windows, macOS and Linux app;
+#   3. publish the package to PyPI with Trusted Publishing: PyPI trusts this workflow, so no token
+#      is stored anywhere (one-time setup on pypi.org, see the release skill);
+#   4. create the GitHub release with the changelog section as notes, the app downloads and the
+#      package files. A pre-release version (PEP 440: a, b, rc, dev) is marked as a pre-release.
+# Nothing is published unless every check and build passed. A version can never be uploaded to
+# PyPI twice, and the upload fails loudly if it is already there. If only the GitHub release job
+# fails, re-running it completes the release.
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    outputs:
+      prerelease: ${{ steps.version.outputs.prerelease }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0  # for the "is it on main" check
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: The tag matches the version and the changelog
+        run: python tools/release_notes.py "$GITHUB_REF_NAME" > release-notes.md
+      - name: The tagged commit is on main
+        run: git merge-base --is-ancestor "$GITHUB_SHA" origin/main
+      - run: python -m pip install -U pip build twine
+      - run: python -m build
+      - name: Is it a pre-release?
+        id: version
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import os
+          from packaging.version import Version  # installed with build
+          print(f"prerelease={str(Version(os.environ['GITHUB_REF_NAME'][1:]).is_prerelease).lower()}")
+          PY
+      - run: python -m twine check dist/*
+      - uses: actions/upload-artifact@v7
+        with:
+          name: python-package
+          path: dist/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v7
+        with:
+          name: release-notes
+          path: release-notes.md
+          if-no-files-found: error
+
+  tests:
+    needs: package
+    uses: ./.github/workflows/ci.yml
+
+  app:
+    needs: package
+    uses: ./.github/workflows/build-app.yml
+
+  pypi:
+    needs: [package, tests, app]
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/yomineko/
+    permissions:
+      id-token: write  # Trusted Publishing: proves to PyPI that this workflow is uploading
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: python-package
+          path: dist/
+      # pinned to a commit: this step holds the PyPI credential (the build tools above are not pinned)
+      - uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33  # v1.14.2
+
+  github-release:
+    needs: [package, pypi]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # create the release and upload its files
+    steps:
+      # only the named artifacts: anything else a called workflow uploads stays off the release
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: yomineko-*
+          path: assets/
+          merge-multiple: true  # the app archives and their .sha256
+      - uses: actions/download-artifact@v8
+        with:
+          name: python-package
+          path: assets/
+      - uses: actions/download-artifact@v8
+        with:
+          name: release-notes
+      - name: Create the release (or finish it on a re-run)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PRERELEASE: ${{ needs.package.outputs.prerelease }}
+        run: |
+          if gh release view "$GITHUB_REF_NAME" > /dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" assets/* --clobber
+            gh release edit "$GITHUB_REF_NAME" --notes-file release-notes.md \
+              --draft=false --prerelease="$PRERELEASE"
+          else
+            gh release create "$GITHUB_REF_NAME" assets/* --prerelease="$PRERELEASE" \
+              --title "${GITHUB_REF_NAME#v}" --notes-file release-notes.md --verify-tag
+          fi
