@@ -21,6 +21,7 @@ def _open_window(url: str) -> bool:
         import webview  # the app extra; imported late so the CLI never needs it
 
         webview.settings["ALLOW_DOWNLOADS"] = True  # exports are file downloads
+        webview.settings["OPEN_EXTERNAL_LINKS_IN_BROWSER"] = True  # the Ko-fi link (target=_blank)
         webview.create_window("yomineko", url, width=1100, height=800, min_size=(360, 500))
         webview.start()
     except Exception as e:  # no GUI toolkit, no WebView2 runtime ...

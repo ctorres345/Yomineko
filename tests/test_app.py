@@ -100,10 +100,11 @@ def test_the_cli_command_runs_the_same_smoke_test(monkeypatch):
 # ----------------------------------------------------------------------- window
 
 
-def test_a_window_is_shown_with_downloads_allowed(fake_webview):
+def test_a_window_is_shown_with_downloads_allowed_and_links_opened_outside(fake_webview):
     module, calls = fake_webview
     assert launch._open_window("http://localhost:1/") is True
     assert module.settings["ALLOW_DOWNLOADS"] is True and calls["started"] == 1
+    assert module.settings["OPEN_EXTERNAL_LINKS_IN_BROWSER"] is True
     assert calls["windows"][0][0] == ("yomineko", "http://localhost:1/")
 
 

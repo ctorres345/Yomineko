@@ -5,6 +5,10 @@
 - **A theme button in the app.** The header's Theme button switches between Match system (the
   default: light or dark as the computer is set), Light and Dark. The choice is kept in the app's
   data folder, so the next window opens the same way.
+- **A Ko-fi link in the app's footer** for anyone who wants to support the project. It opens in your
+  browser, never inside the app, and nothing is loaded from Ko-fi until you click it.
+- **A friendlier README**, with screenshots (taken with a demo ROM written for them), the story behind
+  the project, and a clearer invitation to add your game.
 
 ## 0.5.0 (2026-10-20)
 

@@ -183,6 +183,8 @@ article > footer { border-top: 1px solid var(--yk-line); }
 /* Page frame */
 body > header { border-bottom: 1px solid var(--yk-line); }
 body > footer { border-top: 1px solid var(--yk-line); color: var(--yk-fg2); }
+body > footer .support { display: block; margin-top: 0.25rem; }
+body > footer .support a { color: inherit; }
 .brand { text-decoration: none; }
 .brand strong { color: var(--yk-fg); }
 .brand [lang=ja] { color: var(--yk-fg2); }

@@ -117,7 +117,13 @@ def test_an_unknown_theme_is_refused(client, workspace):
 
 def test_the_pages_load_nothing_from_other_sites(client):
     html = client.get("/").text
-    assert not re.findall(r'(?:src|href)="(?:https?:)?//', html)
+    assert not re.findall(r'src="(?:https?:)?//', html)
+    assert not re.findall(r'<link[^>]*href="(?:https?:)?//', html)
+    # the one link to another site is the donation link, opened outside the app on a click
+    links = re.findall(r'<a [^>]*href="(?:https?:)?//[^>]*>', html)
+    assert links == [
+        '<a href="https://ko-fi.com/pandaveloper" target="_blank" rel="noopener noreferrer">'
+    ]
     assert client.get("/static/htmx.min.js").status_code == 200
     assert client.get("/static/pico.min.css").status_code == 200
 
