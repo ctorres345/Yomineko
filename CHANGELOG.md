@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.5.1 (2026-10-20)
 
 - **A theme button in the app.** The header's Theme button switches between Match system (the
   default: light or dark as the computer is set), Light and Dark. The choice is kept in the app's

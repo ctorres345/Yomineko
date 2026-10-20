@@ -67,7 +67,7 @@ case, but if it helps someone else study the way it has helped me, it's worth sh
 
 ## Install
 
-**Status:** version 0.5.0, early but usable. See the [changelog](https://github.com/ctorres345/yomineko/blob/main/CHANGELOG.md) for what each version added.
+**Status:** version 0.5.1, early but usable. See the [changelog](https://github.com/ctorres345/yomineko/blob/main/CHANGELOG.md) for what each version added.
 
 ### Desktop app (recommended, no Python needed)
 
