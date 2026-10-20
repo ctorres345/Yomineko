@@ -24,6 +24,7 @@
   <a href="#add-your-game">Add your game</a> ·
   <a href="#troubleshooting">Troubleshooting</a> ·
   <a href="#command-line">Command line</a> ·
+  <a href="#tech-stack">Tech stack</a> ·
   <a href="#support-the-project">Support</a>
 </p>
 
@@ -67,7 +68,7 @@ case, but if it helps someone else study the way it has helped me, it's worth sh
 
 ## Install
 
-**Status:** version 0.5.0, early but usable. See the [changelog](https://github.com/ctorres345/yomineko/blob/main/CHANGELOG.md) for what each version added.
+**Status:** version 0.5.1, early but usable. See the [changelog](https://github.com/ctorres345/yomineko/blob/main/CHANGELOG.md) for what each version added.
 
 ### Desktop app (recommended, no Python needed)
 
@@ -352,6 +353,22 @@ yomineko known list                      # the words you marked "I know this"
 - `game.gba` may also be a `.gbc` or `.gb` file, or a `.zip` holding one ROM. `yomineko serve` and
   `yomineko app` only listen on your own computer (127.0.0.1).
 </details>
+
+## Tech stack
+
+yomineko is written in Python (3.10 to 3.13) and runs entirely on your computer.
+
+| Part | Built with |
+|---|---|
+| Reading the ROM | Python's standard library: its own readers for the GBA and Game Boy headers, Shift-JIS and custom character tables, and BIOS LZ77 decompression. Each game is described by a YAML profile, checked with [Pydantic](https://docs.pydantic.dev), which also defines the JSON script format. |
+| Finding the words | [SudachiPy](https://github.com/WorksApplications/SudachiPy) with its core dictionary to split the text into words, and [JMdict](https://www.edrdg.org/jmdict/j_jmdict.html) for meanings and word frequencies, kept in a local SQLite index. |
+| Exports | [genanki](https://github.com/kerrickstaley/genanki) for Anki decks and [openpyxl](https://openpyxl.readthedocs.io) for spreadsheets; CSV and JSON from the standard library. |
+| App and web pages | [FastAPI](https://fastapi.tiangolo.com) and [Uvicorn](https://www.uvicorn.org) on 127.0.0.1 only, [Jinja](https://jinja.palletsprojects.com) templates, [htmx](https://htmx.org), [Pico CSS](https://picocss.com) and bundled IBM Plex fonts. [pywebview](https://pywebview.flowrl.com) gives it a native window. |
+| Command line | [Typer](https://typer.tiangolo.com). |
+| Downloads | Built with [PyInstaller](https://pyinstaller.org) for Windows, macOS and Linux by GitHub Actions; the Python package is on [PyPI](https://pypi.org/project/yomineko/). |
+| Quality | [pytest](https://pytest.org) on synthetic ROMs made by the tests (no real game needed), [Ruff](https://docs.astral.sh/ruff/), [mypy](https://mypy-lang.org) in strict mode and [Import Linter](https://import-linter.readthedocs.io) for the layers. |
+
+How the pieces fit together is in [docs/ARCHITECTURE.md](https://github.com/ctorres345/yomineko/blob/main/docs/ARCHITECTURE.md).
 
 ## Support the project
 
