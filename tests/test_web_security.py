@@ -119,6 +119,7 @@ def test_security_headers_are_on_every_response(client):
         assert response.headers["X-Content-Type-Options"] == "nosniff"
         assert response.headers["X-Frame-Options"] == "DENY"
         assert "default-src 'self'" in response.headers["Content-Security-Policy"]
+        assert "img-src 'self' data:;" in response.headers["Content-Security-Policy"]  # spinner
         assert response.headers["Referrer-Policy"] == "same-origin"
 
 

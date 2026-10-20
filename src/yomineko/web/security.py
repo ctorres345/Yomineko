@@ -29,6 +29,7 @@ SAFE_METHODS: Final = frozenset({"GET", "HEAD", "OPTIONS"})
 MAX_UPLOAD: Final = 33 * 1024 * 1024  # a 32 MiB ROM plus form overhead
 HEADERS: Final = {
     "Content-Security-Policy": "default-src 'self'; style-src 'self' 'unsafe-inline'; "
+    "img-src 'self' data:; "  # the stylesheet's busy spinner is an inline SVG
     "form-action 'self'; frame-ancestors 'none'; base-uri 'none'",
     "X-Content-Type-Options": "nosniff",
     "X-Frame-Options": "DENY",
