@@ -60,6 +60,9 @@ from yomineko.web.paging import paginate
 
 HERE = Path(__file__).parent
 NOTICE_FILE = ".notice-accepted"
+THEME_FILE = ".theme"  # "light" or "dark"; no file means follow the system setting
+# The header's theme button steps through these; "" is the system setting.
+THEMES = {"": "Match system", "light": "Light", "dark": "Dark"}
 SENTENCE_COUNT = 1000
 REVIEW_PAGE_SIZE = 10
 FORMATS = ("anki", "xlsx", "csv", "json")
@@ -178,6 +181,7 @@ def create_app(
     templates = Jinja2Templates(directory=HERE / "templates")
     templates.env.globals["version"] = __version__
     templates.env.globals["can_quit"] = on_quit is not None
+    templates.env.globals["themes"] = THEMES
     jobs = Jobs()
     scripts: dict[str, tuple[int, Script]] = {}  # game id -> (file mtime, parsed script)
     worklists: dict[str, list[WorkItem]] = {}  # game id -> the words still to look at
@@ -186,10 +190,27 @@ def create_app(
     picks: dict[str, tuple[object, list[Sentence]]] = {}  # game id -> (inputs, last selection)
 
     def page(request: Request, name: str, code: int = 200, **context: object) -> HTMLResponse:
+        theme = saved_theme()
+        names = list(THEMES)
+        # where the theme button comes back to: a page shown by a form post may have no GET
+        back = "/"
+        if request.method == "GET":
+            back = request.url.path + (f"?{request.url.query}" if request.url.query else "")
+        context.update(
+            theme=theme, next_theme=names[(names.index(theme) + 1) % len(names)], back=back
+        )
         return templates.TemplateResponse(request, name, context, status_code=code)
 
     def notice_accepted() -> bool:
         return (workspace.root / NOTICE_FILE).is_file()
+
+    def saved_theme() -> str:
+        """The theme picked in the header, or "" to follow the system setting."""
+        try:
+            text = (workspace.root / THEME_FILE).read_text(encoding="utf-8").strip()
+        except OSError:
+            return ""
+        return text if text in THEMES else ""
 
     def titles() -> dict[str, str]:
         return {p.profile.id: p.profile.title for p in packaged_profiles()}
@@ -262,6 +283,27 @@ def create_app(
         workspace.root.mkdir(parents=True, exist_ok=True)
         (workspace.root / NOTICE_FILE).write_text("accepted\n", encoding="utf-8")
         return RedirectResponse("/", status_code=303)
+
+    @app.post("/theme")
+    def set_theme(
+        theme: Annotated[str, Form()] = "", back: Annotated[str, Form()] = "/"
+    ) -> RedirectResponse:
+        if theme not in THEMES:
+            raise YominekoError(f"{theme!r} is not a theme.")
+        path = workspace.root / THEME_FILE
+        if theme:
+            workspace.root.mkdir(parents=True, exist_ok=True)
+            path.write_text(theme + "\n", encoding="utf-8")
+        else:
+            path.unlink(missing_ok=True)
+        # back to the page the button was on; only a path on this server, never another site
+        local = (
+            back.startswith("/")
+            and not back.startswith("//")
+            and "\\" not in back
+            and back.isprintable()
+        )
+        return RedirectResponse(back if local else "/", status_code=303)
 
     @app.post("/extract")
     def extract(file: Annotated[UploadFile, File()]) -> Response:
