@@ -92,4 +92,9 @@ def test_fonts_are_bundled_and_nothing_is_fetched_from_elsewhere():
         assert not name.startswith(("http:", "https:", "//")) and (STATIC / name).is_file()
     assert (STATIC / "fonts" / "OFL.txt").is_file()
     for page in TEMPLATES.glob("*.html"):
-        assert not re.search(r'(src|href)="(https?:)?//', page.read_text(encoding="utf-8")), page
+        html = page.read_text(encoding="utf-8")
+        assert not re.search(r'src="(https?:)?//', html), page
+        assert not re.search(r'<link[^>]*href="(https?:)?//', html), page
+        # a link the user clicks is not a fetch; the only one is the Ko-fi link, in the footer
+        for link in re.findall(r'<a [^>]*href="(?:https?:)?//[^"]*"', html):
+            assert page.name == "base.html" and "ko-fi.com/pandaveloper" in link, page

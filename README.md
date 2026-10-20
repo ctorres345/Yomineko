@@ -1,67 +1,100 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/ctorres345/yomineko/main/docs/assets/logo.png" width="220" alt="yomineko logo: a black cat with big yellow eyes wearing a red polka-dot party hat">
-  <br>
-  <sub>Logo by @loritoart</sub>
+  <img src="https://raw.githubusercontent.com/ctorres345/yomineko/main/docs/assets/logo.png" width="200" alt="yomineko logo: a black cat with big yellow eyes wearing a red polka-dot party hat">
 </p>
 
-# yomineko 読み猫
+<h1 align="center">yomineko 読み猫</h1>
 
-Extract the Japanese script from games you own and turn it into study material:
-a frequency-ordered word list, sentences that teach the most words, each with the meanings of
-its words, and exports to Anki, spreadsheets and JSON.
+<p align="center">
+  <strong>Turn the Japanese script of a game you own into flashcards.</strong><br>
+  A word list, example sentences and Anki decks, made from the game's own text.
+</p>
 
-Learners usually mine words *while* playing. yomineko works *before* you play: study
-the words that cover most of the game, with real lines from it as examples.
+<p align="center">
+  <a href="https://pypi.org/project/yomineko/"><img src="https://img.shields.io/pypi/v/yomineko?color=black" alt="PyPI version"></a>
+  <a href="https://pypi.org/project/yomineko/"><img src="https://img.shields.io/pypi/pyversions/yomineko?color=black" alt="Python 3.10 and newer"></a>
+  <a href="https://github.com/ctorres345/yomineko/actions/workflows/ci.yml"><img src="https://github.com/ctorres345/yomineko/actions/workflows/ci.yml/badge.svg" alt="CI status"></a>
+  <a href="https://github.com/ctorres345/yomineko/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-black" alt="Apache-2.0 licence"></a>
+  <a href="https://ko-fi.com/pandaveloper"><img src="https://img.shields.io/badge/Ko--fi-support%20the%20project-FF5E5B?logo=ko-fi&logoColor=white" alt="Support the project on Ko-fi"></a>
+</p>
 
-> **For games you own.** yomineko does not include or distribute ROMs, game scripts or
-> prebuilt decks. You run it on your own dump, and nothing leaves your machine. See
-> [DISCLAIMER.md](https://github.com/ctorres345/yomineko/blob/main/DISCLAIMER.md) for responsible use and what the project will not help with.
-> Files you export contain the game's text and are for your personal study only.
+<p align="center">
+  <a href="#install">Install</a> ·
+  <a href="#how-to-use-it">How to use it</a> ·
+  <a href="#supported-games">Supported games</a> ·
+  <a href="#add-your-game">Add your game</a> ·
+  <a href="#troubleshooting">Troubleshooting</a> ·
+  <a href="#command-line">Command line</a> ·
+  <a href="#support-the-project">Support</a>
+</p>
 
-**Status:** early but usable, version 0.5.0. It extracts the
-script from a Game Boy Advance or Game Boy Color ROM and checks that it rebuilds byte for byte,
-finds the words with
-dictionary meanings and frequency counts, lets you correct the wrong picks that kana-heavy
-text causes, picks the sentences that teach the most words, and exports Anki decks,
-spreadsheets, CSV and JSON. You can use it in a desktop app, in your browser, or from a
-terminal. Four games are supported so far (see [Games and profiles](#games-and-profiles) for
-what each gives you).
-See the [changelog](https://github.com/ctorres345/yomineko/blob/main/CHANGELOG.md) for what each version added.
+<p align="center">
+  <img src="https://raw.githubusercontent.com/ctorres345/yomineko/main/docs/assets/screenshots/words-dark.png" width="760" alt="The word list in the yomineko app: each word with its reading, meaning, how often the game uses it, and an I know this button">
+</p>
 
-**Contents:** [Install](#install) · [How to use it](#how-to-use-it) ·
-[Troubleshooting](#troubleshooting) · [Command line](#command-line) ·
-[Games and profiles](#games-and-profiles) · [Credits](#credits) · [License](#license)
+## What it does
+
+yomineko reads the text stored inside a Game Boy Advance or Game Boy Color game, finds every
+word in it, and turns them into study material:
+
+- 📖 **A word list**, most frequent first, with readings and dictionary meanings.
+- 💬 **Example sentences** taken from the game, picked so that each one teaches you new words.
+- 🃏 **Anki decks**, spreadsheets, CSV and JSON, ready to import.
+- 🎯 **Only what you need**: tell it your level and the words you already know, and it leaves them out.
+- 🔒 **Everything stays on your computer.** Nothing is uploaded, and there are no accounts.
+
+Most learners look words up *while* they play. yomineko helps you *before* you play: study the words
+that cover most of the game, with real lines from it as examples, and then enjoy the game with far
+fewer trips to the dictionary.
+
+> **For games you own.** yomineko does not include or share ROMs, game scripts or ready-made decks.
+> You run it on your own copy of the game, and nothing leaves your machine. Files you export contain
+> the game's text and are for your personal study only. See [DISCLAIMER.md](https://github.com/ctorres345/yomineko/blob/main/DISCLAIMER.md)
+> for responsible use and what the project will not help with.
+
+## Why I made this
+
+While practising my Japanese, I wanted to bring video games into the media I study with. My
+vocabulary and grammar are still growing, so I was looking for a tool to help me look up words and
+sentences while playing. There are tools that read the text on the screen, like the ones people use
+for visual novels, but I play on handheld consoles most of the time, so running one next to the game
+isn't really possible.
+
+Then I came across a few game decompilation projects, and they gave me an idea: use the same
+approach to find the game's actual script and turn it into study material. It may be a niche use
+case, but if it helps someone else study the way it has helped me, it's worth sharing.
+
+— Cesar
 
 ## Install
 
-### Desktop app (no Python needed)
+**Status:** version 0.5.0, early but usable. See the [changelog](https://github.com/ctorres345/yomineko/blob/main/CHANGELOG.md) for what each version added.
 
-A download for Windows, macOS and Linux holds the app (`yomineko-app`) and the command-line
-program (`yomineko`). Unzip it, open `yomineko-app`, pick your game file and follow the steps: add the game,
-find the words, choose them, check them, export. Builds come from the **Build app** workflow (Actions tab) and
-are attached to releases once there is one.
+### Desktop app (recommended, no Python needed)
 
-The downloads are not code-signed, so your system warns once:
-- **Windows:** SmartScreen says "Windows protected your PC": choose *More info*, then *Run anyway*.
-- **macOS:** the build is for Apple silicon (M1 and later). Recent macOS versions no longer let
-  *Open* from the right-click menu past the warning, so clear the download's quarantine flag once in
-  Terminal, in the folder you unpacked it to: `xattr -dr com.apple.quarantine yomineko`, then
-  `./yomineko/yomineko-app`.
-- **Linux:** unpack the archive, then `chmod +x yomineko yomineko-app` if needed. The window needs
-  GTK or Qt web libraries; without them the app opens in your browser instead.
+1. Download the file for your system from the [latest release](https://github.com/ctorres345/yomineko/releases/latest):
+   Windows (`.zip`), macOS on Apple silicon or Linux (`.tar.gz`).
+2. Unpack it and open **`yomineko-app`**.
+3. The first time, your system warns you because the app is not code-signed (signing costs money every
+   year). Here is how to get past the warning once:
 
-Check a download against its `.sha256` file (`shasum -a 256 -c yomineko-<system>.<ext>.sha256`, or
-`Get-FileHash` on Windows).
+| System | What to do |
+|---|---|
+| **Windows** | SmartScreen says "Windows protected your PC": choose *More info*, then *Run anyway*. |
+| **macOS** | In Terminal, in the folder you unpacked it to, run `xattr -dr com.apple.quarantine yomineko`, then `./yomineko/yomineko-app`. (Recent macOS no longer lets you get past the warning with right-click, *Open*.) The build is for Apple silicon (M1 and later). |
+| **Linux** | Run `chmod +x yomineko yomineko-app` if needed. The window needs GTK or Qt web libraries; without them the app opens in your browser instead, and works the same. |
+
+The download also holds the command-line program, `yomineko`. To check a download, compare it with its
+`.sha256` file (`shasum -a 256 -c yomineko-<system>.<ext>.sha256`, or `Get-FileHash` on Windows).
 
 ### With Python
 
-Python 3.10 or newer. Use a virtual environment if you can (`python -m venv .venv`, then activate it).
+You need Python 3.10 or newer. A virtual environment is a good idea (`python -m venv .venv`, then activate it).
 
 ```bash
-pip install yomineko                    # extract, verify and export
-pip install "yomineko[analyze]"         # also the word list (adds the tokenizer, about 80 MB)
-pip install "yomineko[web]"             # the web interface: yomineko serve
-pip install "yomineko[app,analyze]"     # the desktop app: yomineko app
+pip install "yomineko[app,analyze]"     # the desktop app and the word list: run "yomineko app"
+pip install "yomineko[web,analyze]"     # the same pages in your browser: run "yomineko serve"
+pip install "yomineko[analyze]"         # command line only, with the word list (adds a ~80 MB tokenizer)
+pip install yomineko                    # command line only: extract, verify and export the text
 ```
 
 To work on yomineko itself, install from a checkout instead: see [CONTRIBUTING.md](https://github.com/ctorres345/yomineko/blob/main/CONTRIBUTING.md).
@@ -70,88 +103,147 @@ To work on yomineko itself, install from a checkout instead: see [CONTRIBUTING.m
 
 The whole job takes a few minutes. You need:
 
-- **The game file**, a dump of a game you own: a `.gba`, `.gbc` or `.gb` file, or a `.zip` holding
-  exactly one. It must be an unmodified dump, because yomineko recognises the game by its checksum.
-  Today that means *Pokemon Mystery Dungeon: Red Rescue Team (Japan)*, *Gyakuten Saiban (Japan)*,
-  *Mario & Luigi RPG (Japan)* (Game Boy Advance) or *Pocket Monsters Crystal (Japan)* (Game Boy
-  Color).
-- **An internet connection once**, to download the dictionary (about 10 MB). Nothing else is ever
+- **Your game file**: an unmodified dump of a game you own, as a `.gba`, `.gbc` or `.gb` file, or a
+  `.zip` holding exactly one. yomineko recognises the game by its checksum, so patched or translated
+  versions are not accepted. See [Supported games](#supported-games) for the list.
+- **An internet connection, once**, to download the dictionary (about 10 MB). Nothing else is ever
   downloaded, and your game file never leaves your computer.
-- **Anki**, if you want flashcards ([apps.ankiweb.net](https://apps.ankiweb.net)). A spreadsheet
-  program is enough for the other exports.
+- **[Anki](https://apps.ankiweb.net)**, if you want flashcards. A spreadsheet program is enough for
+  the other exports.
 
-### Step by step
+Open the **desktop app** (`yomineko-app`, or `yomineko app` if you installed with Python). You can
+also run `yomineko serve` and use your browser at <http://localhost:8765>: the pages are the same.
 
-Open the **desktop app** (`yomineko-app`). If you installed with Python, run `yomineko app` for the
-same window, or `yomineko serve` to use your browser at <http://localhost:8765>. The pages are
-identical.
+<p align="center">
+  <img src="https://raw.githubusercontent.com/ctorres345/yomineko/main/docs/assets/screenshots/start.png" width="640" alt="The start page: a box to add a game file and the list of your games">
+</p>
 
-A bar at the top of each game's pages shows the five steps (1 Add a game, 2 Find the words, 3 Choose
-your words, 4 Check meanings, 5 Export) and each page has one **Next** button to the following step.
+A bar at the top shows the five steps, and each page has one **Next** button that takes you to the
+following one.
 
-1. **Read the short notice** the first time and press **Got it**.
-
-2. **Download the dictionary.** On the start page, press **Download the dictionary**. It takes about
-   a minute. The word meanings come from it. You only do this once.
-3. **Add a game.** Under *Add a game*, press **Choose file**, select your game file (`.gba`,
-   `.gbc`, `.gb` or `.zip`), and press **Read the game's text**. After a few seconds you see how many
-   lines were found. Look for
-   **Rebuild check: OK**: it means the text was read completely and correctly.
-4. **Find the words.** On the game page, press **Find the words**. It takes a few seconds and then
-   shows how many different words the game uses. Under **Look inside**, **Browse the words** lists
-   them (most frequent first), **Browse the lines** shows the game's text, and **See the sentences it
-   would pick** previews your example sentences.
-5. **Choose your words.** Press **Next: Choose your words** and pick a level: *Just starting* (every
-   word), *The basics*, *Intermediate* or *Advanced* (these skip the 1,000, 5,000 or 10,000 most
-   common words in the dictionary). Ten sample skipped words help you choose, and the number of word
-   cards updates as you go. The level is remembered for your next game. Below, set how often a word
-   must appear in the game to get a card (default 4) and press **Save**. In the word list, **I know
-   this** leaves a word out of every game's cards (and **Undo** brings it back).
-6. **Check meanings (optional).** The game is written almost entirely in hiragana, so a
-   word can be matched to the wrong dictionary entry with the same sound (for example こと as 琴, a
-   koto, instead of 事, a thing). Press **Next: Check the meanings** and then **Prepare the words to
-   check**. For each word you see the lines it appears in and what it could mean instead. Choose:
-   - one of the **alternatives**, if the pick was wrong (tick *right for most lines, not all* when
-     the alternative is right most of the time but not in every line: it then stays off the sentence
-     cards);
-   - **The pick is right**, so it leaves the list;
-   - **Not a real word here**, to drop it;
-   - or type your own **meaning** in English and press **Use it**.
-
-   Your answers are saved on your computer. When you are done, press **Apply them (find the words
-   again)**. The game already comes with a review of the most common mistakes, so you can press
-   **Skip this step**. Anything you undo can be removed under **Your corrections**.
-7. **Export.** Press **Next: Export** and choose what you want:
-   - **An Anki deck** (`.apkg`): words, sentences and game names, ready to import;
-   - **A spreadsheet** (`.xlsx`), with the same cards as rows;
-   - **A CSV or JSON file**, for your own tools (the word list, the picked sentences or every line).
-
-   Only the options for the format you chose are shown. *More options* lets you change how often a
-   word must appear (it starts from your choice in step 5), how many sentences to pick (default
-   1,000), easiest first or in game order, and the name shown where the game uses *your* name. Press
-   **Download**.
-8. **Import into Anki.** In Anki on your computer, choose **File, Import** and select the `.apkg`.
+1. **Get started.** Read the short notice and press **Got it**. Then press **Download the dictionary**
+   (about a minute, and only once). The word meanings come from it.
+2. **Add a game.** Press **Choose file**, pick your game file and press **Read the game's text**.
+   After a few seconds you see how many lines were found. **Rebuild check passed** means the text was
+   read completely and correctly.
+3. **Find the words.** Press **Find the words**. A few seconds later you see how many different words
+   the game uses. Under **Look inside** you can browse the words (most frequent first), the game's
+   lines, and the sentences yomineko would pick for you.
+4. **Choose your words.** Pick your level: *Just starting* (every word), *The basics*, *Intermediate*
+   or *Advanced* (these skip the 1,000, 5,000 or 10,000 most common words). Ten sample words help you
+   choose, and the number of cards updates as you go. You can also set how often a word must appear in
+   the game to get a card (4 times by default). In the word list, **I know this** leaves a word out
+   of every game's cards, and **Undo** brings it back.
+5. **Check the meanings (optional).** Older games are written mostly in kana, so a word can be matched
+   to the wrong dictionary entry with the same sound (for example こと as 琴, a koto, instead of 事, a
+   thing). Each supported game already comes with fixes for the most common mistakes, so you can press
+   **Skip this step**. To check more, press **Prepare the words to check**. For each word you see the
+   lines it appears in and pick the right meaning, mark the pick as right, drop it, or type your own
+   meaning. Then press **Apply them**.
+6. **Export.** Choose an **Anki deck** (`.apkg`), a **spreadsheet** (`.xlsx`), or a **CSV or JSON
+   file**, and press **Download**. *More options* lets you change how many sentences to pick (1,000 by
+   default), their order, and the name shown where the game uses *your* name.
+7. **Import into Anki.** In Anki on your computer, choose **File › Import** and select the `.apkg`.
    You get three decks named after the game: **1 Words** (most frequent first), **2 Sentences**
-   (easiest first, each with the meanings of its less common words) and **3 Terms** (game names
-   that are real words). To study on a phone, import on your computer, sync, then open Anki
-   (AnkiMobile or AnkiDroid) on the phone.
+   (easiest first, each with the meanings of its harder words) and **3 Terms** (game names that are
+   real words). To study on your phone, sync and open AnkiMobile or AnkiDroid.
 
-When you are finished, close the window (or press **Quit yomineko** if the app opened in your
-browser).
+When you are done, close the window (or press **Quit yomineko** if the app opened in your browser).
+
+<table>
+  <tr>
+    <td width="50%"><img src="https://raw.githubusercontent.com/ctorres345/yomineko/main/docs/assets/screenshots/sentences.png" alt="The sentences page: lines from the game that teach the most words, with how many new words each one has"></td>
+    <td width="50%"><img src="https://raw.githubusercontent.com/ctorres345/yomineko/main/docs/assets/screenshots/export.png" alt="The export page: choose an Anki deck, a spreadsheet, a CSV file or a JSON file"></td>
+  </tr>
+  <tr>
+    <td align="center"><sub>The sentences that teach the most words</sub></td>
+    <td align="center"><sub>Export to Anki, a spreadsheet, CSV or JSON</sub></td>
+  </tr>
+</table>
+
+<sub>The screenshots use a small demo ROM and sentences written for these pictures, not text from a real game.</sub>
 
 ### Good to know
 
-- **Where things are saved.** The start page shows the folder. Each game has its own folder holding
-  the extracted text and your corrections. They contain the game's text: keep them private.
-- **Doing it again is safe.** Export a new deck after changing your corrections and import it over
+- 📁 **Where things are saved.** The start page shows the folder. Each game has its own folder with the
+  extracted text and your corrections. They contain the game's text, so keep them private.
+- 🔁 **Doing it again is safe.** Export a new deck after changing your corrections and import it over
   the old one: Anki updates the cards in place and keeps your review history.
-- **What to study first.** Start with *1 Words*. Add a few new cards a day (10 to 20 is plenty).
+- 🌱 **What to study first.** Start with *1 Words* and add a few new cards a day (10 to 20 is plenty).
   The sentence deck starts with lines made of the most common words, so it gets harder as you go.
-- **The sound on cards** is Anki's built-in Japanese text-to-speech. If you hear nothing, install a
-  Japanese voice in your system settings.
-- **Meanings** come from the JMdict dictionary (EDRDG, CC BY-SA 4.0), credited on every card.
+- 🔊 **Sound on the cards** comes from Anki's built-in Japanese text-to-speech. If you hear nothing,
+  install a Japanese voice in your system settings.
+- 📚 **Meanings** come from the JMdict dictionary (EDRDG, CC BY-SA 4.0) and are credited on every card.
   They are dictionary glosses, not a translation of each line.
-- **Phones.** The app runs on a computer only; to study on a phone, use Anki there (step 8).
+- 📱 **Phones.** The app runs on a computer only. To study on a phone, use Anki there (step 7).
+
+## Supported games
+
+yomineko reads each game through a **profile**: a small file that says where the game keeps its text,
+how its characters are encoded and what its control codes mean. Every game stores its text
+differently, so **support is per game**, and only Japanese releases are in scope.
+
+| Game | Platform | Verdict | Word meanings | Sentence cards | Name cards |
+|---|---|---|---|---|---|
+| Pokemon Mystery Dungeon: Red Rescue Team (Japan) | GBA | ✅ ready | reviewed (311 corrections) | whole lines | yes |
+| Pocket Monsters Crystal (Japan) | GBC | ✅ ready | first-pass review (64 corrections) | one text-box row each | yes |
+| Gyakuten Saiban (Japan) (Rev 1) | GBA | ⚠️ works, with limits | first-pass review (35 corrections) | one text-box row each | no |
+| Mario & Luigi RPG (Japan) | GBA | ⚠️ works, with limits | first-pass review (8 corrections) | one text-box row each | no |
+
+`yomineko profile list` shows the same list. A file that is not an unmodified dump of one of these
+games is refused with a message that says so.
+
+<details>
+<summary><strong>What the verdicts and notes mean</strong></summary>
+
+- **ready** means the text rebuilds the ROM exactly, no raw code reaches a card, and almost every card
+  ends like a sentence. **works, with limits** means usable, with the limits below.
+- **Reviewed** means the most frequent wrong dictionary picks were corrected by hand. Even then, check
+  the words you study: kana-heavy text makes any dictionary program guess, and **Check the meanings**
+  (or `yomineko review`) lets you fix more.
+- **One text-box row each**: these games store a sentence across several short rows (14 to 16
+  characters), so the sentence deck prefers rows that hold a whole sentence.
+- **Pokemon Mystery Dungeon** is the reference game: its sentences are whole lines, filtered.
+- **Gyakuten Saiban**: the main characters' names are left out of the word list, but a few less
+  frequent names may still show up as words.
+- **Mario & Luigi RPG**: two rare kanji are not in the character table yet.
+- **Pocket Monsters Crystal** is written in kana only. Every byte value is a character, so text is
+  read from whole messages, and a message that nothing points to is kept only when it has at least six
+  kana. About 40 short real messages (out of some 4,500) are left out that way; in return, almost no
+  stray data is read as text.
+
+The verdicts come from the project's own check of each game, run the way a learner uses it
+(`tools/game_check.py`).
+</details>
+
+## Add your game
+
+**yomineko grows one game at a time, and every new game is a team effort.** Each profile that someone
+contributes is shipped to everyone, so the next learner who owns that game can start studying right
+away. If you have a Japanese GBA or GBC game you would like to study, adding it is the best way to
+make yomineko better for all of us.
+
+Making a profile takes some detective work: finding the text, working out how it is encoded, and
+proving that it all rebuilds the original file byte for byte. A plain Shift-JIS game can take a few
+hours. Many games use their own character table or compress their text; yomineko already handles
+text in BIOS LZ77 blocks stored as glyph ids (Gyakuten Saiban), one-byte codes with commands
+(Mario & Luigi RPG) and framed messages spread across a Game Boy Color cartridge (Pocket Monsters
+Crystal). You don't need to do it all alone:
+
+- 🧭 **Step-by-step guide:** [docs/ADDING_A_GAME.md](https://github.com/ctorres345/yomineko/blob/main/docs/ADDING_A_GAME.md) walks you
+  through it: investigate, draft, prove it with a round trip, check that it reads well, and submit.
+- 🤖 **With Claude Code:** the repository includes a skill and agents for this. Open the project, say
+  *"add support for my game using the add-game-profile skill"* and give it the path of your game file.
+- 🙋 **Stuck, or the text is stored some other way?** Open a *Game support request* (an issue form) with
+  what you found, counts and offsets only. Even an unfinished investigation tells the project which
+  features to build next, and someone else may pick it up from there.
+
+> **Your game file never leaves your computer**, and **nothing taken from a game belongs in an issue, a
+> pull request or a chat**: no ROMs and no extracted text. Profiles and notes hold offsets, counts,
+> encodings and control codes only. Issues that ask for ROMs, keys or circumvention are closed (see
+> [DISCLAIMER.md](https://github.com/ctorres345/yomineko/blob/main/DISCLAIMER.md)).
+
+Found a security problem? Please report it privately, as [SECURITY.md](https://github.com/ctorres345/yomineko/blob/main/SECURITY.md) describes, not in an issue.
 
 ## Troubleshooting
 
@@ -159,12 +251,12 @@ browser).
 <summary><strong>"no profile for this ROM"</strong></summary>
 
 yomineko does not know this game, or the file is not an unmodified dump (patched, trimmed or
-translated versions have a different checksum). `yomineko profile list` shows the supported games.
-Adding a game is described in [CONTRIBUTING.md](https://github.com/ctorres345/yomineko/blob/main/CONTRIBUTING.md).
+translated versions have a different checksum). `yomineko profile list` shows the supported games,
+and [Add your game](#add-your-game) explains how to add one.
 </details>
 
 <details>
-<summary><strong>Rebuild check says "Mismatch"</strong></summary>
+<summary><strong>The rebuild check says "Mismatch"</strong></summary>
 
 The text read from your file does not rebuild the original exactly, so some of it may be missing or
 wrong. Check that the dump is complete and not damaged. If it keeps happening with a good dump,
@@ -182,27 +274,27 @@ internet connection once. If the download fails, try again later, or check that 
 <details>
 <summary><strong>The word list fails, saying an extra is missing</strong></summary>
 
-You installed with Python and without the tokenizer. Run `pip install "yomineko[analyze]"` (the downloaded
-desktop app already includes it).
+You installed with Python and without the tokenizer. Run `pip install "yomineko[analyze]"` (the
+desktop app download already includes it).
 </details>
 
 <details>
 <summary><strong>Windows or macOS warns that the app is from an unknown developer</strong></summary>
 
-The app is not code-signed (that costs money each year), so the first start shows a warning. See
-[Install](#desktop-app-no-python-needed) for the steps that get past it, and compare the
-download with its `.sha256` file if you want to be sure it is the file the project built.
+The app is not code-signed, so the first start shows a warning. See [Install](#desktop-app-recommended-no-python-needed)
+for the steps that get past it, and compare the download with its `.sha256` file if you want to be
+sure it is the file the project built.
 </details>
 
 <details>
 <summary><strong>The app opens in my browser instead of a window</strong></summary>
 
-That happens when the system has no web view available (mostly on Linux). It works the same.
-Use the **Quit yomineko** button at the bottom of the page when you are done.
+That happens when the system has no web view available (mostly on Linux). It works the same. Use the
+**Quit yomineko** button at the top of the page when you are done.
 </details>
 
 <details>
-<summary><strong>Port 8765 is already in use (yomineko serve)</strong></summary>
+<summary><strong>Port 8765 is already in use (<code>yomineko serve</code>)</strong></summary>
 
 Run `yomineko serve --port 9000` (or any free port) and open that address instead. The desktop app
 picks a free port by itself.
@@ -211,9 +303,9 @@ picks a free port by itself.
 <details>
 <summary><strong>Some meanings look wrong</strong></summary>
 
-The game is written in kana, so the dictionary can pick the wrong word. Use **Check meanings**
-(step 6). Your corrections are only ever ids and your own English, so they are safe to share
-without sharing any game text.
+The game is written in kana, so the dictionary can pick the wrong word. Use **Check the meanings**
+(step 5). Your corrections are only ever ids and your own English, so you can share them without
+sharing any game text.
 </details>
 
 ## Command line
@@ -222,95 +314,56 @@ Everything the app does is also available in a terminal. Files are written under
 
 ```bash
 yomineko info   game.gba                 # header, checksum, matching profile
-yomineko survey game.gba                 # developer: how does this game store its text? (counts only)
 yomineko extract game.gba                # writes yomineko-out/<game>/script.json
 yomineko verify game.gba                 # rebuild from the extracted text, compare checksum
 yomineko dict download                   # once: fetch JMdict (CC BY-SA, EDRDG) for word lookups
-yomineko analyze yomineko-out/<game>/script.json            # find the words (needs the extra)
+yomineko analyze yomineko-out/<game>/script.json            # find the words (needs the analyze extra)
+yomineko export yomineko-out/<game>/script.json --format anki     # words, sentences and terms deck
+yomineko serve                           # the web interface at http://localhost:8765
+yomineko app                             # the desktop app
+```
+
+<details>
+<summary><strong>More commands and export options</strong></summary>
+
+```bash
+yomineko survey game.gba                 # developer: how does this game store its text? (counts only)
 yomineko review worklist yomineko-out/<game>/script.json    # ambiguous words and probable names to double-check
 yomineko analyze yomineko-out/<game>/script.json --review my-review.yaml
-yomineko export yomineko-out/<game>/script.json --format anki     # words, sentences and terms deck
 yomineko export yomineko-out/<game>/script.json --format anki --level basics   # no cards for the 1,000 commonest words
 yomineko export yomineko-out/<game>/script.json --format xlsx     # the same as a spreadsheet
 yomineko export yomineko-out/<game>/script.json --content words --format csv --min-freq 3
 yomineko export yomineko-out/<game>/script.json --content sentences --format csv
 yomineko dict status                     # where the dictionary is stored and how recent it is
-yomineko serve                           # the web interface at http://localhost:8765
-yomineko app                             # the desktop app
+yomineko known list                      # the words you marked "I know this"
 ```
 
-The deck needs `analyze` first (run it again if the script was analysed with an older yomineko).
-Words need `--min-freq` occurrences (default 4), about 1,000 sentences are picked (`--sentences`),
-easiest first or in ROM order (`--order`), and `--decks words,sentences,terms` chooses the parts.
-`--level` skips the words you already know: `basics`, `intermediate` and `advanced` leave out the
-1,000, 5,000 and 10,000 most common words in the dictionary (`starting`, the default, keeps them all).
-Those counts come from JMdict's newspaper word frequencies, not JLPT lists, so a few everyday words rank
-lower than you might expect. Skipped words still appear in the sentences.
-Words you marked "I know this" in the app (or with `yomineko known add`) are left out too, in every
-game; `yomineko known list` shows them and `--no-known` makes cards for them anyway.
-Where the game uses the player's name, cards show a stand-in (`--player-name`). Game names become
-cards only when they match exactly one dictionary entry.
+- The deck needs `analyze` first (run it again if the script was analysed with an older yomineko).
+- Words need `--min-freq` occurrences (default 4). About 1,000 sentences are picked (`--sentences`),
+  easiest first or in ROM order (`--order`), and `--decks words,sentences,terms` chooses the parts.
+- `--level` skips the words you already know: `basics`, `intermediate` and `advanced` leave out the
+  1,000, 5,000 and 10,000 most common words in the dictionary (`starting`, the default, keeps them all).
+  Those counts come from JMdict's newspaper word frequencies, not JLPT lists, so a few everyday words
+  rank lower than you might expect. Skipped words still appear in the sentences.
+- Words you marked "I know this" in the app (or with `yomineko known add`) are left out too, in every
+  game; `--no-known` makes cards for them anyway.
+- Where the game uses the player's name, cards show a stand-in (`--player-name`). Game names become
+  cards only when they match exactly one dictionary entry.
+- `game.gba` may also be a `.gbc` or `.gb` file, or a `.zip` holding one ROM. `yomineko serve` and
+  `yomineko app` only listen on your own computer (127.0.0.1).
+</details>
 
-`game.gba` may also be a `.gbc` or `.gb` file, or a `.zip` holding one ROM. A game is supported when a
-[profile](https://github.com/ctorres345/yomineko/blob/main/CONTRIBUTING.md) matches the ROM's SHA-1 (`yomineko profile list`). `yomineko serve` and
-`yomineko app` only listen on your own computer (127.0.0.1).
+## Support the project
 
-## Games and profiles
+yomineko is free and open source, and it will stay that way. If it helps your Japanese and you'd like
+to say thanks, you can buy me a coffee on Ko-fi. It's completely optional and very much appreciated.
 
-yomineko reads each game through a **profile**: a small file that says where the game keeps its text,
-how its characters are encoded and what its control codes mean. A profile is what makes the text come
-out clean, and a packaged *review* of the word picks makes the meanings right. Because every game
-stores its text differently, **support is per game**, and only Japanese games are in scope. Today four
-games are supported, on Game Boy Advance and Game Boy Color (`yomineko profile list` shows the list). A
-file that is not an unmodified dump of a supported game is refused, with a message that says so, and so
-is a game that is not a Japanese release (the header's game code must end in `J`; an older Game Boy
-cartridge has no code, and its header must name Japan).
+<p>
+  <a href="https://ko-fi.com/pandaveloper"><img src="https://img.shields.io/badge/Ko--fi-buy%20me%20a%20coffee-FF5E5B?logo=ko-fi&logoColor=white&style=for-the-badge" alt="Buy me a coffee on Ko-fi"></a>
+</p>
 
-| Game | Verdict | Words | Sentences | Name cards | Notes |
-|---|---|---|---|---|---|
-| Pokemon Mystery Dungeon: Red Rescue Team (Japan) | ready | reviewed (311 corrections) | whole lines, filtered | yes | the reference game |
-| Gyakuten Saiban (Japan) (Rev 1) | works, with limits | first-pass review (35 corrections, main character names left out), the rest of the long tail unreviewed | one text-box row each (about 14 characters); whole sentences are preferred | no | a few less frequent names may still show up as words |
-| Mario & Luigi RPG (Japan) | works, with limits | first-pass review (8 corrections), the rest unreviewed | one box line each (about 14 characters); whole sentences are preferred | no | two rare kanji are not in the character table |
-| Pocket Monsters Crystal (Japan) | ready | first-pass review (64 corrections), the rest of the long tail unreviewed | one text-box row each (about 16 characters); whole sentences are preferred | yes | Game Boy Color; the game is written in kana only; a few very short messages are not read (see below) |
-
-In Pocket Monsters Crystal every byte value is a character, so text is read from whole messages only,
-and a message that nothing in its part of the ROM points to is kept when it has at least six kana. About
-40 short real messages (a few battle lines and goodbyes on the phone, out of some 4,500) are left out
-that way; in return, almost no stray data is read as text.
-
-The verdict comes from the project's own check of each game, run the way a learner uses it
-(`tools/game_check.py`): *ready* means the text rebuilds the ROM, no raw code reaches a card and almost
-every card ends like a sentence; *works, with limits* means usable, with the limits named in the row.
-"Reviewed" means the most frequent wrong dictionary picks were corrected by hand. Even then, check the
-words you study: kana-heavy text makes a dictionary program guess, and the `Check meanings` page
-(or `yomineko review`) lets you fix more.
-
-Making a profile takes detective work: finding the text, working out the encoding, and proving that
-it all rebuilds the original file byte for byte. A plain Shift-JIS game takes hours. Many Japanese
-games use their own character table or compress their text. Text in BIOS LZ77 blocks stored as
-glyph ids is supported (that is how Gyakuten Saiban works), and so is text stored as one-byte codes
-with commands (Mario & Luigi RPG) or as framed messages spread over the banks of a Game Boy Color
-cartridge (Pocket Monsters Crystal); other compression is not yet. So support
-grows one game at a time, and it grows faster with your help.
-
-### Add your game
-
-If you have a Japanese game you own and want to study, you can write its profile yourself, or let an AI
-assistant do the work on your computer:
-
-- **Guide for everyone:** [docs/ADDING_A_GAME.md](https://github.com/ctorres345/yomineko/blob/main/docs/ADDING_A_GAME.md) walks through it step by step:
-  investigate, draft, prove it with a round trip, check it reads well, submit.
-- **With Claude Code:** the repository includes a skill and agents. Open the project, say *"add support
-  for my game using the add-game-profile skill"* and give it the path of your game file.
-- **Stuck, or the text is stored some other way?** Open a *Game support request* (an issue form) with what you
-  found: counts and offsets only. That tells the project which features to build next.
-
-Your game file never leaves your computer, and **nothing taken from a game belongs in an issue, a pull
-request or a chat**: no ROMs, no extracted text. Profiles and notes hold offsets, counts, encodings
-and control codes only. Accepted profiles are added to the repository and shipped to everyone.
-Issues that ask for ROMs, keys or circumvention are closed: see [DISCLAIMER.md](https://github.com/ctorres345/yomineko/blob/main/DISCLAIMER.md).
-
-Found a security problem? Report it privately, as [SECURITY.md](https://github.com/ctorres345/yomineko/blob/main/SECURITY.md) describes, not in an issue.
+Contributing a game profile, reporting a problem, or telling a friend who is learning Japanese helps
+just as much.
 
 ## Credits
 
@@ -323,6 +376,6 @@ Found a security problem? Report it privately, as [SECURITY.md](https://github.c
 
 ## License
 
-Apache-2.0. See [LICENSE](https://github.com/ctorres345/yomineko/blob/main/LICENSE) and [NOTICE](https://github.com/ctorres345/yomineko/blob/main/NOTICE). yomineko is not affiliated
-with any game publisher or console maker. The logo is by @loritoart and is not covered by this
-licence.
+Apache-2.0. See [LICENSE](https://github.com/ctorres345/yomineko/blob/main/LICENSE) and [NOTICE](https://github.com/ctorres345/yomineko/blob/main/NOTICE). yomineko is not
+affiliated with any game publisher or console maker. The logo is by @loritoart and is not covered by
+this licence.
