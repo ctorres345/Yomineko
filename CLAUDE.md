@@ -49,7 +49,9 @@ data-only YAML profiles in `src/yomineko/profiles/`, keyed by ROM SHA-1.
 - Commits: one per plan task, authored with the repo-local git email. Work on a feature
   branch and open a PR; the owner merges. Releases and PyPI uploads are the owner's
   steps; never run `twine upload`.
-- Before opening a PR, review the diff against the guardrails above and consult the advisor.
+- Before opening a PR, always run the code review (`/code-review high` on the branch's diff
+  against `main`) and fix each finding or say in the PR why it stays. Also review the diff against
+  the guardrails above. Say in the PR description that the review ran and what it found.
 
 ## Translation style (for the translator agent and skill)
 

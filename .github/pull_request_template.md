@@ -7,6 +7,7 @@
 - [ ] `ruff check .`, `ruff format --check .`, `mypy`, `lint-imports`, `pytest -m "not realrom" --cov`
 - [ ] `python tools/repo_guard.py --all`
 - [ ] A change to `src/yomineko/core/` has a synthetic-ROM test
+- [ ] The diff was code-reviewed (with Claude Code: `/code-review high`) and each finding is fixed or answered here
 
 ## Adding a game? (counts only)
 
